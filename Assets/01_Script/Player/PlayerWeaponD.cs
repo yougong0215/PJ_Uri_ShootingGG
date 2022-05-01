@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class PlayerWeaponD : MonoBehaviour
 {
+    Tweener Circle;
     float speed = 3;
     PlayerMove playermove;
     void Awake()
@@ -17,6 +18,7 @@ public class PlayerWeaponD : MonoBehaviour
         LocalY = playermove.transform.position.y;
         transform.position = new Vector3(LocalX, LocalY, 0);
         StartCoroutine("DarkPosX");
+        Circle = transform.DOMove(new Vector3(LocalX, LocalY, 0), 1f).SetAutoKill(false);
     }
 
     float LocalX;
@@ -24,7 +26,7 @@ public class PlayerWeaponD : MonoBehaviour
 
     IEnumerator DarkPosX()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.4f);
         LocalX = playermove.transform.position.x - 0.8f;
         LocalY = playermove.transform.position.y - 0.72f;
 
@@ -33,7 +35,7 @@ public class PlayerWeaponD : MonoBehaviour
     }
     IEnumerator WhithPosX()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.4f);
         LocalX = playermove.transform.position.x + 0.2f;
         LocalY = playermove.transform.position.y - 0.72f;
         StartCoroutine("DarkPosX");
@@ -41,18 +43,20 @@ public class PlayerWeaponD : MonoBehaviour
     }
     IEnumerator DarkPosY()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
         LocalY = playermove.transform.position.y - 0.36f;
     }
     IEnumerator WhithPosY()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f);
         LocalY = playermove.transform.position.y - 1.08f;
     }
 
+    Vector3 dir;
+
     private void Update()
     {
-        transform.DOMove(new Vector3(LocalX, LocalY, 0), 1f);
+        dir = new Vector3(LocalX, LocalY, 0);
+        Circle.ChangeEndValue(dir, true).Restart();
     }
-
 }

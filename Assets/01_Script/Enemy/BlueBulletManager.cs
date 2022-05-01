@@ -2,21 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBulletMaster : MonoBehaviour
+
+
+public class BlueBulletManager : MonoBehaviour
 {
+
+    public static int blueDir = 0;
+
     public GameObject Bullet;
     private Transform poolManagertransform = null;
-
+    [SerializeField] private BlueBullet BDir;
     void Start()
     {
-        poolManagertransform = FindObjectOfType<PoolManager>().GetComponent<Transform>();
+        poolManagertransform = FindObjectOfType<BluePullManager>().GetComponent<Transform>();
         StartCoroutine("EnableBullet");
     }
     IEnumerator EnableBullet()
     {
         GameObject obj = null;
-        while (true)
-        {
+
             if (poolManagertransform.childCount > 0)
             {
                 obj = poolManagertransform.GetChild(0).gameObject;
@@ -27,11 +31,12 @@ public class PlayerBulletMaster : MonoBehaviour
                 obj = Instantiate(Bullet, transform);
             }
             obj.transform.SetParent(null);
+
             obj.transform.position = transform.position;
-
-
-            yield return new WaitForSeconds(0.05f);
-        }
+           
+            yield return new WaitForEndOfFrame();
+        blueDir++;
+        StartCoroutine("EnableBullet");
     }
-
+    
 }
