@@ -4,33 +4,29 @@ using UnityEngine;
 
 public class BlueBullet : MonoBehaviour
 {
-    float speed = 5;
+    float speed = 2;
     int a;
     Vector3 dir = Vector3.down;
-    Vector2 Left = new Vector2(-1, -1);
-    Vector2 Middle = new Vector2(0, -1);
-    Vector2 Right = new Vector2(1, -1);
-    public void SetDir(Vector3 value)
+    Vector2 Left = new Vector2(-1, -2);
+    Vector2 Middle = new Vector2(0, -2);
+    Vector2 Right = new Vector2(1, -2);
+    public void SetDir(int value)
     {
-        dir = value;
-        a = BlueBulletManager.blueDir;
+        a = value;
     }
-    public Vector3 GetDir()
-    {
-        return dir;
-    }
+
     void FixedUpdate()
     {
         switch(a)
         {
-            case 1:
+            case 0:
                 dir = Left;
                 break;
-            case 2:
+            case 1:
                 dir = Middle;
                 break;
-            case 3:
-                dir = Left;
+            case 2:
+                dir = Right;
                 break;
         }
 
