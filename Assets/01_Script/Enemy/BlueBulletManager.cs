@@ -22,7 +22,6 @@ public class BlueBulletManager : MonoBehaviour
     {
         while (true)
         {
-            if (SpriteName.sprite.name == "CrazyBird")
             {
                 GameObject obj = null;
                 for (int j = 0; j < 3; j++)
@@ -42,8 +41,8 @@ public class BlueBulletManager : MonoBehaviour
                     BDir.SetDir(j);
                     obj.transform.position = transform.position;
                 }
-                yield return new WaitForSeconds(0.5f);
             }
+            yield return new WaitForSeconds(0.5f);
         }
     }
     
