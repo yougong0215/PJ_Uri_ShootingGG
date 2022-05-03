@@ -15,6 +15,14 @@ public class EnemyHPMaster : EnemyParent
         HP = 100;
     }
 
+    private void Update()
+    {
+        if(HP <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("PlayerBullet"))
@@ -22,7 +30,6 @@ public class EnemyHPMaster : EnemyParent
             HP--;
             collision.gameObject.SetActive(false);
             collision.transform.SetParent(GameManager.InstancePro.PoolManagerpro.transform);
-            Debug.Log(HP);
         }
     }
 }
