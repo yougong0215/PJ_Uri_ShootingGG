@@ -20,7 +20,7 @@ public class BlueBullet : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine("BoxTurn");
+        StartCoroutine("DiamondTurn");
     }
     public void SetDir(int value, int speed, int Version)
     {
@@ -104,6 +104,21 @@ public class BlueBullet : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         StartCoroutine("BoxTurn");
     }
+
+    IEnumerator DiamondTurn()
+    {
+        dir = new Vector3(1, -1, 0);
+        yield return new WaitForSeconds(0.5f);
+        dir = new Vector3(-1, -1, 0);
+        yield return new WaitForSeconds(0.5f);
+        dir = new Vector3(-1, 1, 0);
+        yield return new WaitForSeconds(0.5f);
+        dir = new Vector3(1, 1, 0);
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine("DiamondTurn");
+    }
+    
+
    // IEnumerator DiamondTurn()
     //{
 
