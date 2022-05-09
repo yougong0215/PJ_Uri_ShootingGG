@@ -5,25 +5,35 @@ using UnityEngine;
 public class WingAttack : MonoBehaviour
 {
     public GameObject Wing;
-    public GameObject[] WingObjects;
+    public WingAtt_Pull[] WingObjects;
+    [SerializeField] private WingAtt_Pull Wings;
     private int pivot = 0;
-    bool Attack =false;
+    float currentTime = 0f;
 
     void Start()
     {
-        WingObjects = new GameObject[10];
+        WingObjects = new WingAtt_Pull[10];
         for(int i =0; i < 10; i++)
         {
-            GameObject WingObj = Instantiate(Wing);
+            WingAtt_Pull WingObj = Instantiate(Wing).GetComponent<WingAtt_Pull>();
             WingObjects[i] = WingObj;
-            WingObj.SetActive(false);
+            WingObj.gameObject.SetActive(false);
         }
     }
 
     private void Update()
     {
-        if (Input.GetButtonUp("Jump"))
+        if (Input.GetButton("Jump"))
         {
+            currentTime += Time.deltaTime;
+        }
+        
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                WingObjects[i].SetCurrentTime(currentTime);
+            }
             StartCoroutine("EnableWing");
         }
     }
@@ -31,7 +41,8 @@ public class WingAttack : MonoBehaviour
     IEnumerator EnableWing()
     {
         yield return new WaitForSeconds(0.1f);
-        WingObjects[pivot].SetActive(true);
+        WingObjects[pivot].gameObject.SetActive(true);
+        //currentTime = 0;
         WingObjects[pivot].transform.position = transform.position;
             pivot++;
         

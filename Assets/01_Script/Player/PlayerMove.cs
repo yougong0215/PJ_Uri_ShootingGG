@@ -21,14 +21,14 @@ public class PlayerMove : MonoBehaviour
         h = Input.GetAxis("Horizontal");
         v = Input.GetAxis("Vertical");
         dir = new Vector3(h, v, 0);
-        if(Input.GetButton("Jump"))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
 
             transform.position += dir * speed * Time.deltaTime /4;
         }
         else
         {
-        transform.position += dir * speed * Time.deltaTime;
+            transform.position += dir * speed * Time.deltaTime;
         }
 
     }

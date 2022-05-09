@@ -6,31 +6,33 @@ public class PlayerWeapon : MonoBehaviour
 {
     [SerializeField] float speed;
     Vector3 pos;
-    [SerializeField] GameObject Target;
+    [SerializeField] GameObject Light;
     [SerializeField] GameObject UP;
     [SerializeField] GameObject Down;
-    Vector3 LateWitch;
-    Vector3 NowWitch;
+    [SerializeField] GameObject Dark;
+    Vector3 Lightps;
+    Vector3 Darkps;
     Vector3 UpPs;
     Vector3 DownPs;
 
     int a;
-    private void Start()
+    private void Awake()
     {
         if (gameObject.name == "Dark")
         {
-            transform.localPosition = new Vector3(-0.1f, 0, 0);
+            pos = new Vector3(-0.1f, 0, -1);
         }
 
         if (gameObject.name == "Light")
         {
-            transform.localPosition = new Vector3(0.1f, 0, 0);
+            pos = new Vector3(0.1f, 0, -1);
         }
+
         UpPs = UP.transform.localPosition;
         DownPs = Down.transform.localPosition;
-        LateWitch = Target.transform.localPosition;
-        NowWitch = gameObject.transform.localPosition;
-            StartCoroutine("A");
+        Lightps = Light.transform.localPosition;
+        Darkps = Dark.transform.localPosition;
+            StartCoroutine(A());
     }
 
     private void Update()
@@ -39,64 +41,83 @@ public class PlayerWeapon : MonoBehaviour
     }
     IEnumerator A()
     {
-        if (gameObject.name == "Dark")
+        while (true)
         {
-            switch (a)
+            if (gameObject.name == "Dark")
             {
-                case 1:
-                    pos = Vector2.MoveTowards(gameObject.transform.localPosition, UpPs, 0.005f);
-                    break;
-                case 2:
-                    pos = Vector2.MoveTowards(gameObject.transform.localPosition, LateWitch, 0.005f);
-                    break;
-                case 3:
-                    pos = Vector2.MoveTowards(gameObject.transform.localPosition, DownPs, 0.005f);
-                    break;
-                case 4:
-                    pos = Vector2.MoveTowards(gameObject.transform.localPosition, NowWitch, 0.005f);
-                    break;
+                switch (a)
+                {
+                    case 1:
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, UpPs, 0.005f);
+                        break;
+                    case 2:
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, Lightps, 0.005f);
+                        break;
+                    case 3:
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, DownPs, 0.005f);
+                        break;
+                    case 4:
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, Darkps, 0.005f);
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
+
             }
-
-        }
-        if (gameObject.name == "Light")
-        {
-            switch (a)
+            if (gameObject.name == "Light")
             {
-                case 1:
-                    pos = Vector2.MoveTowards(gameObject.transform.localPosition, DownPs, 0.005f);
-                    break;
-                case 2:
-                    pos = Vector2.MoveTowards(gameObject.transform.localPosition, NowWitch, 0.005f);
-                    break;
-                case 3:
-                    pos = Vector2.MoveTowards(gameObject.transform.localPosition, UpPs, 0.005f);
-                    break;
-                case 4:
-                    pos = Vector2.MoveTowards(gameObject.transform.localPosition, LateWitch, 0.005f);
-                    break;
+                switch (a)
+                {
+                    case 1:
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, Darkps, 0.005f);
+                        break;
+                    case 2:
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, Lightps, 0.005f);
+                        break;
+                    case 3:
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, DownPs, 0.005f);
+                        break;
+                    case 4:
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, UpPs, 0.005f);
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
             }
+            yield return new WaitForEndOfFrame();
+            transform.localPosition = pos;
         }
-        yield return new WaitForEndOfFrame();
-        transform.localPosition = pos;
-        StartCoroutine("A");
     }
 
     void check()
     {
-            if (NowWitch == transform.localPosition)
+        
+
+            if (gameObject.name == "Dark")
+        {
+            if (Darkps == transform.localPosition)
                 a = 1;
             else if (UpPs == transform.localPosition)
                 a = 2;
-            else if (LateWitch == transform.localPosition)
+            else if (Lightps == transform.localPosition)
                 a = 3;
             else if (DownPs == transform.localPosition)
                 a = 4;
-        
+        }
+        if (gameObject.name == "Light")
+        {
+            if (Darkps == transform.localPosition)
+                a = 4;
+            else if (DownPs == transform.localPosition)
+                a = 1;
+            else if (Lightps == transform.localPosition)
+                a = 3;
+            else if (UpPs == transform.localPosition)
+                a = 2;
+        }
+
+
     }
 }
