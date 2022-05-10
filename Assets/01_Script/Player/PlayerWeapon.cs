@@ -10,11 +10,15 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] GameObject UP;
     [SerializeField] GameObject Down;
     [SerializeField] GameObject Dark;
+    [SerializeField] GameObject ShiftLeft;
+    [SerializeField] GameObject ShiftRight;
     Vector3 Lightps;
     Vector3 Darkps;
     Vector3 UpPs;
     Vector3 DownPs;
-
+    Vector3 ShiftLeftPs;
+    Vector3 ShiftRightPs;
+    float speedValue;
     int a;
     private void Awake()
     {
@@ -32,12 +36,20 @@ public class PlayerWeapon : MonoBehaviour
         DownPs = Down.transform.localPosition;
         Lightps = Light.transform.localPosition;
         Darkps = Dark.transform.localPosition;
+        ShiftLeftPs = ShiftLeft.transform.localPosition;
+        ShiftRightPs = ShiftRight.transform.localPosition;
+        
             StartCoroutine(A());
     }
 
     private void Update()
     {
-        check();
+        if (Input.GetKey(KeyCode.LeftShift))
+            speedValue = 0.01f;
+        else
+            speedValue = 0.005f;
+
+            check();
     }
     IEnumerator A()
     {
@@ -48,54 +60,57 @@ public class PlayerWeapon : MonoBehaviour
                 switch (a)
                 {
                     case 1:
-                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, UpPs, 0.005f);
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, UpPs, speedValue);
                         break;
                     case 2:
-                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, Lightps, 0.005f);
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, Lightps, speedValue);
                         break;
                     case 3:
-                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, DownPs, 0.005f);
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, DownPs, speedValue);
                         break;
                     case 4:
-                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, Darkps, 0.005f);
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, Darkps, speedValue);
                         break;
 
                     default:
                         break;
                 }
-
             }
             if (gameObject.name == "Light")
             {
+
+
                 switch (a)
                 {
                     case 1:
-                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, Darkps, 0.005f);
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, UpPs, speedValue);
                         break;
                     case 2:
-                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, Lightps, 0.005f);
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, Lightps, speedValue);
                         break;
                     case 3:
-                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, DownPs, 0.005f);
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, DownPs, speedValue);
                         break;
                     case 4:
-                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, UpPs, 0.005f);
+                        pos = Vector3.MoveTowards(gameObject.transform.localPosition, Darkps, speedValue);
                         break;
 
                     default:
                         break;
                 }
             }
+
             yield return new WaitForEndOfFrame();
             transform.localPosition = pos;
         }
-    }
 
+
+    }
     void check()
     {
-        
 
-            if (gameObject.name == "Dark")
+
+        if (gameObject.name == "Dark")
         {
             if (Darkps == transform.localPosition)
                 a = 1;
@@ -109,15 +124,14 @@ public class PlayerWeapon : MonoBehaviour
         if (gameObject.name == "Light")
         {
             if (Darkps == transform.localPosition)
-                a = 4;
-            else if (DownPs == transform.localPosition)
                 a = 1;
+            else if (DownPs == transform.localPosition)
+                a = 4;
             else if (Lightps == transform.localPosition)
                 a = 3;
             else if (UpPs == transform.localPosition)
                 a = 2;
         }
-
 
     }
 }
