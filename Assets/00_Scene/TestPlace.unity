@@ -390,6 +390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Wing: {fileID: 888118060647743732, guid: 911334ecb61919e439054ab736b7e0f9, type: 3}
   WingObjects: []
+  Wings: {fileID: 9048285188395071391, guid: 911334ecb61919e439054ab736b7e0f9, type: 3}
 --- !u!1 &779973729
 GameObject:
   m_ObjectHideFlags: 0

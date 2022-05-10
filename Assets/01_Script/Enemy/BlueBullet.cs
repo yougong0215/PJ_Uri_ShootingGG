@@ -20,18 +20,32 @@ public class BlueBullet : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine("DiamondTurn");
+        switch(Version)
+        {
+            case 0:
+                Version0();
+                break;
+            case 1:
+                Version1();
+                break;
+            case 2:
+                Version2();
+                break;
+            default:
+                break;
+        }
     }
     public void SetDir(int value, int speed, int Version)
     {
         a = value;
         this.speed = speed;
         this.Version = Version;
+        Start();
     }
     /// <summary>
     /// 3방향 발사 아렛쪽( 왼쪽, 오른쪽, 아레 )
     /// </summary>
-    void Version1()
+    void Version0()
     {
         switch (a)
         {
@@ -45,6 +59,13 @@ public class BlueBullet : MonoBehaviour
                 dir = DownRight;
                 break;
         }
+    }
+
+    void Version1()
+    {
+        GameObject Player = GameObject.Find("Player");
+        dir = Player.transform.position - transform.position;
+        dir.Normalize();
     }
 
     /// <summary>
@@ -91,7 +112,9 @@ public class BlueBullet : MonoBehaviour
         }
 
     }
-
+    
+    // 예네는 게임 오브잭트 안에 만들어주는게 훨편함 ㅇㅇ
+    /*
     IEnumerator BoxTurn()
     {
         dir = new Vector3(0, -2, 0);
@@ -118,9 +141,6 @@ public class BlueBullet : MonoBehaviour
         StartCoroutine("DiamondTurn");
     }
     
-
-   // IEnumerator DiamondTurn()
-    //{
-
+    */
     
 }
