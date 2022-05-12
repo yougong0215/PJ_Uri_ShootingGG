@@ -4,11 +4,22 @@ using UnityEngine;
 
 public class BlueBullet : MonoBehaviour
 {
+    float currenttime;
     float speed = 0;
     int a = 1;
     int Version = 0;
     Vector3 dir = Vector3.down;
-    
+    public void SetDir(Vector3 dir)
+    {
+        this.dir = dir;
+        Debug.Log($"dir : {this.dir} | ThatDir {dir}");
+    }
+    public Vector3 GetDir()
+    {
+        Debug.Log("daf2");
+        return dir;
+    }
+
     Vector2 DownLeft = Vector2.down + Vector2.left;   // 0
     Vector2 Middle = Vector2.down;                    // 1
     Vector2 DownRight = Vector2.down + Vector2.right; // 2
@@ -20,6 +31,7 @@ public class BlueBullet : MonoBehaviour
 
     private void Start()
     {
+        
         switch(Version)
         {
             case 0:
@@ -34,6 +46,10 @@ public class BlueBullet : MonoBehaviour
             default:
                 break;
         }
+
+        dir.Normalize();
+        Debug.Log($"ThatDir {dir}");
+
     }
     public void SetDir(int value, int speed, int Version)
     {
@@ -105,14 +121,30 @@ public class BlueBullet : MonoBehaviour
     void FixedUpdate()
     {
         transform.position += speed * dir * Time.deltaTime;
-        if (transform.position.y <= -4)
+        if(gameObject.activeSelf)
+        {
+            currenttime += Time.deltaTime;
+        }
+
+        if (Mathf.Abs(transform.position.y) >= 7 || currenttime > 4)
         {
             gameObject.SetActive(false);
             transform.SetParent(GameManager.InstancePro.bluePoolManagerpro.transform);
+            currenttime = 0;
         }
 
     }
-    
+
+    void Version5()
+    {
+       
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        dir = Vector3.Reflect(dir, ((Vector2)transform.position - collision.contacts[0].point).normalized);
+    }
+
+
     // 예네는 게임 오브잭트 안에 만들어주는게 훨편함 ㅇㅇ
     /*
     IEnumerator BoxTurn()
@@ -142,5 +174,5 @@ public class BlueBullet : MonoBehaviour
     }
     
     */
-    
+
 }
