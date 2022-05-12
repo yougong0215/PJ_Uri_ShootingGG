@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6450286089015195835}
   - component: {fileID: 6450286089015195834}
   - component: {fileID: 6450286089015195833}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CrazyBirdSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

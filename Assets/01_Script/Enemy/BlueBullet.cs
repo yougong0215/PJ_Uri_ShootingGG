@@ -12,11 +12,9 @@ public class BlueBullet : MonoBehaviour
     public void SetDir(Vector3 dir)
     {
         this.dir = dir;
-        Debug.Log($"dir : {this.dir} | ThatDir {dir}");
     }
     public Vector3 GetDir()
     {
-        Debug.Log("daf2");
         return dir;
     }
 
@@ -35,20 +33,19 @@ public class BlueBullet : MonoBehaviour
         switch(Version)
         {
             case 0:
-                Version0();
+                Version0(); // CrazyBird
                 break;
             case 1:
-                Version1();
+                Version1();// CrazyBird
                 break;
             case 2:
-                Version2();
+                Version2(); // Jimball
                 break;
             default:
                 break;
         }
 
         dir.Normalize();
-        Debug.Log($"ThatDir {dir}");
 
     }
     public void SetDir(int value, int speed, int Version)
@@ -139,9 +136,26 @@ public class BlueBullet : MonoBehaviour
     {
        
     }
+
+    int i = 0;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        dir = Vector3.Reflect(dir, ((Vector2)transform.position - collision.contacts[0].point).normalized);
+        if (Version == 1)
+        {
+            dir = Vector3.Reflect(dir, ((Vector2)transform.position - collision.contacts[0].point).normalized);
+            speed = 5;
+            i++;
+            if(i == 2)
+            {
+                i = 0;
+                gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
 

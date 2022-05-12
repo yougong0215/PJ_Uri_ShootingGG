@@ -21,7 +21,6 @@ public class WingAtt_Pull : MonoBehaviour
     {
         if (currentTime >= 2f)
         {
-            Debug.Log("»÷Áî");
             transform.localScale = new Vector3(1f, 1f, 1f);
         }
         else if (currentTime < 2f && currentTime >= 1f)
@@ -32,13 +31,11 @@ public class WingAtt_Pull : MonoBehaviour
         {
             transform.localScale = new Vector3(0.2f, 0.2f, 1f);
         }
-        Debug.Log("WingPull In Check : " + currentTime);
     }
 
     public void SetCurrentTime(float currentTimes) 
     { 
         currentTime = currentTimes;
-        Debug.Log("WingPull : " + currentTime + " | Wingatt : " + currentTimes);
     }
 
     void FalseBullet()

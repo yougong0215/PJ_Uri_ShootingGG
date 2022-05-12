@@ -41,7 +41,8 @@ public class BoundVector : MonoBehaviour
             
 
             dir = Quaternion.AngleAxis(90f, Vector3.forward) * Bullet.GetDir();
-                */
+            */
+
             dir = Vector3.Reflect(Bullet.GetDir(), ((Vector2)transform.position - collision.contacts[0].point).normalized);
 
             Debug.Log(dir);

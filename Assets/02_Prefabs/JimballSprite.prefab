@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1089129821308695}
   - component: {fileID: 1089129821308689}
   - component: {fileID: 1089129821308698}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: JimballSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
