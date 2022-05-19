@@ -9,14 +9,12 @@ public class BlueBullet : MonoBehaviour
     int a = 1;
     int Version = 0;
     Vector3 dir = Vector3.down;
-    public void SetDir(Vector3 dir)
-    {
-        this.dir = dir;
-    }
     public Vector3 GetDir()
     {
         return dir;
     }
+
+    Transform Player;
 
     Vector2 DownLeft = Vector2.down + Vector2.left;   // 0
     Vector2 Middle = Vector2.down;                    // 1
@@ -27,10 +25,20 @@ public class BlueBullet : MonoBehaviour
     Vector2 LeftUp = Vector2.left + Vector2.up;       // 6
     Vector2 Left = Vector2.left;                      // 7
 
-    private void Start()
+
+    private void Awake()
     {
-        
-        switch(Version)
+        Player = GameObject.Find("Player").GetComponent<Transform>();
+    }
+
+    public void SetDir(int value, int speed, int Version)
+    {
+        a = value;
+        this.speed = speed;
+        this.Version = Version;
+
+
+        switch (Version)
         {
             case 0:
                 Version0(); // CrazyBird
@@ -44,17 +52,8 @@ public class BlueBullet : MonoBehaviour
             default:
                 break;
         }
-
-        dir.Normalize();
-
     }
-    public void SetDir(int value, int speed, int Version)
-    {
-        a = value;
-        this.speed = speed;
-        this.Version = Version;
-        Start();
-    }
+
     /// <summary>
     /// 3방향 발사 아렛쪽( 왼쪽, 오른쪽, 아레 )
     /// </summary>
@@ -74,10 +73,10 @@ public class BlueBullet : MonoBehaviour
         }
     }
 
+    
     void Version1()
     {
-        GameObject Player = GameObject.Find("Player");
-        dir = Player.transform.position - transform.position;
+        dir = Player.transform.position - gameObject.transform.position;
         dir.Normalize();
     }
 
@@ -115,8 +114,12 @@ public class BlueBullet : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    void Update()
     {
+        if(Version == 1)
+        {
+            Debug.Log($"{gameObject.name}  | {dir}");
+        }
         transform.position += speed * dir * Time.deltaTime;
         if(gameObject.activeSelf)
         {
@@ -125,8 +128,7 @@ public class BlueBullet : MonoBehaviour
 
         if (Mathf.Abs(transform.position.y) >= 7 || currenttime > 4)
         {
-            gameObject.SetActive(false);
-            transform.SetParent(GameManager.InstancePro.bluePoolManagerpro.transform);
+            Despawn();
             currenttime = 0;
         }
 
@@ -149,15 +151,20 @@ public class BlueBullet : MonoBehaviour
             if(i == 2)
             {
                 i = 0;
-                gameObject.SetActive(false);
+                Despawn();
             }
         }
         else
         {
-            gameObject.SetActive(false);
+            Despawn();
         }
     }
 
+
+    void Despawn()
+    {
+        GameManager.InstancePro.BlueDespawn(gameObject);
+    }
 
     // 예네는 게임 오브잭트 안에 만들어주는게 훨편함 ㅇㅇ
     /*

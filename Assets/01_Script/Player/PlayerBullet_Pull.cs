@@ -23,13 +23,12 @@ public class PlayerBullet_Pull : MonoBehaviour
                 dir.Normalize();
             }catch
             {
-                dir = Vector3.zero;
                 dir = Vector3.up;
             } 
         }
         else
         {
-            dir = Vector3.zero;
+            
             dir = Vector3.up;
         }
         transform.position += speed * dir * Time.deltaTime;

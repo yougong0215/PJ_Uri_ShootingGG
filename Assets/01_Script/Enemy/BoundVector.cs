@@ -46,7 +46,6 @@ public class BoundVector : MonoBehaviour
             dir = Vector3.Reflect(Bullet.GetDir(), ((Vector2)transform.position - collision.contacts[0].point).normalized);
 
             Debug.Log(dir);
-            Bullet.SetDir(dir) ;
         }
 
     }

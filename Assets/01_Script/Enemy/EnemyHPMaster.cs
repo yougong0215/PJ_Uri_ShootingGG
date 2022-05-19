@@ -7,13 +7,8 @@ using UnityEngine;
 /// </summary>
 public class EnemyHPMaster : EnemyParent
 {
-    [SerializeField] private int HP;
+    protected int HP;
 
-    void Awake()
-    {
-        // 씬 / 적에 따라 다르게 하자
-        HP = 100;
-    }
 
     private void Update()
     {
@@ -23,7 +18,7 @@ public class EnemyHPMaster : EnemyParent
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {

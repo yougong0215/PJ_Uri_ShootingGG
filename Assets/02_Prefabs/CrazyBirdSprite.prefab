@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6450286089015195832}
-  - component: {fileID: 6450286089015195838}
   - component: {fileID: 6450286089015195837}
   - component: {fileID: 6450286089015195836}
   - component: {fileID: 6450286089015195835}
   - component: {fileID: 6450286089015195834}
+  - component: {fileID: 1390273526223127876}
   - component: {fileID: 6450286089015195833}
   m_Layer: 11
   m_Name: CrazyBirdSprite
@@ -36,19 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6450286089015195838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6450286089015195815}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 617d0dbd1496f9941923421f8d03910d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HP: 0
 --- !u!212 &6450286089015195837
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -166,6 +153,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.24}
   m_EdgeRadius: 0
+--- !u!114 &1390273526223127876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6450286089015195815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4593caced21485c408528451642ca88c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6450286089015195833
 MonoBehaviour:
   m_ObjectHideFlags: 0

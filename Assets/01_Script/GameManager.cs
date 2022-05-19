@@ -52,13 +52,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    
+    private
     void awake()
     {
         if (InstancePro != null && InstancePro != this)
         {
             Destroy(gameObject);
         }
+
+
     }
 
     public void Despawn(GameObject obj)
@@ -66,9 +68,9 @@ public class GameManager : MonoBehaviour
         obj.SetActive(false);
         obj.transform.SetParent(poolManager.gameObject.transform);
     }
-    public void OnDespawn(GameObject obj)
+    public void BlueDespawn(GameObject obj)
     {
         obj.SetActive(false);
-        obj.transform.SetParent(bluepoolManager.gameObject.transform);
+        obj.transform.SetParent(bluePoolManagerpro.gameObject.transform);
     }
 }

@@ -17,7 +17,9 @@ public class PlayerBulletMaster : MonoBehaviour
         GameObject obj = null;
         while (true)
         {
-            if (poolManagertransform.childCount > 0)
+            if(Input.GetKey(KeyCode.Z))
+            {
+                if (poolManagertransform.childCount > 0)
             {
                 obj = poolManagertransform.GetChild(0).gameObject;
                 obj.SetActive(true);
@@ -26,8 +28,10 @@ public class PlayerBulletMaster : MonoBehaviour
             {
                 obj = Instantiate(Bullet, transform);
             }
-            obj.transform.SetParent(null);
-            obj.transform.position = transform.position;
+                obj.transform.SetParent(null);
+                obj.transform.position = transform.position;
+            }
+           
 
 
             yield return new WaitForSeconds(0.05f);
