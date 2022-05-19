@@ -22,7 +22,7 @@ public class WillType : EnemyHPMaster
         seq = DOTween.Sequence()
          .Append(transform.DOMove(new Vector3(-5f, 3.5f, 0), 1).SetEase(Ease.Linear))
          .Append(transform.DOMove(new Vector3(-6f, 2f, 0), 1).SetEase(Ease.Linear))
-         .Append(transform.DOMove(new Vector3(-5f, 1.5f, 0), 1).SetEase(Ease.Linear));
+         .Append(transform.DOMove(new Vector3(-5f, 0.5f, 0), 1).SetEase(Ease.Linear));
 
     }
 

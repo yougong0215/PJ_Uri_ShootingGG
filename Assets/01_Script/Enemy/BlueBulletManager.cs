@@ -43,13 +43,15 @@ public class BlueBulletManager : MonoBehaviour
                         }
                         obj.transform.SetParent(null);
                         BDir = obj.gameObject.GetComponent<BlueBullet>();
-                        BDir.SetDir(j, 10, RandomValue);
+                        BDir.SetDir(j, 10, RandomValue, gameObject);
                         obj.transform.position = transform.position;
                         if(RandomValue == 1)
                              yield return new WaitForSeconds(0.1f);
                     }
                 BirdCheck = false;
             }
+
+
             else if (SpriteName.name == "JimballSprite" && JimballBoom == false)
             {
                 JimballBoom = true;
@@ -70,7 +72,7 @@ public class BlueBulletManager : MonoBehaviour
                         obj.transform.SetParent(null);
 
                         BDir = obj.gameObject.GetComponent<BlueBullet>();
-                        BDir.SetDir(j, 2, 2);
+                        BDir.SetDir(j, 2, 2, gameObject);
                         obj.transform.position = transform.position;
 
                     }

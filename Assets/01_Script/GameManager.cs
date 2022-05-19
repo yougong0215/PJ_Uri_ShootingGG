@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     public void Despawn(GameObject obj)
     {
         obj.SetActive(false);
-        obj.transform.SetParent(poolManager.gameObject.transform);
+        obj.transform.SetParent(PoolManagerpro.gameObject.transform);
     }
     public void BlueDespawn(GameObject obj)
     {

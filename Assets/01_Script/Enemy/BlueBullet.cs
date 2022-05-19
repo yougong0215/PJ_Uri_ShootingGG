@@ -8,13 +8,14 @@ public class BlueBullet : MonoBehaviour
     float speed = 0;
     int a = 1;
     int Version = 0;
+
+    Vector3 ObjectPos;
+
     Vector3 dir = Vector3.down;
     public Vector3 GetDir()
     {
         return dir;
     }
-
-    Transform Player;
 
     Vector2 DownLeft = Vector2.down + Vector2.left;   // 0
     Vector2 Middle = Vector2.down;                    // 1
@@ -25,19 +26,13 @@ public class BlueBullet : MonoBehaviour
     Vector2 LeftUp = Vector2.left + Vector2.up;       // 6
     Vector2 Left = Vector2.left;                      // 7
 
-
-    private void Awake()
-    {
-        Player = GameObject.Find("Player").GetComponent<Transform>();
-    }
-
-    public void SetDir(int value, int speed, int Version)
+    public void SetDir(int value, int speed, int Version, GameObject obj)
     {
         a = value;
         this.speed = speed;
         this.Version = Version;
-
-
+        dir = Vector2.zero;
+        ObjectPos = obj.transform.position;
         switch (Version)
         {
             case 0:
@@ -53,7 +48,6 @@ public class BlueBullet : MonoBehaviour
                 break;
         }
     }
-
     /// <summary>
     /// 3방향 발사 아렛쪽( 왼쪽, 오른쪽, 아레 )
     /// </summary>
@@ -73,11 +67,12 @@ public class BlueBullet : MonoBehaviour
         }
     }
 
-    
     void Version1()
     {
-        dir = Player.transform.position - gameObject.transform.position;
+        GameObject Player = GameObject.Find("Player");
+        dir = Player.transform.position - ObjectPos;
         dir.Normalize();
+        Debug.Log(dir);
     }
 
     /// <summary>
@@ -114,57 +109,52 @@ public class BlueBullet : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if(Version == 1)
-        {
-            Debug.Log($"{gameObject.name}  | {dir}");
-        }
         transform.position += speed * dir * Time.deltaTime;
-        if(gameObject.activeSelf)
+        if (gameObject.activeSelf)
         {
             currenttime += Time.deltaTime;
         }
 
-        if (Mathf.Abs(transform.position.y) >= 7 || currenttime > 4)
+        if (Mathf.Abs(transform.position.y) >= 7)
         {
-            Despawn();
-            currenttime = 0;
+            GameManager.InstancePro.BlueDespawn(gameObject);
         }
 
     }
 
     void Version5()
     {
-       
+
     }
 
     int i = 0;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
+
+
         if (Version == 1)
         {
             dir = Vector3.Reflect(dir, ((Vector2)transform.position - collision.contacts[0].point).normalized);
             speed = 5;
             i++;
-            if(i == 2)
+            if (i == 2)
             {
                 i = 0;
-                Despawn();
+
+                GameManager.InstancePro.BlueDespawn(gameObject);
             }
         }
         else
         {
-            Despawn();
+
+            GameManager.InstancePro.BlueDespawn(gameObject);
         }
     }
 
-
-    void Despawn()
-    {
-        GameManager.InstancePro.BlueDespawn(gameObject);
-    }
 
     // 예네는 게임 오브잭트 안에 만들어주는게 훨편함 ㅇㅇ
     /*
