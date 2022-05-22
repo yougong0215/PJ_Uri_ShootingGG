@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlueBullet : MonoBehaviour
+public class BlueBullet : BulletTrans
 {
     float currenttime;
     float speed = 0;
@@ -119,7 +119,7 @@ public class BlueBullet : MonoBehaviour
 
         if (Mathf.Abs(transform.position.y) >= 7)
         {
-            GameManager.InstancePro.BlueDespawn(gameObject);
+         //   GameManager.InstancePro.BlueDespawn(gameObject);
         }
 
     }
@@ -145,14 +145,18 @@ public class BlueBullet : MonoBehaviour
             {
                 i = 0;
 
-                GameManager.InstancePro.BlueDespawn(gameObject);
+           //     GameManager.InstancePro.BlueDespawn(gameObject);
             }
         }
         else
         {
 
-            GameManager.InstancePro.BlueDespawn(gameObject);
+         //   GameManager.InstancePro.BlueDespawn(gameObject);
         }
+    }
+
+    public override void Reset()
+    {
     }
 
 

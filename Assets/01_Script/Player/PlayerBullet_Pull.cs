@@ -42,7 +42,7 @@ public class PlayerBullet_Pull : MonoBehaviour
         {
             
             gameObject.SetActive(false);
-            transform.SetParent(GameManager.InstancePro.PoolManagerpro.transform);
+          //  transform.SetParent(GameManager.InstancePro.PoolManagerpro.transform);
         }
     }
 

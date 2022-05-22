@@ -24,53 +24,15 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private PoolManager poolManager = null;
+    [SerializeField] private List<BulletTrans> _PoolList;
 
-    public PoolManager PoolManagerpro
+
+    private void Awake()
     {
-        get
+        PoolManager.Instance = new PoolManager(transform); // 게임메니저 풀링 부모로 해서 풀메니저 싱글톤 생성
+        foreach (BulletTrans p in _PoolList)
         {
-            if (poolManager == null)
-            {
-                poolManager = FindObjectOfType<PoolManager>();
-            }
-            return poolManager;
+            PoolManager.Instance.CreatePool(p, 40); // 40개씨 뽑아내는건데 이건 나중에 원하는만큼뽑게 바꾸어ㅑ됨
         }
-    }
-
-    private BluePullManager bluepoolManager = null;
-
-    public BluePullManager bluePoolManagerpro
-    {
-        get
-        {
-            if (bluepoolManager == null)
-            {
-                bluepoolManager = FindObjectOfType<BluePullManager>();
-            }
-            return bluepoolManager;
-        }
-    }
-
-    private
-    void awake()
-    {
-        if (InstancePro != null && InstancePro != this)
-        {
-            Destroy(gameObject);
-        }
-
-
-    }
-
-    public void Despawn(GameObject obj)
-    {
-        obj.SetActive(false);
-        obj.transform.SetParent(PoolManagerpro.gameObject.transform);
-    }
-    public void BlueDespawn(GameObject obj)
-    {
-        obj.SetActive(false);
-        obj.transform.SetParent(bluePoolManagerpro.gameObject.transform);
     }
 }

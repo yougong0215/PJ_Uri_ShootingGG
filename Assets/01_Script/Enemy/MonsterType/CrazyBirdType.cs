@@ -2,31 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CrazyBirdType : EnemyHPMaster
+public class CrazyBirdType : BulletTrans
 {
     // 옌 BulletBullet만 사용함
-    // 0번 1번 사용 가능
-
-    enum ShootType
-    {
-        TripleShoot = 0,
-        ZoomShoot = 1
-    }
-    int i;
-
+    BlueBullet BB;
     const string Type1 = "CrazyBirdType1";
     const string Type2 = "CrazyBirdType2";
 
-    BlueBullet Script;
-    BulletManager Manager;
 
     bool isType;
-    private void Start()
+    // 0번 1번 사용 가능
+
+    int HP;
+    int i;
+    public override void Reset()
     {
-        Manager = GetComponent<BulletManager>();
+        
         i = 0;
         HP = 30;
     }
+
+    private void Update()
+    {
+        if (HP <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+
+
     private void LateUpdate()
     {
         if (isType == false)
@@ -37,25 +42,45 @@ public class CrazyBirdType : EnemyHPMaster
     {
         StartCoroutine(CRType());
     }
-    public void Type(GameObject obj)
+    public void Type()
     {
-        Script = obj.GetComponent<BlueBullet>();
         if (gameObject.name == Type1) // 3방향 난사
         {
             for (i = 0; i < 3; i++)
-                Script.SetDir(i, 4, 0, gameObject);
+            {
+                BB = PoolManager.Instance.Pop("BlueBullet") as BlueBullet;
+                BB.SetDir(i, 4, 0, gameObject);
+                BB.transform.position = transform.position;
+            }
         }
         else if (gameObject.name == Type2) // 플레이어 방향 쏘기
         {
             for (i = 0; i < 3; i++)
-                Script.SetDir(i, 8, 1, gameObject);
+            {
+                BB = PoolManager.Instance.Pop("BlueBullet") as BlueBullet;
+                BB.SetDir(i, 8, 1, gameObject);
+                BB.transform.position = transform.position;
+            }
         }
-        isType = false;
+        StartCoroutine(CRType());
     }
 
     IEnumerator CRType()
     {
         yield return new WaitForSeconds(2f);
-        isType = true;
+        Type();
+    }
+    protected void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("PlayerBullet"))
+        {
+            HP--;
+
+
+        }
+        if (HP == 0)
+        {
+            PoolManager.Instance.Pop("BuleBullet");
+        }
     }
 }

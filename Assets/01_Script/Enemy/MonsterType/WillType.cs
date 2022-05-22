@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class WillType : EnemyHPMaster
+public class WillType : BulletTrans
 {
     Sequence seq;
-
-    private void OnEnable()
+    int HP;
+    public override void Reset()
     {
         HP = 30;
         MoveType();
     }
-   
-
-   
 
     void MoveType()
     {
@@ -26,8 +23,17 @@ public class WillType : EnemyHPMaster
 
     }
 
-    void Update()
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.gameObject.CompareTag("PlayerBullet"))
+        {
+            HP--;
+
+
+        }
+        if (HP == 0)
+        {
+            PoolManager.Instance.Pop("BuleBullet");
+        }
     }
 }
