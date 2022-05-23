@@ -38,6 +38,7 @@ public class PlayerMove : MonoBehaviour
             CBT.transform.position = new Vector3(0, 5, 0);
             CBT = PoolManager.Instance.Pop("CrazyBirdType2") as CrazyBirdType;
             CBT.transform.position = new Vector3(-4, 5, 0);
+            PoolManager.Instance.Pop("Turlet");
         }
 
     }

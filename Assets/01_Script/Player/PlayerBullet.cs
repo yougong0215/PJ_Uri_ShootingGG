@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBullet_Pull : MonoBehaviour
+public class PlayerBullet : BulletTrans
 {
     private Vector3 dir = Vector3.up;
     [SerializeField]float speed = 10;
@@ -38,12 +38,20 @@ public class PlayerBullet_Pull : MonoBehaviour
     }
     void FalseBullet()
     {
-        if (Mathf.Abs(transform.position.y) >= 5)
+        if (Mathf.Abs(transform.position.y) >= 7)
         {
-            
-            gameObject.SetActive(false);
-          //  transform.SetParent(GameManager.InstancePro.PoolManagerpro.transform);
+
+            PoolManager.Instance.Push(this);
         }
     }
 
+    public override void Reset()
+    {
+        speed = 10;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Wall") || collision.CompareTag("Enemy"))
+            PoolManager.Instance.Push(this);
+    }
 }

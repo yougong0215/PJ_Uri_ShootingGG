@@ -19,7 +19,7 @@ public class JimBallType : BulletTrans
         }
         if(HP == 0)
         {
-            PoolManager.Instance.Pop("BuleBullet");
+            PoolManager.Instance.Push(this);
         }
     }
 }

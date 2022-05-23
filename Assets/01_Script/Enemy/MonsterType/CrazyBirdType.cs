@@ -12,32 +12,20 @@ public class CrazyBirdType : BulletTrans
 
     bool isType;
     // 0번 1번 사용 가능
-
+    [SerializeField]
     int HP;
     int i;
     public override void Reset()
     {
         
         i = 0;
-        HP = 30;
-    }
-
-    private void Update()
-    {
-        if (HP <= 0)
-        {
-            gameObject.SetActive(false);
-        }
+        HP = 120;
     }
 
 
 
-    private void LateUpdate()
-    {
-        if (isType == false)
-        {
-        }
-    }
+
+
     private void OnEnable()
     {
         StartCoroutine(CRType());
@@ -46,41 +34,53 @@ public class CrazyBirdType : BulletTrans
     {
         if (gameObject.name == Type1) // 3방향 난사
         {
-            for (i = 0; i < 3; i++)
-            {
-                BB = PoolManager.Instance.Pop("BlueBullet") as BlueBullet;
-                BB.SetDir(i, 4, 0, gameObject);
-                BB.transform.position = transform.position;
-            }
+            StartCoroutine(CRType1());
         }
         else if (gameObject.name == Type2) // 플레이어 방향 쏘기
         {
-            for (i = 0; i < 3; i++)
-            {
-                BB = PoolManager.Instance.Pop("BlueBullet") as BlueBullet;
-                BB.SetDir(i, 8, 1, gameObject);
-                BB.transform.position = transform.position;
-            }
+            StartCoroutine(CRType2());
         }
         StartCoroutine(CRType());
     }
+
+
+    IEnumerator CRType1()
+    {
+        for (i = 0; i < 3; i++)
+        {
+            BB = PoolManager.Instance.Pop("BlueBullet") as BlueBullet;
+            BB.SetDir(i, 4, 0, gameObject);
+            BB.transform.position = transform.position;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    IEnumerator CRType2()
+    {
+        for (i = 0; i < 3; i++)
+        {
+            BB = PoolManager.Instance.Pop("BlueBullet") as BlueBullet;
+            BB.SetDir(i, 6, 1, gameObject);
+            BB.transform.position = transform.position;
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
 
     IEnumerator CRType()
     {
         yield return new WaitForSeconds(2f);
         Type();
     }
-    protected void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
             HP--;
-
-
         }
-        if (HP == 0)
+        if (HP <= 0)
         {
-            PoolManager.Instance.Pop("BuleBullet");
+            PoolManager.Instance.Push(this);
         }
     }
 }

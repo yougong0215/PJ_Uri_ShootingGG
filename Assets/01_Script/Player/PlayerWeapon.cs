@@ -4,20 +4,17 @@ using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
 {
-    [SerializeField] float speed;
     Vector3 pos;
     [SerializeField] GameObject Light;
     [SerializeField] GameObject UP;
     [SerializeField] GameObject Down;
     [SerializeField] GameObject Dark;
-    [SerializeField] GameObject ShiftLeft;
-    [SerializeField] GameObject ShiftRight;
+
     Vector3 Lightps;
     Vector3 Darkps;
     Vector3 UpPs;
     Vector3 DownPs;
-    Vector3 ShiftLeftPs;
-    Vector3 ShiftRightPs;
+
     float speedValue;
     int a;
     private void Awake()
@@ -36,8 +33,6 @@ public class PlayerWeapon : MonoBehaviour
         DownPs = Down.transform.localPosition;
         Lightps = Light.transform.localPosition;
         Darkps = Dark.transform.localPosition;
-        ShiftLeftPs = ShiftLeft.transform.localPosition;
-        ShiftRightPs = ShiftRight.transform.localPosition;
         
             StartCoroutine(A());
     }
@@ -45,9 +40,9 @@ public class PlayerWeapon : MonoBehaviour
     private void Update()
     {
         if (Input.GetKey(KeyCode.LeftShift))
-            speedValue = 0.01f;
+            speedValue = 0.05f;
         else
-            speedValue = 0.005f;
+            speedValue = 0.01f;
 
             check();
     }

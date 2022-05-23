@@ -72,7 +72,6 @@ public class BlueBullet : BulletTrans
         GameObject Player = GameObject.Find("Player");
         dir = Player.transform.position - ObjectPos;
         dir.Normalize();
-        Debug.Log(dir);
     }
 
     /// <summary>
@@ -119,7 +118,7 @@ public class BlueBullet : BulletTrans
 
         if (Mathf.Abs(transform.position.y) >= 7)
         {
-         //   GameManager.InstancePro.BlueDespawn(gameObject);
+            PoolManager.Instance.Push(this);
         }
 
     }
@@ -145,13 +144,13 @@ public class BlueBullet : BulletTrans
             {
                 i = 0;
 
-           //     GameManager.InstancePro.BlueDespawn(gameObject);
+                PoolManager.Instance.Push(this);
             }
         }
         else
         {
 
-         //   GameManager.InstancePro.BlueDespawn(gameObject);
+            PoolManager.Instance.Push(this);
         }
     }
 
