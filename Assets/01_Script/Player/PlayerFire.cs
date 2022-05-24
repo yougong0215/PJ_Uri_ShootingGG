@@ -7,9 +7,14 @@ public class PlayerFire : MonoBehaviour
     private void Start()
     {
         StartCoroutine(Delay());
+        RaycastHit2D hit;
     }
     BulletTrans Bullet;
-    // Update is called once per frame
+
+    private void Update()
+    {
+        
+    }
 
 
     IEnumerator Delay()

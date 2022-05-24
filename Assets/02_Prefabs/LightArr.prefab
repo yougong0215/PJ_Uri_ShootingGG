@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6814006014985817217}
   - component: {fileID: -3704129679348729985}
   - component: {fileID: 4180901534457110789}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LightArr
   m_TagString: PlayerBullet
   m_Icon: {fileID: 0}

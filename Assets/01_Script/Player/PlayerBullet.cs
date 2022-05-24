@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerBullet : BulletTrans
 {
     private Vector3 dir = Vector3.up;
-    [SerializeField]float speed = 10;
+    [SerializeField] float speed = 10;
     GameObject Target;
     Vector3 Enemy;
 
@@ -13,7 +13,7 @@ public class PlayerBullet : BulletTrans
     void FixedUpdate()
     {
         speed = 15f;
-        if(Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             try
             {
@@ -21,14 +21,15 @@ public class PlayerBullet : BulletTrans
                 Enemy = Target.GetComponent<Transform>().transform.position;
                 dir = Enemy - transform.position;
                 dir.Normalize();
-            }catch
+            }
+            catch
             {
                 dir = Vector3.up;
-            } 
+            }
         }
         else
         {
-            
+
             dir = Vector3.up;
         }
         transform.position += speed * dir * Time.deltaTime;
@@ -49,9 +50,9 @@ public class PlayerBullet : BulletTrans
     {
         speed = 10;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.CompareTag("Wall") || collision.CompareTag("Enemy"))
-            PoolManager.Instance.Push(this);
+        PoolManager.Instance.Push(this);
     }
 }
