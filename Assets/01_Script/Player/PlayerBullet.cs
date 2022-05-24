@@ -9,8 +9,17 @@ public class PlayerBullet : BulletTrans
     GameObject Target;
     Vector3 Enemy;
 
+    private int Typeint;
+    private int number;
+    public void SetType(int Version, int i)
+    {
+        Typeint = Version;
+        number = i;
+    }
+
+
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         speed = 15f;
         if (Input.GetKey(KeyCode.LeftShift))
@@ -24,13 +33,12 @@ public class PlayerBullet : BulletTrans
             }
             catch
             {
-                dir = Vector3.up;
+                Type();
             }
         }
         else
         {
-
-            dir = Vector3.up;
+            Type();
         }
         transform.position += speed * dir * Time.deltaTime;
 
@@ -45,6 +53,32 @@ public class PlayerBullet : BulletTrans
             PoolManager.Instance.Push(this);
         }
     }
+
+    void Type()
+    {
+        switch(Typeint)
+        {
+            case 1:
+                dir = Vector3.up;
+                break;
+
+            case 2:
+                switch(number)
+                {
+                    case 1:
+                        dir = new Vector3(0.2f, 1, 0);
+                        break;
+                    case 2:
+                        dir = new Vector3(0, 1, 0);
+                        break;
+                    case 3:
+                        dir = new Vector3(-0.2f, 1, 0);
+                        break;
+                }
+                break;
+        }
+    }
+
 
     public override void Reset()
     {
