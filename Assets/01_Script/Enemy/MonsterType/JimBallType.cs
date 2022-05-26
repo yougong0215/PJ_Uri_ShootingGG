@@ -4,22 +4,35 @@ using UnityEngine;
 
 public class JimBallType : BulletTrans
 {
-    int HP;
-
+    BlueBullet BB;
     public override void Reset()
     {
         HP = 30;
     }
-
-    protected void OnTriggerEnter2D(Collider2D collision)
+    public void OnEnable()
     {
-        if (collision.gameObject.CompareTag("PlayerBullet"))
+        HP = 30;
+        StartCoroutine(Type1());
+    }
+
+    IEnumerator Type1()
+    {
+        while (true)
         {
-            HP--;
-        }
-        if(HP == 0)
-        {
-            PoolManager.Instance.Push(this);
+            yield return new WaitForSeconds(3f);
+            for (int j = 0; j < 3; j++)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    Debug.Log("µé¾î¿È!!! = " + i);
+                    BB = PoolManager.Instance.Pop("BlueBullet") as BlueBullet;
+                    BB.SetDir(i, 4, 2, gameObject);
+                    BB.transform.position = transform.position;
+                    
+                }
+                yield return new WaitForSeconds(0.1f);
+            }
+            
         }
     }
 }

@@ -12,14 +12,13 @@ public class CrazyBirdType : BulletTrans
 
     bool isType;
     // 0번 1번 사용 가능
-    [SerializeField]
-    int HP;
+
     int i;
     public override void Reset()
     {
         
         i = 0;
-        HP = 120;
+        HP = 30;
     }
 
 
@@ -71,16 +70,5 @@ public class CrazyBirdType : BulletTrans
     {
         yield return new WaitForSeconds(2f);
         Type();
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("PlayerBullet"))
-        {
-            HP--;
-        }
-        if (HP <= 0)
-        {
-            PoolManager.Instance.Push(this);
-        }
     }
 }

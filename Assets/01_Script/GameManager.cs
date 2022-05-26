@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager Instance = null;
-    public static GameManager InstancePro
+    private static GameManager Instancet = null;
+    public static GameManager Instance
     {
         get
         {
-            if (Instance == null)
+            if (Instancet == null)
             {
-                Instance = FindObjectOfType<GameManager>();
-                if (Instance == null)
+                Instancet = FindObjectOfType<GameManager>();
+                if (Instancet == null)
                 {
-                    Instance = new GameObject().AddComponent<GameManager>();
+                    Instancet = new GameObject().AddComponent<GameManager>();
 
-                    DontDestroyOnLoad(Instance);
+                    DontDestroyOnLoad(Instancet);
                 }
             }
-            return Instance;
+            return Instancet;
         }
     }
-
+    private bool damaged;
+    public void SetDamaged(bool value) { damaged = value; }
+    public bool GetDamaged() { return damaged; }
 
     [SerializeField] private List<BulletTrans> _PoolList;
 
@@ -34,5 +36,6 @@ public class GameManager : MonoBehaviour
         {
             PoolManager.Instance.CreatePool(p, 40); // 40개씨 뽑아내는건데 이건 나중에 원하는만큼뽑게 바꾸어ㅑ됨
         }
+        damaged = false;
     }
 }

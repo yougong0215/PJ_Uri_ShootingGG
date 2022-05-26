@@ -12,6 +12,7 @@ public class BlueBullet : BulletTrans
     Vector3 ObjectPos;
 
     Vector3 dir = Vector3.down;
+
     public Vector3 GetDir()
     {
         return dir;
@@ -132,26 +133,25 @@ public class BlueBullet : BulletTrans
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
-
-
-        if (Version == 1)
-        {
-            dir = Vector3.Reflect(dir, ((Vector2)transform.position - collision.contacts[0].point).normalized);
-            speed = 5;
-            i++;
-            if (i == 2)
+            if (Version == 1)
             {
-                i = 0;
+                dir = Vector3.Reflect(dir, ((Vector2)transform.position - collision.contacts[0].point).normalized);
+                speed = 5;
+                i++;
+                if (i == 2)
+                {
+                    i = 0;
+
+                    PoolManager.Instance.Push(this);
+                }
+            }
+            else
+            {
 
                 PoolManager.Instance.Push(this);
             }
-        }
-        else
-        {
+        
 
-            PoolManager.Instance.Push(this);
-        }
     }
 
     public override void Reset()

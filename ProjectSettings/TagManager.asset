@@ -7,10 +7,9 @@ TagManager:
   - PlayerBullet
   - EnemyBullet
   - Enemy
-  - CrazyBird
-  - Jimball
   - Wall
   - Item
+  - PlayerHit
   layers:
   - Default
   - TransparentFX
@@ -24,9 +23,9 @@ TagManager:
   - EnemyBullet
   - 
   - Enemy
-  - 
-  - 
-  - 
+  - Player
+  - PlayerHit
+  - Item
   - 
   - 
   - 

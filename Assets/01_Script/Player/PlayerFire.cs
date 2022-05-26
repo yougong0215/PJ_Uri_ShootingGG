@@ -6,47 +6,63 @@ public class PlayerFire : MonoBehaviour
 {
     PlayerItem playeritem;
     int bulletCnt;
+    int bulletMa;
     int Version;
-      BulletTrans Bullet;
+    BulletTrans Bullet;
     PlayerBullet PBullet;
-    
+
+    float Damage;
+
 
     private void Start()
     {
         playeritem = GameObject.Find("Player").GetComponent<PlayerItem>();
         StartCoroutine(Delay());
     }
-  
 
-    private void Update()
-    {
-    }
+
+
 
 
     IEnumerator Delay()
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.1f);
             if (playeritem.GetPowerCnt() == 0)
             {
                 bulletCnt = 1;
                 Version = 1;
+                bulletMa = 1;
+
+                Damage = 1;
             }
-            else if(playeritem.GetPowerCnt() <= 1)
+            else if (playeritem.GetPowerCnt() <= 1)
             {
                 bulletCnt = 3;
                 Version = 2;
-            }
+                bulletMa = 3;
 
+                Damage = 1;
+            }
+            else if (playeritem.GetPowerCnt() <= 3)
+            {
+                bulletCnt = 5;
+                Version = 3;
+                bulletMa = 5;
+
+                Damage = 0.6f;
+            }
             Shoot();
+
+
         }
     }
     void Shoot()
     {
         if (Input.GetKey(KeyCode.Z))
         {
-            for (; bulletCnt > 0; bulletCnt--)
+            for (bulletCnt = bulletMa; bulletCnt > 0; bulletCnt--)
             {
 
                 if (gameObject.name == "Dark")
@@ -59,12 +75,12 @@ public class PlayerFire : MonoBehaviour
                     Bullet = PoolManager.Instance.Pop("LightArr");
                 }
                 PBullet = Bullet.GetComponent<PlayerBullet>();
-                PBullet.SetType(Version, bulletCnt);
-                
+                PBullet.SetType(Version, bulletCnt, Damage);
                 Bullet.transform.position = transform.position;
             }
+
+
         }
     }
-
-
 }
+
