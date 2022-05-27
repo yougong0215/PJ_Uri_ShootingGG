@@ -10,18 +10,26 @@ public class Stage1 : MonoBehaviour
     WillType will;
     TurletType turlet;
 
-    Sequence CRBseq;
-    Sequence JBseq;
-    Sequence Willseq;
-    Sequence turletSeq;
+
+    bool _Patun;
+
+    float currentTime;
     void Start()
     {
-        
+        _Patun = true;
+        currentTime = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+
+
+    }
+
+    private void LateUpdate()
+    {
+        currentTime += Time.deltaTime;
     }
 }

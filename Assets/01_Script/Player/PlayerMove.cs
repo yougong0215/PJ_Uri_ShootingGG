@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float speed = 1;
-    CrazyBirdType CBT;
+    BulletTransP CBT;
     JimBallType JBT;
     float h = 0f;
     float v = 0f;
@@ -36,14 +36,14 @@ public class PlayerMove : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            CBT = PoolManager.Instance.Pop("CrazyBirdType1") as CrazyBirdType;
-            CBT.transform.position = new Vector3(0, 3, 0);
-            CBT = PoolManager.Instance.Pop("CrazyBirdType2") as CrazyBirdType;
-            CBT.transform.position = new Vector3(-4, 3, 0);
-            PoolManager.Instance.Pop("Turlet");
-            JBT = PoolManager.Instance.Pop("Jimball") as JimBallType;
+            CBT = PoolManager.Instance.Pop("CrazyBirdPattern1") as BulletTransP;
+            CBT.transform.position = new Vector3(-3, 4, 0);
+            //CBT = PoolManager.Instance.Pop("CrazyBirdType2") as CrazyBirdType;
+           CBT.transform.position = new Vector3(-4, 3, 0);
+           PoolManager.Instance.Pop("Turlet");
+           JBT = PoolManager.Instance.Pop("Jimball") as JimBallType;
 
-            JBT.transform.position = new Vector3(-2, 4, 0);
+           JBT.transform.position = new Vector3(-2, 4, 0);
         }
 
     }

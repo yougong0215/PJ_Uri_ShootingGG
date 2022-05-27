@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class CrazyBirdType : BulletTrans
 {
@@ -8,7 +9,7 @@ public class CrazyBirdType : BulletTrans
     BlueBullet BB;
     const string Type1 = "CrazyBirdType1";
     const string Type2 = "CrazyBirdType2";
-
+    
 
     bool isType;
     // 0번 1번 사용 가능
@@ -20,6 +21,12 @@ public class CrazyBirdType : BulletTrans
         i = 0;
         HP = 30;
     }
+    public Vector3 ParentRotate
+    {
+        get;
+
+        set;
+    }
 
 
 
@@ -27,6 +34,7 @@ public class CrazyBirdType : BulletTrans
 
     private void OnEnable()
     {
+        HP = 30f;
         StartCoroutine(CRType());
     }
     public void Type()

@@ -601,6 +601,7 @@ MonoBehaviour:
   - {fileID: 6814006014985817217, guid: 21694cda20784a3479c0faec66f7211b, type: 3}
   - {fileID: -2767411749457599687, guid: e544b707a0da140439977001751fabee, type: 3}
   - {fileID: 698092308550642950, guid: ae38b2d9e943d2247bd613c3cdc0a3d9, type: 3}
+  - {fileID: -713761186392520746, guid: 8f092380a1d2c0c408fc847ee87b62e1, type: 3}
 --- !u!1 &1061698279
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,7 +669,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1141871692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1637,7 +1638,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1917994900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.34, y: -0.6, z: 0}
+  m_LocalPosition: {x: -2.34, y: -0.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1740,7 +1741,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!1 &1925844233
 GameObject:
   m_ObjectHideFlags: 0
