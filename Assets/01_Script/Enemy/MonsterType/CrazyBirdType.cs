@@ -9,7 +9,7 @@ public class CrazyBirdType : BulletTrans
     BlueBullet BB;
     const string Type1 = "CrazyBirdType1";
     const string Type2 = "CrazyBirdType2";
-    
+    Vector3 dir;
 
     bool isType;
     // 0번 1번 사용 가능
@@ -27,7 +27,6 @@ public class CrazyBirdType : BulletTrans
 
         set;
     }
-
 
 
 
@@ -50,7 +49,6 @@ public class CrazyBirdType : BulletTrans
         StartCoroutine(CRType());
     }
 
-
     IEnumerator CRType1()
     {
         for (i = 0; i < 3; i++)
@@ -66,10 +64,11 @@ public class CrazyBirdType : BulletTrans
     {
         for (i = 0; i < 3; i++)
         {
-            BB = PoolManager.Instance.Pop("BlueBullet") as BlueBullet;
-            BB.SetDir(i, 6, 1, gameObject);
-            BB.transform.position = transform.position;
-            yield return new WaitForEndOfFrame();
+                BB = PoolManager.Instance.Pop("BlueBullet") as BlueBullet;
+                BB.SetDir(i, 6, 1, gameObject);
+                BB.transform.position = transform.position;
+            yield return new WaitForSeconds(0.1f);
+            
         }
     }
 

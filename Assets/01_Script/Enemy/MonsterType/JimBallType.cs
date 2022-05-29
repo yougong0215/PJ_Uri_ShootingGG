@@ -5,6 +5,8 @@ using UnityEngine;
 public class JimBallType : BulletTrans
 {
     BlueBullet BB;
+    
+
     public override void Reset()
     {
         HP = 30;

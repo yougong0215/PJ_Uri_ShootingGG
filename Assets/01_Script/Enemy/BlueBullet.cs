@@ -109,7 +109,7 @@ public class BlueBullet : BulletTrans
         }
     }
 
-    void FixedUpdate()
+    void Update()
     {
         transform.position += speed * dir * Time.deltaTime;
         if (gameObject.activeSelf)

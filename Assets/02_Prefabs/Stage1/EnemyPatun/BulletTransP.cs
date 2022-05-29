@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class BulletTransP : BulletTrans
 {
+    Stage1 STG1;
+
+    void Awake()
+    {
+        STG1 = gameObject.GetComponent<Stage1>();
+    }
     int i;
     public override void Reset()
     {
@@ -32,6 +38,12 @@ public class BulletTransP : BulletTrans
                 PoolManager.Instance.Push(this);
             }
         }
+    }
+
+    public void Push()
+    {
+        PoolManager.Instance.Push(this);
+        STG1.SetNextPatton();
     }
 
 
