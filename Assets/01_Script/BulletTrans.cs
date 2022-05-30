@@ -14,7 +14,10 @@ public abstract class BulletTrans : MonoBehaviour
     }
     public void Update()
     {
-        transform.position += 3 * Vector3.down * Time.deltaTime;
+        if (transform.parent.GetComponent<Stage1Patton>() == false)
+        {
+            transform.position += 3 * Vector3.down * Time.deltaTime;
+        }
         if (Mathf.Abs(transform.position.y) >= 7f)
         {
             PoolManager.Instance.Push(this);
@@ -34,7 +37,6 @@ public abstract class BulletTrans : MonoBehaviour
         }
         if(collision.gameObject.CompareTag("PlayerHit"))
         {
-            GameManager.Instance.SetDamaged(true);
         }
     }
 }

@@ -81,7 +81,6 @@ public class TurletType : BulletTrans
         if(collision.gameObject.CompareTag("PlayerHit") && isTrigger == true)
         {
             //Debug.Log("조건 충족함");
-            GameManager.Instance.SetDamaged(true);
         }
 
     }

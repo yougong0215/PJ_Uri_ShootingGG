@@ -9,6 +9,7 @@ public class PlayerMove : MonoBehaviour
     JimBallType JBT;
     float h = 0f;
     float v = 0f;
+    const string Patten1 = "StagePattern1";
     Vector3 dir;
     private void Awake()
     {
@@ -34,6 +35,9 @@ public class PlayerMove : MonoBehaviour
             transform.position += dir * speed * Time.deltaTime;
         }
 
-
+        if(Input.GetMouseButton(0))
+        {
+            CBT = PoolManager.Instance.Pop(Patten1) as BulletTransP;
+        }
     }
 }

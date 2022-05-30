@@ -33,7 +33,6 @@ public class PlayerHP : MonoBehaviour
        if(oncurrt == true)
         {
             currt += Time.deltaTime;
-            GameManager.Instance.SetDamaged(false);
         }
 
        if(currt >= 1)

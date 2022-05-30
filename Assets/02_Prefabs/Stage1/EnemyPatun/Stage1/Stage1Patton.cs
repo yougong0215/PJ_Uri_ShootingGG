@@ -22,12 +22,12 @@ public class Stage1Patton : BulletTrans
         if (gameObject.name == Patten1)
         {
             rotSpeed = 100;
-            transform.Rotate(new Vector3(0, 0, rotSpeed * Time.deltaTime));
+            
             for (int i = 0; transform.childCount > i; i++)
             {
                 transform.GetChild(i).transform.Rotate(new Vector3(0, 0, -1 * rotSpeed * Time.deltaTime));
             }
-            
+            transform.Rotate(new Vector3(0, 0, rotSpeed * Time.deltaTime));
         } 
         else if(gameObject.name == Patten2)
         {

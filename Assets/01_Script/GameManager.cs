@@ -4,38 +4,44 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager Instancet = null;
+    private static GameManager instance = null;
     public static GameManager Instance
     {
         get
         {
-            if (Instancet == null)
+            if (instance == null)
             {
-                Instancet = FindObjectOfType<GameManager>();
-                if (Instancet == null)
+                instance = FindObjectOfType<GameManager>();
+                if (instance == null)
                 {
-                    Instancet = new GameObject().AddComponent<GameManager>();
-
-                    DontDestroyOnLoad(Instancet);
+                    instance = new GameObject().AddComponent<GameManager>();
                 }
             }
-            return Instancet;
+            return instance;
         }
     }
-    private bool damaged;
-    public void SetDamaged(bool value) { damaged = value; }
-    public bool GetDamaged() { return damaged; }
-
     [SerializeField] private List<BulletTrans> _PoolList;
 
 
     private void Awake()
     {
+        /*
+        if(instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        */
+
+
         PoolManager.Instance = new PoolManager(transform); // 게임메니저 풀링 부모로 해서 풀메니저 싱글톤 생성
         foreach (BulletTrans p in _PoolList)
         {
             PoolManager.Instance.CreatePool(p, 40); // 40개씨 뽑아내는건데 이건 나중에 원하는만큼뽑게 바꾸어ㅑ됨
         }
-        damaged = false;
     }
 }
