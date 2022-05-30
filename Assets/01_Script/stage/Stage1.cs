@@ -13,8 +13,8 @@ public class Stage1 : MonoBehaviour
     const string Patten2 = "StagePattern2";
 
     BulletTrans BT;
-    
-    
+
+
 
 
     float RandomSummon;
@@ -25,20 +25,26 @@ public class Stage1 : MonoBehaviour
     bool _FirstSummon;
     bool _Patun; // 페턴중이냐 자체의 유무
     bool _SummonPaton; //한마리만 소환해야됨;
+    bool _SecondSummon;
     #endregion
 
     void Start()
     {
         _SummonPaton = false;
         _FirstSummon = false;
+        _SecondSummon = false;
         _Patun = false;
         _currentTime = 0;
-        _WorldTime = 12;
+        _WorldTime = 60;
     }
 
     public void SetNextPatton()
     {
-        _WorldTime += 15;
+        _WorldTime += 10;
+        _Patun = false;
+        _FirstSummon = false;
+        _SecondSummon = false;
+        _SummonPaton = false;
     }
 
     // Update is called once per frame
@@ -46,55 +52,130 @@ public class Stage1 : MonoBehaviour
     {
         if (_WorldTime > 3) // 시작 할때 UI 보여줄 시간
         {       // Debug.Log(_WorldTime);
-            if(_Patun == false)
+            if (_Patun == false)
             {
                 if (_FirstSummon == false)
                 {
                     _FirstSummon = true;
-                    StartCoroutine(MonsterSummonFirst());
+                    if (_WorldTime >= 5f) StartCoroutine(MonsterSummonCrazy());
+
+                }
+                if (_SecondSummon == false)
+                {
+                    _SecondSummon = true;
+                    if (_WorldTime >= 20f) StartCoroutine(MonsterSummonJimball());
                 }
 
                 // 15초 에 미니보스 하나
-               
+
 
             }
-                if ( 30f >_WorldTime && _WorldTime >= 15f)
+            if (40f > _WorldTime && _WorldTime >= 30f)
+            {
+                if (_SummonPaton == false)
                 {
-                     if(_SummonPaton == false)
-                     {
-                        _SummonPaton = true;
-                        BT = PoolManager.Instance.Pop(Patten1);
-                        BT.transform.position = new Vector3(-3, 3, 0);
-                        BT.transform.DOMove(new Vector3(-3, 3, 0), 2f);
-                     }
+                    _SummonPaton = true;
                     
-                    _Patun = true;
-                    _WorldTime = 16f;
+                    BT = PoolManager.Instance.Pop(Patten1);
+                    BT.transform.position = new Vector3(-3, 5, 0);
+                    BT.transform.DOMove(new Vector3(-3, 3, 0), 2f);
                 }
+
+                _Patun = true;
+                _WorldTime = 31f;
+            }
+
+
+            if (70f > _WorldTime && _WorldTime >= 60)
+            {
+                if (_SummonPaton == false)
+                {
+                    _SummonPaton = true;
+                    BT = PoolManager.Instance.Pop(Patten2);
+                    BT.transform.position = new Vector3(-3, 5, 0);
+
+                    BT.transform.DOMove(new Vector3(-3, 3, 0), 2f);
+                }
+                _Patun = true;
+                _WorldTime = 61f;
+            }
 
         }
 
-            Debug.Log(_WorldTime);
-        
+        Debug.Log(_WorldTime);
+
         _currentTime += Time.deltaTime;
         _WorldTime += Time.deltaTime;
 
     }
-    IEnumerator MonsterSummonFirst()
+    IEnumerator MonsterSummonCrazy()
     {
         while (true)
         {
-            for (int i = 0; i < 3; i++)
+
+            RandomSummon = UnityEngine.Random.Range(0f, -6.5f);
+            switch ((int)RandomSummon % 2)
             {
-                RandomSummon = UnityEngine.Random.Range(0f, -6.5f);
-                BT = PoolManager.Instance.Pop(CBType1) as CrazyBirdType;
-                BT.transform.position = new Vector3(RandomSummon, 6.99f, 0);
-                BT.SetHp(10);
-                yield return new WaitForSeconds(1.5f);
+                case 0:
+                    BT = PoolManager.Instance.Pop(CBType1) as CrazyBirdType;
+                    BT.transform.position = new Vector3(RandomSummon, 6.99f, 0);
+                    BT.SetHp(10);
+                    break;
+                case 1:
+                    if (_WorldTime >= 15f)
+                    {
+                        BT = PoolManager.Instance.Pop(CBType2) as CrazyBirdType;
+                        BT.transform.position = new Vector3(RandomSummon, 6.99f, 0);
+                        BT.SetHp(10);
+                    }
+                    else
+                    {
+                        BT = PoolManager.Instance.Pop(CBType1) as CrazyBirdType;
+                        BT.transform.position = new Vector3(RandomSummon, 6.99f, 0);
+                        BT.SetHp(10);
+                    }
+                    break;
             }
-            if(_Patun == true)
+            yield return new WaitForSeconds(1.5f);
+
+
+            if (_Patun == true)
+            {
                 break;
+            }
         }
+    }
+    IEnumerator MonsterSummonJimball()
+    {
+        while (true)
+        {
+            BT = PoolManager.Instance.Pop(JBType) as JimBallType;
+            RandomSummon = UnityEngine.Random.Range(0f, -6.5f);
+            BT.transform.position = new Vector3(RandomSummon, 6.99f, 0);
+            RandomSummon = UnityEngine.Random.Range(1, 5);
+            switch ((int)RandomSummon)
+            {
+                case 1:
+                    BT.SetDir(new Vector3(0.7f, 0, 0));
+                    break;
+                case 2:
+                    BT.SetDir(new Vector3(-0.7f, 0, 0));
+                    break;
+                case 3:
+                    BT.SetDir(new Vector3(-0.4f, 0, 0));
+                    break;
+                case 4:
+                    BT.SetDir(new Vector3(0.4f, 0, 0));
+                    break;
+            }
+            if (_Patun == true)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(2f);
+        }
+
+
     }
 
 

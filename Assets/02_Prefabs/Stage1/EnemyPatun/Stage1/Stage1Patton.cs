@@ -6,17 +6,22 @@ using DG.Tweening;
 public class Stage1Patton : BulletTrans
 {
     float rotSpeed;
+    [SerializeField ]Stage1 STG;
     float ObjectRotZ;
     Vector3 ObjectRot;
 
 
     const string Patten1 = "StagePattern1";
     const string Patten2 = "StagePattern2";
-    void Start()
+    void Awake()
     {
-
+        STG = GameObject.Find("Stage1").GetComponent<Stage1>();
     }
     // Update is called once per frame
+    public void SetNextPatton()
+    {
+        STG.SetNextPatton();
+    }
     void Update()
     {
         if (gameObject.name == Patten1)

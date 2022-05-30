@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BulletTransP : BulletTrans
 {
-    Stage1 STG1;
-
+    Stage1Patton STG1;
+    int j;
     void Awake()
     {
-        STG1 = gameObject.GetComponent<Stage1>();
+        STG1 = gameObject.GetComponent<Stage1Patton>();
     }
     int i;
     public override void Reset()
@@ -25,9 +25,9 @@ public class BulletTransP : BulletTrans
 
     private void Update()
     {
-        for(i = 0; transform.childCount > i; i++)
+        j = 0;
+        for (i = 0; transform.childCount > i; i++)
         {
-            int j = 0;
             
             if(transform.GetChild(i).gameObject.activeSelf == false)
             {
@@ -36,10 +36,10 @@ public class BulletTransP : BulletTrans
             if(j == transform.childCount)
             {
                 PoolManager.Instance.Push(this);
+                STG1.SetNextPatton();
             }
         }
     }
-
     public void Push()
     {
         PoolManager.Instance.Push(this);

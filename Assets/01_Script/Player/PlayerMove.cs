@@ -37,7 +37,7 @@ public class PlayerMove : MonoBehaviour
 
         if(Input.GetMouseButton(0))
         {
-            CBT = PoolManager.Instance.Pop(Patten1) as BulletTransP;
+         //   CBT = PoolManager.Instance.Pop(Patten1) as BulletTransP;
         }
     }
 }
