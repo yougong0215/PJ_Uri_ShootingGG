@@ -130,9 +130,11 @@ public class BlueBullet : BulletTrans
     }
 
     int i = 0;
-
+    const string _playerAttack = "AttackCollider";
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.name != _playerAttack)
+        {
             if (Version == 1)
             {
                 dir = Vector3.Reflect(dir, ((Vector2)transform.position - collision.contacts[0].point).normalized);
@@ -150,7 +152,7 @@ public class BlueBullet : BulletTrans
 
                 PoolManager.Instance.Push(this);
             }
-        
+        }
 
     }
 

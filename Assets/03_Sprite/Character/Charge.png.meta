@@ -11,6 +11,24 @@ TextureImporter:
   - first:
       213: 6256210931507321577
     second: Charge_2
+  - first:
+      213: -5836993557942118350
+    second: Charge_3
+  - first:
+      213: -1925022604624453576
+    second: Charge_4
+  - first:
+      213: -2250842547723467441
+    second: Charge_5
+  - first:
+      213: -1474126701674958951
+    second: Charge_6
+  - first:
+      213: 7925466270181125623
+    second: Charge_7
+  - first:
+      213: 639825769314155430
+    second: Charge_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -115,12 +133,12 @@ TextureImporter:
       name: Charge_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 21
-        width: 32
+        x: 22
+        y: 5
+        width: 47
         height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.41677198, y: 0.45258522}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -136,12 +154,12 @@ TextureImporter:
       name: Charge_1
       rect:
         serializedVersion: 2
-        x: 96
-        y: 21
-        width: 31
+        x: 93
+        y: 5
+        width: 47
         height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.42433816, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -157,12 +175,12 @@ TextureImporter:
       name: Charge_2
       rect:
         serializedVersion: 2
-        x: 176
-        y: 21
-        width: 33
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 163
+        y: 5
+        width: 45
+        height: 48
+      alignment: 9
+      pivot: {x: 0.41307306, y: 0.44814017}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -170,6 +188,132 @@ TextureImporter:
       bones: []
       spriteID: 9ead86402b682d650800000000000000
       internalID: 6256210931507321577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charge_3
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 5
+        width: 45
+        height: 69
+      alignment: 9
+      pivot: {x: 0.35775587, y: 0.36084804}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 238dd96e845defea0800000000000000
+      internalID: -5836993557942118350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charge_4
+      rect:
+        serializedVersion: 2
+        x: 289
+        y: 5
+        width: 43
+        height: 63
+      alignment: 9
+      pivot: {x: 0.748279, y: 0.3537027}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83023cae322f845e0800000000000000
+      internalID: -1925022604624453576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charge_5
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 20
+        width: 14
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f458b99d0a663c0e0800000000000000
+      internalID: -2250842547723467441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charge_6
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 29
+        width: 28
+        height: 45
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99feeb83399da8be0800000000000000
+      internalID: -1474126701674958951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charge_7
+      rect:
+        serializedVersion: 2
+        x: 569
+        y: 16
+        width: 43
+        height: 53
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fd6c71f499ecfd60800000000000000
+      internalID: 7925466270181125623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Charge_8
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 6
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ab7c12b52e11e800800000000000000
+      internalID: 639825769314155430
       vertices: []
       indices: 
       edges: []
