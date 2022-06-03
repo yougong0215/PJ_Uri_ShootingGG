@@ -7,6 +7,7 @@ public class Stage1Patton : BulletTrans
 {
     float rotSpeed;
     [SerializeField ]Stage1 STG;
+    
     float ObjectRotZ;
     Vector3 ObjectRot;
 

@@ -8,10 +8,13 @@ public class Stage1 : MonoBehaviour
     const string CBType1 = "CrazyBirdType1";
     const string CBType2 = "CrazyBirdType2";
     const string JBType = "Jimball";
-    const string TuretType = "Turlet";
+    const string TuretType1 = "TurletType1";
+    const string TuretType2 = "TurletType2";
+    const string TuretType3 = "TurletType3";
     const string Patten1 = "StagePattern1";
     const string Patten2 = "StagePattern2";
 
+    string ThisObject;
     BulletTrans BT;
 
 
@@ -35,7 +38,7 @@ public class Stage1 : MonoBehaviour
         _SecondSummon = false;
         _Patun = false;
         _currentTime = 0;
-        _WorldTime = 60;
+        _WorldTime = 51;
     }
 
     public void SetNextPatton()
@@ -57,13 +60,18 @@ public class Stage1 : MonoBehaviour
                 if (_FirstSummon == false)
                 {
                     _FirstSummon = true;
-                    if (_WorldTime >= 5f) StartCoroutine(MonsterSummonCrazy());
+                    StartCoroutine(MonsterSummonCrazy());
 
                 }
                 if (_SecondSummon == false)
                 {
                     _SecondSummon = true;
-                    if (_WorldTime >= 20f) StartCoroutine(MonsterSummonJimball());
+                    if (_WorldTime >= 20f)
+                    {
+                        StartCoroutine(MonsterSummonTurlet());
+                        StartCoroutine(MonsterSummonJimball());
+                    }
+                   
                 }
 
                 // 15초 에 미니보스 하나
@@ -102,7 +110,7 @@ public class Stage1 : MonoBehaviour
 
         }
 
-        Debug.Log(_WorldTime);
+       Debug.Log(_WorldTime);
 
         _currentTime += Time.deltaTime;
         _WorldTime += Time.deltaTime;
@@ -136,13 +144,59 @@ public class Stage1 : MonoBehaviour
                     }
                     break;
             }
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
 
 
             if (_Patun == true)
             {
                 break;
             }
+        }
+    }
+    IEnumerator MonsterSummonTurlet()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5f);
+            switch(UnityEngine.Random.Range(0,3))
+            {
+                case 1:
+                    ThisObject = TuretType1;
+                    break;
+                case 2:
+                    ThisObject = TuretType2;
+                    break;
+                case 3:
+                    ThisObject = TuretType3;
+                    break;
+            }
+            BT = PoolManager.Instance.Pop(ThisObject) as TurletType;
+            if (_Patun == true)
+            {
+                break;
+            }
+        }
+        while(true)
+        {
+            yield return new WaitForSeconds(0.8f);
+            switch (UnityEngine.Random.Range(1, 4))
+            {
+                case 1:
+                    ThisObject = TuretType1;
+                    break;
+                case 2:
+                    ThisObject = TuretType2;
+                    break;
+                case 3:
+                    ThisObject = TuretType3;
+                    break;
+            }
+            BT = PoolManager.Instance.Pop(ThisObject) as TurletType;
+            if (_Patun == false)
+            {
+                break;
+            }
+
         }
     }
     IEnumerator MonsterSummonJimball()
@@ -172,7 +226,7 @@ public class Stage1 : MonoBehaviour
             {
                 break;
             }
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1.5f);
         }
 
 

@@ -49,7 +49,6 @@ public class PlayerHP : MonoBehaviour
         {
                 HP--;
                 oncurrt = true;
-            Debug.Log(collision.name);
                 Debug.Log(HP);
         }
     }

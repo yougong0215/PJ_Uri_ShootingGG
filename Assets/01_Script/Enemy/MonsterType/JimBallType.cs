@@ -26,7 +26,6 @@ public class JimBallType : BulletTrans
             {
                 for (int i = 0; i < 8; i++)
                 {
-                    Debug.Log("µé¾î¿È!!! = " + i);
                     BB = PoolManager.Instance.Pop("BlueBullet") as BlueBullet;
                     BB.SetDir(i, 4, 2, gameObject);
                     BB.transform.position = transform.position;

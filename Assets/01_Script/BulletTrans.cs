@@ -48,4 +48,10 @@ public abstract class BulletTrans : MonoBehaviour
         {
         }
     }
+    public void GetDamage(float value)
+    {
+        HP -= value;
+        Debug.Log($"{gameObject}, {HP}");
+        if (HP <= 0) PoolManager.Instance.Push(this);
+    }
 }

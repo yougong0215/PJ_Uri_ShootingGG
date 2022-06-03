@@ -19,7 +19,7 @@ public class CrazyBirdType : BulletTrans
     {
         
         i = 0;
-        HP = 30;
+        HP = 20;
     }
     public Vector3 ParentRotate
     {

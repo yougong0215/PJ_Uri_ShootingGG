@@ -11,21 +11,22 @@ public class TurletType : BulletTrans
     Sequence seq;
     float X;
     float Y;
-
+    const string Type1 = "TurletType1";
+    const string Type2 = "TurletType2";
+    const string Type3 = "TurletType3";
     bool isTrigger;
     public override void Reset()
     {
-        X = GameObject.Find("Player/Hit").GetComponent<Transform>().transform.position.x;
-        Y = 5.5f;
-        transform.position = new Vector3(X, Y, 0);
+        X = 10;
+        Y = 10;
         StartCoroutine(Fire());
         isTrigger = false;
     }
 
     void Start()
     {
-        X = GameObject.Find("Player/Hit").GetComponent<Transform>().transform.position.x;
-        Y = 5.5f;
+        X = 10;
+        Y = 10;
         Ani = gameObject.GetComponent<Animator>();
         spi = gameObject.GetComponent<SpriteRenderer>();
         box = gameObject.GetComponent<BoxCollider2D>();
@@ -59,33 +60,63 @@ public class TurletType : BulletTrans
 
     IEnumerator Fire()
     {
-        seq = DOTween.Sequence()
-        .Append(transform.DOMove(new Vector3(X, Y, 0), 1).SetEase(Ease.Linear))
-        .Append(transform.DOMove(new Vector3(X, 5.1f, 0), 1).SetEase(Ease.Linear));
-        yield return new WaitForSeconds(2f);
 
-        Ani.SetTrigger("Shot");
-                isTrigger = true;
-        seq = DOTween.Sequence().Append(transform.DOMove(new Vector3(X, Y, 0), 1).SetEase(Ease.Linear));
-        yield return new WaitForSeconds(1f);
+        if (gameObject.name == Type1)
+        {   X = GameObject.Find("Player/Hit").GetComponent<Transform>().transform.position.x;
+            Y = 5.5f;
+            transform.position = new Vector3(X, Y, 0);
+            seq = DOTween.Sequence()
+            .Append(transform.DOMove(new Vector3(X, 5.1f, 0), 1).SetEase(Ease.Linear));
+            yield return new WaitForSeconds(2f);
 
-        yield return new WaitForSeconds(0.2f);
-        box.size = new Vector2(0.2f, 0.2f);
-        box.offset = new Vector2(0.0f, 0.05f);
-        PoolManager.Instance.Push(this);
-    }
+            Ani.SetTrigger("Shot");
+            isTrigger = true;
+            seq = DOTween.Sequence().Append(transform.DOMove(new Vector3(X, Y, 0), 1).SetEase(Ease.Linear));
+            yield return new WaitForSeconds(1f);
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        //Debug.Log($"istrigger : {isTrigger} | {collision.gameObject.CompareTag("PlayerHit")} 플레이어 맞ㄱ잇냐");
-        if(collision.gameObject.CompareTag("PlayerHit") && isTrigger == true)
-        {
-            //Debug.Log("조건 충족함");
+            yield return new WaitForSeconds(0.2f);
+            box.size = new Vector2(0.2f, 0.2f);
+            box.offset = new Vector2(0.0f, 0.05f);
+            PoolManager.Instance.Push(this);
         }
+        else if (gameObject.name == Type2)
+        {
+            X = -7f;
+            Y = GameObject.Find("Player/Hit").GetComponent<Transform>().transform.position.y;
+            transform.position = new Vector3(X, Y, 0);
+            seq = DOTween.Sequence()
+            .Append(transform.DOMove(new Vector3(-7f, Y, 0), 1).SetEase(Ease.Linear));
+            yield return new WaitForSeconds(2f);
 
+            Ani.SetTrigger("Shot");
+            isTrigger = true;
+            seq = DOTween.Sequence().Append(transform.DOMove(new Vector3(X, Y, 0), 1).SetEase(Ease.Linear));
+            yield return new WaitForSeconds(1f);
+
+            yield return new WaitForSeconds(0.2f);
+            box.size = new Vector2(0.2f, 0.2f);
+            box.offset = new Vector2(0.0f, 0.05f);
+            PoolManager.Instance.Push(this);
+        }
+        else if (gameObject.name == Type2)
+        {
+            X = 0.6f;
+            Y = GameObject.Find("Player/Hit").GetComponent<Transform>().transform.position.y;
+            transform.position = new Vector3(X, Y, 0);
+            seq = DOTween.Sequence()
+            .Append(transform.DOMove(new Vector3(0.3f, Y, 0), 1).SetEase(Ease.Linear));
+            yield return new WaitForSeconds(2f);
+
+            Ani.SetTrigger("Shot");
+            isTrigger = true;
+            seq = DOTween.Sequence().Append(transform.DOMove(new Vector3(X, Y, 0), 1).SetEase(Ease.Linear));
+            yield return new WaitForSeconds(1f);
+
+            yield return new WaitForSeconds(0.2f);
+            box.size = new Vector2(0.2f, 0.2f);
+            box.offset = new Vector2(0.0f, 0.05f);
+            PoolManager.Instance.Push(this);
+        }
     }
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        
-    }
+
 }
