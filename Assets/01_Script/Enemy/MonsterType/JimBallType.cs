@@ -5,10 +5,11 @@ using UnityEngine;
 public class JimBallType : BulletTrans
 {
     BlueBullet BB;
-    
+    int BoundCheck;
 
     public override void Reset()
     {
+        BoundCheck = 0;
         HP = 30;
     }
     public void OnEnable()
@@ -35,5 +36,16 @@ public class JimBallType : BulletTrans
             }
             
         }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(BoundCheck >= 2)
+        {
+            PoolManager.Instance.Push(this);
+        }
+
+        dir = Vector3.Reflect(dir, ((Vector2)transform.position - collision.contacts[0].point).normalized);
+        BoundCheck++;
+        
     }
 }

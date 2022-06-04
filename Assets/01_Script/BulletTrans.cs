@@ -5,12 +5,14 @@ using DG.Tweening;
 
 public abstract class BulletTrans : MonoBehaviour
 {
-    Vector3 dir;
+    protected Vector3 dir;
+    float currentTIme;
     public abstract void Reset();
     protected float HP;
 
     public void Awake()
     {
+        currentTIme = 0;
         dir = Vector3.down;
     }
     public void SetHp(int value)
@@ -23,11 +25,24 @@ public abstract class BulletTrans : MonoBehaviour
         {
             transform.position += 3 * dir * Time.deltaTime;
         }
+
+    }
+
+    public void LateUpdate()
+    {
+
         if (Mathf.Abs(transform.position.y) >= 10f)
         {
-            PoolManager.Instance.Push(this);
+            currentTIme += Time.deltaTime;
+            if (currentTIme >= 2)
+            {
+                PoolManager.Instance.Push(this);
+            }
         }
-
+        else
+        {
+            currentTIme = 0;
+        }
     }
     public void SetDir(Vector3 value)
     {

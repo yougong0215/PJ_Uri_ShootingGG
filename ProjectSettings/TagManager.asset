@@ -22,7 +22,7 @@ TagManager:
   - 
   - 
   - EnemyBullet
-  - 
+  - BoundEnemy
   - Enemy
   - Player
   - PlayerHit
