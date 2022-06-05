@@ -35,9 +35,6 @@ public class PlayerMove : MonoBehaviour
             transform.position += dir * speed * Time.deltaTime;
         }
 
-        if(Input.GetMouseButton(0))
-        {
-         //   CBT = PoolManager.Instance.Pop(Patten1) as BulletTransP;
-        }
+        // ±êÇãºê ³¯¸Ô¿ë ¼öÁ¤
     }
 }
