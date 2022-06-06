@@ -8,6 +8,7 @@ public abstract class BulletTrans : MonoBehaviour
     protected Vector3 dir;
     float currentTIme;
     public abstract void Reset();
+    [SerializeField]
     protected float HP;
 
     public void Awake()

@@ -8,6 +8,8 @@ public class BlueBullet : BulletTrans
     float speed = 0;
     int a = 1;
     int Version = 0;
+    BlueBulletExplosion exp;
+    const string Explosion = "BlueBulletExplosion";
 
     Vector3 ObjectPos;
 
@@ -119,7 +121,7 @@ public class BlueBullet : BulletTrans
 
         if (Mathf.Abs(transform.position.y) >= 7)
         {
-            PoolManager.Instance.Push(this);
+            PushBullet();
         }
 
     }
@@ -133,6 +135,8 @@ public class BlueBullet : BulletTrans
     const string _playerAttack = "AttackCollider";
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        exp = PoolManager.Instance.Pop(Explosion) as BlueBulletExplosion;
+        exp.transform.position = transform.position;
         if (collision.gameObject.name != _playerAttack)
         {
             if (Version == 1)
@@ -144,18 +148,21 @@ public class BlueBullet : BulletTrans
                 {
                     i = 0;
 
-                    PoolManager.Instance.Push(this);
+                    PushBullet();
                 }
             }
             else
             {
+                PushBullet();
 
-                PoolManager.Instance.Push(this);
+
             }
         }
-
     }
-
+    private void PushBullet()
+    {
+        PoolManager.Instance.Push(this);
+    }
     public override void Reset()
     {
     }

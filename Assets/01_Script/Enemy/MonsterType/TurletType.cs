@@ -15,8 +15,10 @@ public class TurletType : BulletTrans
     const string Type2 = "TurletType2";
     const string Type3 = "TurletType3";
     bool isTrigger;
+
     public override void Reset()
     {
+        HP = 100;
         X = 10;
         Y = 10;
         StartCoroutine(Fire());
@@ -71,7 +73,7 @@ public class TurletType : BulletTrans
 
             Ani.SetTrigger("Shot");
             isTrigger = true;
-            seq = DOTween.Sequence().Append(transform.DOMove(new Vector3(X, Y, 0), 1).SetEase(Ease.Linear));
+            //seq = DOTween.Sequence().Append(transform.DOMove(new Vector3(X, Y, 0), 1).SetEase(Ease.Linear));
             yield return new WaitForSeconds(1f);
 
             yield return new WaitForSeconds(0.2f);
@@ -85,12 +87,12 @@ public class TurletType : BulletTrans
             Y = GameObject.Find("Player/Hit").GetComponent<Transform>().transform.position.y;
             transform.position = new Vector3(X, Y, 0);
             seq = DOTween.Sequence()
-            .Append(transform.DOMove(new Vector3(-7f, Y, 0), 1).SetEase(Ease.Linear));
+            .Append(transform.DOMove(new Vector3(-7.2f, Y, 0), 1).SetEase(Ease.Linear));
             yield return new WaitForSeconds(2f);
 
             Ani.SetTrigger("Shot");
             isTrigger = true;
-            seq = DOTween.Sequence().Append(transform.DOMove(new Vector3(X, Y, 0), 1).SetEase(Ease.Linear));
+            //seq = DOTween.Sequence().Append(transform.DOMove(new Vector3(X, Y, 0), 1).SetEase(Ease.Linear));
             yield return new WaitForSeconds(1f);
 
             yield return new WaitForSeconds(0.2f);
@@ -98,18 +100,18 @@ public class TurletType : BulletTrans
             box.offset = new Vector2(0.0f, 0.05f);
             PoolManager.Instance.Push(this);
         }
-        else if (gameObject.name == Type2)
+        else if (gameObject.name == Type3)
         {
-            X = 0.6f;
+            X = 0.8f;
             Y = GameObject.Find("Player/Hit").GetComponent<Transform>().transform.position.y;
             transform.position = new Vector3(X, Y, 0);
             seq = DOTween.Sequence()
-            .Append(transform.DOMove(new Vector3(0.3f, Y, 0), 1).SetEase(Ease.Linear));
+            .Append(transform.DOMove(new Vector3(0.6f, Y, 0), 1).SetEase(Ease.Linear));
             yield return new WaitForSeconds(2f);
 
             Ani.SetTrigger("Shot");
             isTrigger = true;
-            seq = DOTween.Sequence().Append(transform.DOMove(new Vector3(X, Y, 0), 1).SetEase(Ease.Linear));
+            //seq = DOTween.Sequence().Append(transform.DOMove(new Vector3(X, Y, 0), 1).SetEase(Ease.Linear));
             yield return new WaitForSeconds(1f);
 
             yield return new WaitForSeconds(0.2f);
@@ -118,5 +120,8 @@ public class TurletType : BulletTrans
             PoolManager.Instance.Push(this);
         }
     }
-
+    private void LateUpdate()
+    {
+        return;
+    }
 }

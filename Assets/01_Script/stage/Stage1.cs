@@ -38,7 +38,7 @@ public class Stage1 : MonoBehaviour
         _SecondSummon = false;
         _Patun = false;
         _currentTime = 0;
-        _WorldTime = 51;
+        _WorldTime = 61;
     }
 
     public void SetNextPatton()
@@ -161,16 +161,15 @@ public class Stage1 : MonoBehaviour
             switch(UnityEngine.Random.Range(0,3))
             {
                 case 1:
-                    ThisObject = TuretType1;
+                    BT = PoolManager.Instance.Pop(TuretType1) as TurletType;
                     break;
                 case 2:
-                    ThisObject = TuretType2;
+                    BT = PoolManager.Instance.Pop(TuretType2) as TurletType;
                     break;
                 case 3:
-                    ThisObject = TuretType3;
+                    BT = PoolManager.Instance.Pop(TuretType3) as TurletType;
                     break;
             }
-            BT = PoolManager.Instance.Pop(ThisObject) as TurletType;
             if (_Patun == true)
             {
                 break;
