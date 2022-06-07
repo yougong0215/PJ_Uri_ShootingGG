@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public abstract class BulletTrans : MonoBehaviour
 {
+    // 1 : 30
     protected Vector3 dir;
     float currentTIme;
     public abstract void Reset();
