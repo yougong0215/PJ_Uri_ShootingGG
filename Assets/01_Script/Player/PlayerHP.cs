@@ -35,7 +35,7 @@ public class PlayerHP : MonoBehaviour
             currt += Time.deltaTime;
         }
 
-       if(currt >= 1)
+       if(currt >= 1.5f)
         {
             oncurrt = false;    
             currt = 0;

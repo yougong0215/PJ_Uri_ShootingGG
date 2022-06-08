@@ -8,7 +8,7 @@ public class Pool<T> where T : BulletTrans
     private T _prefab;
     private Transform _parent;
 
-    public Pool(T prefab, Transform parent, int count = 10)
+    public Pool(T prefab, Transform parent, int count = 5)
     {
         _prefab = prefab;
         _parent = parent;

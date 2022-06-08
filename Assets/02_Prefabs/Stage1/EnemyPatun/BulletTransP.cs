@@ -20,6 +20,7 @@ public class BulletTransP : BulletTrans
         for(i = 0; transform.childCount > i; i++ )
         {
             transform.GetChild(i).gameObject.SetActive(true);
+            transform.GetChild(i).gameObject.GetComponent<BulletTrans>().SetHp(STG1.GetWorldTime()+50);
         }
     }
 

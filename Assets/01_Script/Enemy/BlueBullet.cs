@@ -13,7 +13,6 @@ public class BlueBullet : BulletTrans
 
     Vector3 ObjectPos;
 
-    Vector3 dir = Vector3.down;
 
     public Vector3 GetDir()
     {
@@ -125,6 +124,10 @@ public class BlueBullet : BulletTrans
         }
 
     }
+    protected void LateUpdate()
+    {
+        // ÇÏÀÌµש
+    }
 
     void Version5()
     {
@@ -165,6 +168,7 @@ public class BlueBullet : BulletTrans
     }
     public override void Reset()
     {
+        dir = Vector3.down;
     }
 
 

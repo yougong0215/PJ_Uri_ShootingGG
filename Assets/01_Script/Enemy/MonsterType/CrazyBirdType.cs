@@ -19,7 +19,6 @@ public class CrazyBirdType : BulletTrans
     {
         
         i = 0;
-        HP = 20;
     }
     public Vector3 ParentRotate
     {
@@ -33,7 +32,6 @@ public class CrazyBirdType : BulletTrans
 
     private void OnEnable()
     {
-        HP = 30f;
         StartCoroutine(CRType());
     }
     public void Type()
@@ -65,7 +63,7 @@ public class CrazyBirdType : BulletTrans
         for (i = 0; i < 3; i++)
         {
                 BB = PoolManager.Instance.Pop("BlueBullet") as BlueBullet;
-                BB.SetDir(i, 6, 1, gameObject);
+                BB.SetDir(i,4, 1, gameObject);
                 BB.transform.position = transform.position;
             yield return new WaitForSeconds(0.1f);
             

@@ -16,7 +16,7 @@ public class Stage1 : MonoBehaviour
 
     string ThisObject;
     BulletTrans BT;
-
+    float _WorldHP;
 
 
 
@@ -38,11 +38,18 @@ public class Stage1 : MonoBehaviour
         _SecondSummon = false;
         _Patun = false;
         _currentTime = 0;
-        _WorldTime = 61;
+        _WorldTime = 0;
+        
+    }
+
+    public float GetWorldTime()
+    {
+        return _WorldHP;
     }
 
     public void SetNextPatton()
     {
+        _WorldHP = 0;
         _WorldTime += 10;
         _Patun = false;
         _FirstSummon = false;
@@ -83,16 +90,13 @@ public class Stage1 : MonoBehaviour
                 if (_SummonPaton == false)
                 {
                     _SummonPaton = true;
-                    
-                    BT = PoolManager.Instance.Pop(Patten1);
-                    BT.transform.position = new Vector3(-3, 5, 0);
-                    BT.transform.DOMove(new Vector3(-3, 3, 0), 2f);
+                    StartCoroutine(FirstPatton());
                 }
 
                 _Patun = true;
                 _WorldTime = 31f;
             }
-
+            _WorldHP = _WorldTime / 2f;
 
             if (70f > _WorldTime && _WorldTime >= 60)
             {
@@ -100,7 +104,7 @@ public class Stage1 : MonoBehaviour
                 {
                     _SummonPaton = true;
                     BT = PoolManager.Instance.Pop(Patten2);
-                    BT.transform.position = new Vector3(-3, 5, 0);
+                    BT.transform.position = new Vector3(-3, 7, 0);
 
                     BT.transform.DOMove(new Vector3(-3, 3, 0), 2f);
                 }
@@ -110,11 +114,18 @@ public class Stage1 : MonoBehaviour
 
         }
 
-       Debug.Log(_WorldTime);
 
         _currentTime += Time.deltaTime;
         _WorldTime += Time.deltaTime;
 
+    }
+
+    IEnumerator FirstPatton()
+    {
+        yield return new WaitForSeconds(3f);
+        BT = PoolManager.Instance.Pop(Patten1);
+        BT.transform.position = new Vector3(-3, 5, 0);
+        BT.transform.DOMove(new Vector3(-3, 3, 0), 2f);
     }
     IEnumerator MonsterSummonCrazy()
     {
@@ -122,25 +133,25 @@ public class Stage1 : MonoBehaviour
         {
 
             RandomSummon = UnityEngine.Random.Range(0f, -6.5f);
-            switch ((int)RandomSummon % 2)
+            switch (UnityEngine.Random.Range(0,2))
             {
                 case 0:
                     BT = PoolManager.Instance.Pop(CBType1) as CrazyBirdType;
                     BT.transform.position = new Vector3(RandomSummon, 6.99f, 0);
-                    BT.SetHp(10);
+                    BT.SetHp(20f + _WorldHP);
                     break;
                 case 1:
                     if (_WorldTime >= 15f)
                     {
                         BT = PoolManager.Instance.Pop(CBType2) as CrazyBirdType;
                         BT.transform.position = new Vector3(RandomSummon, 6.99f, 0);
-                        BT.SetHp(10);
+                        BT.SetHp(20 + _WorldHP);
                     }
                     else
                     {
                         BT = PoolManager.Instance.Pop(CBType1) as CrazyBirdType;
                         BT.transform.position = new Vector3(RandomSummon, 6.99f, 0);
-                        BT.SetHp(10);
+                        BT.SetHp(20 + _WorldHP);
                     }
                     break;
             }
@@ -221,6 +232,7 @@ public class Stage1 : MonoBehaviour
                     BT.SetDir(new Vector3(0.4f, 0, 0));
                     break;
             }
+            BT.SetHp(30 + _WorldHP);
             if (_Patun == true)
             {
                 break;

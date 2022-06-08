@@ -16,7 +16,7 @@ public class PoolManager
     {
         _trmParent = trmParent;
     }
-    public void CreatePool(BulletTrans prefab, int cnt = 10)
+    public void CreatePool(BulletTrans prefab, int cnt = 5)
     {
         Pool<BulletTrans> pool = new Pool<BulletTrans>(prefab, _trmParent, cnt);
         _pools.Add(prefab.gameObject.name, pool);

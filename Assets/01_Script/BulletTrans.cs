@@ -8,8 +8,8 @@ public abstract class BulletTrans : MonoBehaviour
     // 1 : 30
     protected Vector3 dir;
     float currentTIme;
+    int ItemRandom;
     public abstract void Reset();
-    [SerializeField]
     protected float HP;
 
     public void Awake()
@@ -17,7 +17,7 @@ public abstract class BulletTrans : MonoBehaviour
         currentTIme = 0;
         dir = Vector3.down;
     }
-    public void SetHp(int value)
+    public void SetHp(float value)
     {
         HP = value;
     }
@@ -35,15 +35,7 @@ public abstract class BulletTrans : MonoBehaviour
 
         if (Mathf.Abs(transform.position.y) >= 10f)
         {
-            currentTIme += Time.deltaTime;
-            if (currentTIme >= 2)
-            {
-                PoolManager.Instance.Push(this);
-            }
-        }
-        else
-        {
-            currentTIme = 0;
+             PoolManager.Instance.Push(this);
         }
     }
     public void SetDir(Vector3 value)
@@ -60,6 +52,7 @@ public abstract class BulletTrans : MonoBehaviour
         if (HP <= 0)
         {
             PoolManager.Instance.Push(this);
+            CreateItem();
         }
         if(collision.gameObject.CompareTag("PlayerHit"))
         {
@@ -68,7 +61,24 @@ public abstract class BulletTrans : MonoBehaviour
     public void GetDamage(float value)
     {
         HP -= value;
-        Debug.Log($"{gameObject}, {HP}");
+        //Debug.Log($"{gameObject}, {HP}");
         if (HP <= 0) PoolManager.Instance.Push(this);
+    }
+    public void CreateItem()
+    {
+        ItemRandom = UnityEngine.Random.Range(0, 101);
+        if (ItemRandom >= 20 && ItemRandom < 70)
+        {
+
+        }
+        else if (ItemRandom > 1 && ItemRandom < 20)
+        {
+
+        }
+        else if(ItemRandom <= 1)
+        {
+
+        }
+        PoolManager.Instance.Pop("Power_Item");
     }
 }

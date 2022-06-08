@@ -23,6 +23,10 @@ public class Stage1Patton : BulletTrans
     {
         STG.SetNextPatton();
     }
+    public float GetWorldTime()
+    {
+        return STG.GetWorldTime();
+    }
     void Update()
     {
         if (gameObject.name == Patten1)

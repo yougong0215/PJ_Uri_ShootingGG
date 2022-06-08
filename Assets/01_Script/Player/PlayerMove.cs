@@ -35,6 +35,7 @@ public class PlayerMove : MonoBehaviour
             transform.position += dir * speed * Time.deltaTime;
         }
 
+        transform.position = new Vector3 (Mathf.Clamp(transform.position.x, -6.5f, 0f), Mathf.Clamp(transform.position.y, -5f, 5f), 0);
         // ±êÇãºê ³¯¸Ô¿ë ¼öÁ¤
     }
 }

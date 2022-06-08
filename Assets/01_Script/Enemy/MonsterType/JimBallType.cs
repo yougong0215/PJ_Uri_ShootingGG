@@ -10,11 +10,9 @@ public class JimBallType : BulletTrans
     public override void Reset()
     {
         BoundCheck = 0;
-        HP = 30;
     }
     public void OnEnable()
     {
-        HP = 30;
         StartCoroutine(Type1());
     }
 

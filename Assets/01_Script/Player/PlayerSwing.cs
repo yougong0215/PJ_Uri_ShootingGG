@@ -16,6 +16,7 @@ public class PlayerSwing : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         SlashNum = 0;
         animator = gameObject.GetComponent<Animator>();
         currentTime = 0;
