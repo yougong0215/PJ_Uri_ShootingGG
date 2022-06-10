@@ -27,5 +27,6 @@ public class Slash : BulletTrans
 
     public override void Reset()
     {
+        HP = 10000;
     }
 }

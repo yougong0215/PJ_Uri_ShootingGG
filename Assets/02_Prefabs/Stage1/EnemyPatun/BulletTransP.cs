@@ -8,6 +8,7 @@ public class BulletTransP : BulletTrans
     int j;
     void Awake()
     {
+        HP = 10000;
         STG1 = gameObject.GetComponent<Stage1Patton>();
     }
     int i;

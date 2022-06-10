@@ -10,7 +10,8 @@ public class BlueBullet : BulletTrans
     int Version = 0;
     BlueBulletExplosion exp;
     const string Explosion = "BlueBulletExplosion";
-
+    int i = 0;
+    const string _playerAttack = "AttackCollider";
     Vector3 ObjectPos;
 
 
@@ -27,7 +28,10 @@ public class BlueBullet : BulletTrans
     Vector2 Up = Vector2.up;                          // 5
     Vector2 LeftUp = Vector2.left + Vector2.up;       // 6
     Vector2 Left = Vector2.left;                      // 7
-
+    private void Awake()
+    {
+        HP = 3;
+    }
     public void SetDir(int value, int speed, int Version, GameObject obj)
     {
         a = value;
@@ -117,6 +121,10 @@ public class BlueBullet : BulletTrans
         {
             currenttime += Time.deltaTime;
         }
+        if(HP<=0)
+        {
+            PushBullet();
+        }    
 
         if (Mathf.Abs(transform.position.y) >= 7)
         {
@@ -129,13 +137,6 @@ public class BlueBullet : BulletTrans
         // ÇÏÀÌµù
     }
 
-    void Version5()
-    {
-
-    }
-
-    int i = 0;
-    const string _playerAttack = "AttackCollider";
     private void OnCollisionEnter2D(Collision2D collision)
     {
         exp = PoolManager.Instance.Pop(Explosion) as BlueBulletExplosion;
@@ -168,6 +169,7 @@ public class BlueBullet : BulletTrans
     }
     public override void Reset()
     {
+        HP = 3;
         dir = Vector3.down;
     }
 

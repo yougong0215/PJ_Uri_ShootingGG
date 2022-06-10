@@ -116,6 +116,7 @@ public class PlayerBullet : BulletTrans
         speed = 10;
         shift = false;
         StartCoroutine(BulletDieTime());
+        HP = 10000;
     }
     IEnumerator BulletDieTime()
     {

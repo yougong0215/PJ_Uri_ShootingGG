@@ -9,6 +9,7 @@ public abstract class BulletTrans : MonoBehaviour
     protected Vector3 dir;
     float currentTIme;
     int ItemRandom;
+    PowerItem item;
     public abstract void Reset();
     protected float HP;
 
@@ -33,9 +34,14 @@ public abstract class BulletTrans : MonoBehaviour
     public void LateUpdate()
     {
 
-        if (Mathf.Abs(transform.position.y) >= 10f)
+        if (Mathf.Abs(transform.position.y) >= 15f)
         {
              PoolManager.Instance.Push(this);
+        }
+        if (HP <= 0)
+        {
+            CreateItem();
+            PoolManager.Instance.Push(this);
         }
     }
     public void SetDir(Vector3 value)
@@ -49,27 +55,19 @@ public abstract class BulletTrans : MonoBehaviour
             HP -= collision.GetComponent<PlayerBullet>().GetDamage();
             PoolManager.Instance.Push(collision.GetComponent<BulletTrans>());
         }
-        if (HP <= 0)
-        {
-            PoolManager.Instance.Push(this);
-            CreateItem();
-        }
-        if(collision.gameObject.CompareTag("PlayerHit"))
-        {
-        }
     }
     public void GetDamage(float value)
     {
         HP -= value;
         //Debug.Log($"{gameObject}, {HP}");
-        if (HP <= 0) PoolManager.Instance.Push(this);
     }
     public void CreateItem()
     {
         ItemRandom = UnityEngine.Random.Range(0, 101);
         if (ItemRandom >= 20 && ItemRandom < 70)
         {
-
+            item = PoolManager.Instance.Pop("Power_Item") as PowerItem;
+            item.SetPos(gameObject.transform.position);
         }
         else if (ItemRandom > 1 && ItemRandom < 20)
         {
@@ -79,6 +77,6 @@ public abstract class BulletTrans : MonoBehaviour
         {
 
         }
-        PoolManager.Instance.Pop("Power_Item");
+
     }
 }

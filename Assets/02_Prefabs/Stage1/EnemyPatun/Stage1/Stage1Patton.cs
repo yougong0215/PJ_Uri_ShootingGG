@@ -16,6 +16,7 @@ public class Stage1Patton : BulletTrans
     const string Patten2 = "StagePattern2";
     void Awake()
     {
+        HP = 10000;
         STG = GameObject.Find("Stage1").GetComponent<Stage1>();
     }
     // Update is called once per frame

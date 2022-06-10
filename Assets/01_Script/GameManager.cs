@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
     }
     [SerializeField] private List<BulletTrans> _PoolList;
 
-
     private void Awake()
     {
         /*
@@ -43,5 +42,6 @@ public class GameManager : MonoBehaviour
         {
             PoolManager.Instance.CreatePool(p, 1); // 40개씨 뽑아내는건데 이건 나중에 원하는만큼뽑게 바꾸어ㅑ됨
         }
+        
     }
 }
