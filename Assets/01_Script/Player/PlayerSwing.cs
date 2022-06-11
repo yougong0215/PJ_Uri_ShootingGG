@@ -10,6 +10,7 @@ public class PlayerSwing : MonoBehaviour
     Animator animator;
     [SerializeField] Image Attack;
     [SerializeField] Image Slash;
+    [SerializeField] GameObject Explosion;
     BulletTrans bulletTrans;
     float SlashNum;
 
@@ -27,7 +28,7 @@ public class PlayerSwing : MonoBehaviour
     {
         WindSlash();
         NormalAttack();
-        
+        SuperNove();
     }
 
     void NormalAttack()
@@ -58,6 +59,17 @@ public class PlayerSwing : MonoBehaviour
             Slash.fillAmount = 0;
         }
         
+    }
+
+    void SuperNove()
+    {
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            for(int i = 0; i < Explosion.transform.childCount; i++)
+            {
+                Explosion.transform.GetChild(i).gameObject.SetActive(true);
+            }
+        }    
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
