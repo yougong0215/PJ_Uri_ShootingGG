@@ -123,7 +123,7 @@ public class PlayerBullet : BulletTrans
         yield return new WaitForSeconds(1f);
         PoolManager.Instance.Push(this);
     }
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.GetComponent("Enemy"))
         {

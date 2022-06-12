@@ -21,7 +21,7 @@ public class Tests : MonoBehaviour
     void Update()
     {
         currentTime += Time.deltaTime;
-        dir.x = Mathf.Sin(currentTime);
+        dir.x = Mathf.Sin(currentTime) + Mathf.Tan(currentTime);
         transform.position = Now + dir;
         Now += new Vector2(0, 1f) * speed * Time.deltaTime;
     }

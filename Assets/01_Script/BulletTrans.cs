@@ -11,6 +11,7 @@ public abstract class BulletTrans : MonoBehaviour
     int ItemRandom;
     PowerItem item;
     public abstract void Reset();
+    [SerializeField]
     protected float HP;
 
     public void Awake()
@@ -48,7 +49,7 @@ public abstract class BulletTrans : MonoBehaviour
     {
         dir += value;
     }
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {

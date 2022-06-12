@@ -22,8 +22,8 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        h = Input.GetAxis("Horizontal");
-        v = Input.GetAxis("Vertical");
+        h = Input.GetAxisRaw("Horizontal");
+        v = Input.GetAxisRaw("Vertical");
         dir = new Vector3(h, v, 0);
         if (Input.GetKey(KeyCode.LeftShift))
         {

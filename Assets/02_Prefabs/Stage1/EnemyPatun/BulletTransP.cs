@@ -50,7 +50,7 @@ public class BulletTransP : BulletTrans
 
 
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
     }
 }

@@ -13,18 +13,19 @@ public class LightAndDarkExplosion : MonoBehaviour
         if (gameObject.name == "LightEx")
         {
             transform.localScale = new Vector3(0f, 0f, 0f);
-            transform.DOScale(new Vector3(100f,100f,1f), 2).OnComplete(() => { gameObject.SetActive(false); });
+            transform.DOScale(new Vector3(5f,5f,1f), 2).OnComplete(() => { gameObject.SetActive(false); });
         }
         if (gameObject.name == "DarkEx")
         {
-            transform.localScale = new Vector3(100f, 100f, 100f);
+            transform.localScale = new Vector3(30f, 30f, 100f);
             transform.DOScale(new Vector3(0f, 0f, 1f), 2).OnComplete(() => { gameObject.SetActive(false); });
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (gameObject.name == "DarkEx")
+        if (gameObject.name == "DarkEx" && collision.GetComponent<BulletTrans>())
         {
+            
             collision.GetComponent<BulletTrans>().GetDamage(100);
         }
     }

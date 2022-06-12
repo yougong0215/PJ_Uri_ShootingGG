@@ -16,7 +16,7 @@ public class Slash : BulletTrans
         transform.position += Time.deltaTime * Vector3.up * 8;
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         collision.gameObject.GetComponent<BulletTrans>().GetDamage(50);
         if(collision.name == "BlueBullet")
