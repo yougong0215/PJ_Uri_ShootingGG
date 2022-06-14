@@ -20,9 +20,18 @@ public class Tests : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         currentTime += Time.deltaTime;
-        dir.x = Mathf.Sin(currentTime) + Mathf.Tan(currentTime);
+        dir.x = Mathf.Sin(currentTime);// + Mathf.Tan(currentTime);
         transform.position = Now + dir;
         Now += new Vector2(0, 1f) * speed * Time.deltaTime;
+        */
+        currentTime += Time.deltaTime;
+        transform.position += Vector3.up * 3 * Time.deltaTime;
+        if(currentTime >= 4f)
+        {
+            gameObject.SetActive(false);
+        }
     }
+
 }

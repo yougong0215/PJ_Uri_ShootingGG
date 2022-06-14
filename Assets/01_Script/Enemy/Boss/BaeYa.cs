@@ -46,7 +46,8 @@ public class BaeYa : BulletTrans
         {
             FirstPatton = true;
             SecondPatton = true;
-                        StopAllCoroutines();
+            StopAllCoroutines();
+            DOTween.KillAll();
             thisHP.fillAmount = 0;
             thisHP = RedHP;
             HP = 500;
@@ -73,8 +74,8 @@ public class BaeYa : BulletTrans
                 FirstPatton = true;
                 transform.DOMove(new Vector3(-3, 3, 0), 1f).OnComplete(() =>
                 {
-                     StartCoroutine(BossBullet1()); 
-                    StartCoroutine(BossBullet2());
+                     StartCoroutine(BossBullet1(1.5f)); 
+                    StartCoroutine(BossBullet2(1.5f));
 
                 });
             }
@@ -107,13 +108,15 @@ public class BaeYa : BulletTrans
                 transform.DOMove(new Vector3(-3, 3, 0), 1f).OnComplete(() =>
                 {
                     StartCoroutine(Patton4());
+                    StartCoroutine(BossBullet1(3f));
+                    StartCoroutine(BossBullet2(3f));
                 });
             }
         } 
         
     }
     #region ∆–≈œ 1
-    IEnumerator BossBullet1()
+    IEnumerator BossBullet1(float a)
     {
         for (int j = 1; j <= 30; j++)
         {
@@ -129,16 +132,17 @@ public class BaeYa : BulletTrans
             yield return new WaitForSeconds(0.15f);
             if (j < 5)
             {
-                Rot -= 1.5f;
+                Rot -= a;
             }
             else
             {
-                Rot += 1.5f;
+                Rot += a;
             }
         }
-        SecondPatton = false;
+        if(thisHP == WhiteHP)
+            SecondPatton = false;
     }
-    IEnumerator BossBullet2()
+    IEnumerator BossBullet2(float a)
     {
         for (int j = 1; j <= 30; j++)
         {
@@ -153,11 +157,11 @@ public class BaeYa : BulletTrans
             yield return new WaitForSeconds(0.15f);
             if (j < 5)
             {
-                Rot2 += 1.5f;
+                Rot2 += a;
             }
             else
             {
-                Rot2 -= 1.5f;
+                Rot2 -= a;
             }
         }
     }
@@ -251,10 +255,10 @@ public class BaeYa : BulletTrans
                 while (true)
                 {
 
-                    bullet.transform.position = Player.transform.position + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
+                    bullet.transform.position = transform.position + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
                     if (Mathf.Abs(bullet.transform.position.x - Player.position.x) < 1f && bullet.transform.position.y - Player.position.y < Mathf.Abs(0.3f))
                     {
-                        bullet.transform.position = Player.transform.position + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
+                        bullet.transform.position = transform.position + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
                     }
                     else
                         break;
@@ -264,6 +268,7 @@ public class BaeYa : BulletTrans
             }
             yield return new WaitForSeconds(0.3f);
         }
+        yield return new WaitForSeconds(5f);
         FirstPatton = false;
     }
 

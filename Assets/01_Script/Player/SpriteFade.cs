@@ -19,7 +19,10 @@ public class SpriteFade : MonoBehaviour
         Append(Spi.DOFade(0.0f, 0.25f)).
         Append(Spi.DOFade(1.0f, 0.25f)).
         Append(Spi.DOFade(0.0f, 0.25f)).
-        Append(Spi.DOFade(1.0f, 0.25f));
+        Append(Spi.DOFade(1.0f, 0.25f)).OnComplete(()=>
+        {
+            Player.SetBool();
+        });
     }
 
     // Update is called once per frame
@@ -27,8 +30,11 @@ public class SpriteFade : MonoBehaviour
     {
         if(Player.GetOnCR() == true)
         {
-            Spi.color = new Color(1, 1, 1, 0);
             seq.Restart();
+        }
+        else
+        {
+            Spi.color = new Color(1, 1, 1, 1);
         }
     }
 }

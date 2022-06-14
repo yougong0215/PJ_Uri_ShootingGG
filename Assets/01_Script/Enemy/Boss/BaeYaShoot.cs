@@ -71,7 +71,7 @@ public class BaeYaShoot : BulletTrans
     IEnumerator SpeedDown()
     {
         yield return new WaitForSeconds(1.5f);
-        speed = 10f;
+        speed = 5f;
     }
     IEnumerator RotMove(Vector3 value)
     {
@@ -91,8 +91,11 @@ public class BaeYaShoot : BulletTrans
 
     private void OnTriggerEnter2D(Collider2D collision) 
     {
-        if(collision.GetComponent<PlayerSwing>() || collision.GetComponent<Slash>() ||
-            collision.GetComponent<LightAndDarkExplosion>().name =="LightEx")
+        if (collision.GetComponent<Slash>())
+        {
+            PoolManager.Instance.Push(this);
+        }
+        else if(collision.GetComponent<PlayerSwing>())
         {
             PoolManager.Instance.Push(this);
         }

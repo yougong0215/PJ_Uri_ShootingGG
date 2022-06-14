@@ -5,16 +5,15 @@ using UnityEngine;
 public class PlayerHP : MonoBehaviour
 {
     int HP =3;
-    protected float currt;
     protected bool oncurrt;
-    private bool attacked;
+    private bool onDamaged;
+    float currentTime;
 
-
-
-    public float GetCRTime()
+    public void SetBool()
     {
-        return currt;
+        onDamaged = false;
     }
+
     public bool GetOnCR()
     {
         return oncurrt;
@@ -22,30 +21,33 @@ public class PlayerHP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentTime = 0;
         oncurrt = false;
-        currt = 0;
+        onDamaged = true;
         HP = 3;
     }
 
     // Update is called once per frame
     void Update()
     {
-       if(oncurrt == true)
-        {
-            currt += Time.deltaTime;
-        }
 
-       if(currt >= 1.5f)
+        if (currentTime >= 1.5f &&  onDamaged == false)
         {
-            oncurrt = false;    
-            currt = 0;
+            onDamaged = true;
+            oncurrt = true;
+            currentTime = 0;
+        }
+        else
+        {
+            oncurrt = false;
+            currentTime += Time.deltaTime;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log($"{GameManager.Instance.GetDamaged()} | {oncurrt}");
-        if (collision.gameObject.CompareTag("Item") == false && oncurrt == false)
+        if (collision.GetComponent<BulletTrans>() && onDamaged && oncurrt == true)
         {
                 HP--;
                 oncurrt = true;

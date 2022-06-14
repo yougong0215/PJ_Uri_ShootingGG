@@ -60,6 +60,7 @@ public class Stage1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (_WorldTime > 3) // 시작 할때 UI 보여줄 시간
         {       // Debug.Log(_WorldTime);
             if (_Patun == false)
@@ -117,7 +118,7 @@ public class Stage1 : MonoBehaviour
 
         _currentTime += Time.deltaTime;
         _WorldTime += Time.deltaTime;
-
+        */
     }
 
     IEnumerator FirstPatton()
