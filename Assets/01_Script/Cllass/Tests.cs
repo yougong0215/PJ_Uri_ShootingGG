@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tests : MonoBehaviour
 {
-    Vector2 dir;
+    Vector3 dir;
     float speed = 3;
     float currentTime;
     Vector2 Now;
@@ -13,7 +13,7 @@ public class Tests : MonoBehaviour
     {
         currentTime = 0;
         dir = Vector3.zero;
-        transform.position = new Vector3(5, -5, 0);
+        //transform.position = new Vector3(5, -5, 0);
         Now = transform.position;
     }
 
@@ -22,14 +22,17 @@ public class Tests : MonoBehaviour
     {
         /*
         currentTime += Time.deltaTime;
-        dir.x = Mathf.Sin(currentTime);// + Mathf.Tan(currentTime);
+        
         transform.position = Now + dir;
         Now += new Vector2(0, 1f) * speed * Time.deltaTime;
         */
+        dir.x = Mathf.Sin(currentTime * 2);// + Mathf.Tan(currentTime);
+        dir.y = 1f;
         currentTime += Time.deltaTime;
-        transform.position += Vector3.up * 3 * Time.deltaTime;
+        transform.position += dir * 3 * Time.deltaTime;
         if(currentTime >= 4f)
         {
+            currentTime = 0;
             gameObject.SetActive(false);
         }
     }

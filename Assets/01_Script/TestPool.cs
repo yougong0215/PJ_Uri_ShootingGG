@@ -15,34 +15,29 @@ public class TestPool : MonoBehaviour
         StartCoroutine(poolTest());
     }
 
-    private void Update()
-    {
-       
-    }
-
     IEnumerator poolTest()
     {
         while(true)
         {
+            GameObject obj1 = null;
             for (i = 0; i < transform.childCount; i++)
             {
-                Debug.Log($"{i} {transform.childCount} {transform.GetChild(i).gameObject.activeSelf == false}");
-                GameObject obj1 = null;
+                
                 if (transform.GetChild(i).gameObject.activeSelf == false && i < transform.childCount)
                 {
                     obj1 = transform.GetChild(i).gameObject;
                     obj1.SetActive((true));
                     break;
                 }
-                else if (i == transform.childCount -1)
-                {  
-                    Debug.Log("»çÀÌÅ¬");
-                    obj1 = Instantiate(obj);
-                    obj1.transform.SetParent(gameObject.transform);
-                    obj1.gameObject.name = obj.gameObject.name.Replace("(Clone)", "");
-                    break;
-                }
             }
+            if (i == transform.childCount)
+            {
+                obj1 = Instantiate(obj);
+                obj1.transform.SetParent(gameObject.transform);
+                obj1.gameObject.name = obj.gameObject.name.Replace("(Clone)", "");
+               
+            }
+            obj1.transform.position = new Vector3(Random.Range(0, 6), -5f, 0);
             yield return new WaitForSeconds(0.5f);
 
         }
