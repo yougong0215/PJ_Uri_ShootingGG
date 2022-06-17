@@ -5,9 +5,9 @@ using DG.Tweening;
 using UnityEngine.UI;
 public class BaeYa : BulletTrans
 {
-    [SerializeField] Image WhiteHP;
-    [SerializeField] Image RedHP;
-    [SerializeField] Transform Player;
+    Image WhiteHP;
+    Image RedHP;
+    Transform Player;
     Image thisHP;
     float OriginHP;
     Vector3 direction = Vector3.right;
@@ -17,6 +17,7 @@ public class BaeYa : BulletTrans
     float Rot2;
     float speed;
     float currentTime;
+    Stage1 stg;
     IEnumerator cor;
 
     #region
@@ -26,19 +27,25 @@ public class BaeYa : BulletTrans
     // Start is called before the first frame 
     void OnEnable()
     {
+        WhiteHP = GameManager.Instance.GetWhiteImage();
+        RedHP = GameManager.Instance.GetRedImage();
+        WhiteHP.fillAmount = 1;
+        RedHP.fillAmount = 1;
         thisHP = WhiteHP;
-        HP = 1000;
+        HP = 500;
         OriginHP = HP;
         Rot = 0;
         SecondPatton = true;
+        transform.position = new Vector3(3, 8);
     }
     private void Start()
     {
-        HP = 1000;
+        Player = GameObject.Find("Player").GetComponent<Transform>();
+        HP = 500;
     }
     private void Awake()
     {
-        
+        stg = GameObject.Find("Stage1").GetComponent<Stage1>();
     }
     private void LateUpdate()
     {
@@ -50,13 +57,16 @@ public class BaeYa : BulletTrans
             DOTween.KillAll();
             thisHP.fillAmount = 0;
             thisHP = RedHP;
-            HP = 500;
-
+            HP = 250;
+            OriginHP = HP;
             FirstPatton = false;
         }
         thisHP.fillAmount = (HP / OriginHP);
         if (thisHP == RedHP && HP <=0)
         {
+            WhiteHP.fillAmount = 0;
+            RedHP.fillAmount = 0;
+            stg.SetNextPatton();
             PoolManager.Instance.Push(this);
         }
 

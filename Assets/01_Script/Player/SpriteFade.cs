@@ -19,10 +19,7 @@ public class SpriteFade : MonoBehaviour
         Append(Spi.DOFade(0.0f, 0.25f)).
         Append(Spi.DOFade(1.0f, 0.25f)).
         Append(Spi.DOFade(0.0f, 0.25f)).
-        Append(Spi.DOFade(1.0f, 0.25f)).OnComplete(()=>
-        {
-            Player.SetBool();
-        });
+        Append(Spi.DOFade(1.0f, 0.25f));
     }
 
     // Update is called once per frame

@@ -40,7 +40,7 @@ public class Stage1Patton : BulletTrans
             }
             transform.Rotate(new Vector3(0, 0, rotSpeed * Time.deltaTime));
         } 
-        else if(gameObject.name == Patten2)
+        if(gameObject.name == Patten2)
         {
             rotSpeed = 500;
             for (int i = 0; transform.childCount > i; i++)
@@ -63,7 +63,27 @@ public class Stage1Patton : BulletTrans
             transform.Rotate(new Vector3(0, 0, rotSpeed * Time.deltaTime));
 
         }
+
+
         
+    }
+    private void LateUpdate()
+    {
+        int j = 0;
+        for (int i = 0; transform.childCount > i; i++)
+        {
+
+            if (transform.GetChild(i).gameObject.activeSelf == false)
+            {
+                j++;
+            }
+            if (j == transform.childCount)
+            {
+                SetNextPatton();
+                PoolManager.Instance.Push(this);
+            }
+
+        }
     }
 
     public override void Reset()

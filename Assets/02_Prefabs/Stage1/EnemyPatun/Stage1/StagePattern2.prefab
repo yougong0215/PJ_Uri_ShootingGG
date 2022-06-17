@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8805547182720241659}
   - component: {fileID: 3453793798666001588}
-  - component: {fileID: 6236952965049356816}
   m_Layer: 0
   m_Name: StagePattern2
   m_TagString: Untagged
@@ -49,18 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abe25f9143ca86745bd2787d4d4e98fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6236952965049356816
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1323887187030167600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee5063a5bd9a1b940aaef30b557e0b23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  HP: 0
+  STG: {fileID: 0}
 --- !u!1 &1701326518528960399
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4593caced21485c408528451642ca88c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 0
 --- !u!61 &8756697379938293453
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -389,6 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 181abc10ffde2b74cad918f63ffa0dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 0
 --- !u!1 &3965292009059660755
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,6 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 181abc10ffde2b74cad918f63ffa0dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 0
 --- !u!1 &4146739248244697736
 GameObject:
   m_ObjectHideFlags: 0
@@ -717,6 +709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 181abc10ffde2b74cad918f63ffa0dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 0
 --- !u!1 &7310775860221192566
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,3 +874,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 181abc10ffde2b74cad918f63ffa0dfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HP: 0

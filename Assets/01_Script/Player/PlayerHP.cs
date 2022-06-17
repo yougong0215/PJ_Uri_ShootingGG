@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class PlayerHP : MonoBehaviour
 {
-    int HP =3;
+    [SerializeField]int HP =3;
     protected bool oncurrt;
-    private bool onDamaged;
     float currentTime;
 
-    public void SetBool()
-    {
-        onDamaged = false;
-    }
+
 
     public bool GetOnCR()
     {
@@ -23,7 +19,6 @@ public class PlayerHP : MonoBehaviour
     {
         currentTime = 0;
         oncurrt = false;
-        onDamaged = true;
         HP = 3;
     }
 
@@ -31,15 +26,12 @@ public class PlayerHP : MonoBehaviour
     void Update()
     {
 
-        if (currentTime >= 1.5f &&  onDamaged == false)
+        if (currentTime >= 1.5f && oncurrt == false)
         {
-            onDamaged = true;
             oncurrt = true;
-            currentTime = 0;
         }
         else
         {
-            oncurrt = false;
             currentTime += Time.deltaTime;
         }
     }
@@ -47,11 +39,12 @@ public class PlayerHP : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log($"{GameManager.Instance.GetDamaged()} | {oncurrt}");
-        if (collision.GetComponent<BulletTrans>() && onDamaged && oncurrt == true)
+        if (collision.GetComponent<BulletTrans>() && oncurrt == true)
         {
                 HP--;
-                oncurrt = true;
+                oncurrt = false;
                 Debug.Log(HP);
+            currentTime = 0;
         }
     }
 }

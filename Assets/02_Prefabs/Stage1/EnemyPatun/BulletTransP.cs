@@ -25,29 +25,6 @@ public class BulletTransP : BulletTrans
         }
     }
 
-    private void Update()
-    {
-        j = 0;
-        for (i = 0; transform.childCount > i; i++)
-        {
-            
-            if(transform.GetChild(i).gameObject.activeSelf == false)
-            {
-                j++;
-            }
-            if(j == transform.childCount)
-            {
-                PoolManager.Instance.Push(this);
-                STG1.SetNextPatton();
-            }
-        }
-    }
-    public void Push()
-    {
-        PoolManager.Instance.Push(this);
-        STG1.SetNextPatton();
-    }
-
 
 
     protected void OnTriggerEnter2D(Collider2D collision)

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5673137779942244782}
   - component: {fileID: -3278027239050991817}
-  - component: {fileID: -713761186392520746}
   m_Layer: 0
   m_Name: StagePattern1
   m_TagString: Untagged
@@ -55,19 +54,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 0
   STG: {fileID: 0}
---- !u!114 &-713761186392520746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 526727458705069227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee5063a5bd9a1b940aaef30b557e0b23, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HP: 0
 --- !u!1001 &3181392988752644615
 PrefabInstance:
   m_ObjectHideFlags: 0

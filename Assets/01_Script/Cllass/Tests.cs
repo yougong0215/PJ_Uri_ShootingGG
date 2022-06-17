@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Tests : MonoBehaviour
 {
@@ -20,12 +21,12 @@ public class Tests : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
+        
         currentTime += Time.deltaTime;
         
-        transform.position = Now + dir;
+        //transform.position = Now + dir;
         Now += new Vector2(0, 1f) * speed * Time.deltaTime;
-        */
+        
         dir.x = Mathf.Sin(currentTime * 2);// + Mathf.Tan(currentTime);
         dir.y = 1f;
         currentTime += Time.deltaTime;
@@ -36,5 +37,7 @@ public class Tests : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-
 }
+
+
+
