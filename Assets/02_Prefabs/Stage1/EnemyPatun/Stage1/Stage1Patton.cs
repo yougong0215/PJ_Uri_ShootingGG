@@ -16,8 +16,17 @@ public class Stage1Patton : BulletTrans
     const string Patten2 = "StagePattern2";
     void Awake()
     {
+        
         HP = 10000;
         STG = GameObject.Find("Stage1").GetComponent<Stage1>();
+    }
+    private void OnEnable()
+    {
+        for (int i = 0; transform.childCount > i; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(true);
+            transform.GetChild(i).gameObject.GetComponent<BulletTrans>().SetHp(GetWorldTime() + 50);
+        }
     }
     // Update is called once per frame
     public void SetNextPatton()
@@ -30,9 +39,10 @@ public class Stage1Patton : BulletTrans
     }
     void Update()
     {
+        
         if (gameObject.name == Patten1)
         {
-            rotSpeed = 100;
+            rotSpeed = Random.Range(100,300);
             
             for (int i = 0; transform.childCount > i; i++)
             {

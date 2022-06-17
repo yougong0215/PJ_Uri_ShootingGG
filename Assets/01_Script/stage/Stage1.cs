@@ -112,7 +112,7 @@ public class Stage1 : MonoBehaviour
                 {
                     StopAllCoroutines();
                     _SummonPaton = true;
-                    StartCoroutine(Patton(Patten1,1));
+                    StartCoroutine(Patton(Patten1,1, 3));
                 }
 
                 _Patun = true;
@@ -126,13 +126,15 @@ public class Stage1 : MonoBehaviour
                 {
                     StopAllCoroutines();
                     _SummonPaton = true;
-                    BT = PoolManager.Instance.Pop(Patten2);
+                    StartCoroutine(Patton(Patten2, 1, 3));
+                    StartCoroutine(Patton(Patten2, 1, 5));
+                    StartCoroutine(Patton(Patten2, 1, 1));
                 }
                 _Patun = true;
                 _WorldTime = 61f;
             }
 
-            if (110f > _WorldTime && _WorldTime >= 100)
+            if (130f > _WorldTime && _WorldTime >= 120)
             {
                 if (_SummonPaton == false)
                 {
@@ -141,23 +143,23 @@ public class Stage1 : MonoBehaviour
                     BT = PoolManager.Instance.Pop(MiddleBoss);
                 }
                 _Patun = true;
-                _WorldTime = 101;
+                _WorldTime = 121;
             }
 
         }
 
 
         _currentTime += Time.deltaTime;
-        _WorldTime += Time.deltaTime * 3;
+        _WorldTime += Time.deltaTime ;
         
     }
 
-    IEnumerator Patton(string obj, int i)
+    IEnumerator Patton(string obj, int i, float pos)
     {
         yield return new WaitForSeconds(3f);
         BT = PoolManager.Instance.Pop(obj);
         BT.transform.position = new Vector3(-3, 6, 0);
-        BT.transform.DOMove(new Vector3(-3, 3, 0), 2f);
+        BT.transform.DOMove(new Vector3(-pos, 3, 0), 2f);
         _PattonInt = i;
     }
 
