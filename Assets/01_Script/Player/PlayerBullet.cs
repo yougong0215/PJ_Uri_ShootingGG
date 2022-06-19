@@ -12,17 +12,28 @@ public class PlayerBullet : BulletTrans
     float bulletDamage;
     private int Typeint;
     private int number;
+    float currentTime;
+    private void OnEnable()
+    {
+        currentTime = 0;
+        speed = 10;
+        shift = false;
+        StartCoroutine(BulletDieTime());
+        HP = 10000;
+    }
     public void SetType(int Version, int i, float Damage)
     {
         Typeint = Version;
         number = i;
         bulletDamage = Damage;
+        currentTime = 0;
+        shift = false;
     }
     public float GetDamage()
     {
         if(shift == true)
         {
-            bulletDamage /= 2;
+            bulletDamage += 1;
         }
 
         return bulletDamage;
@@ -34,26 +45,14 @@ public class PlayerBullet : BulletTrans
         speed = 15f;
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            try
-            {
-                shift = true;
-                Target = GameObject.FindWithTag("Enemy");
-                Enemy = Target.GetComponent<Transform>().transform.position;
-                dir = Enemy - transform.position;
-                dir.Normalize();
-            }
-            catch
-            {
-                Type();
-            }
+            shift = true;
         }
-        else
-        {
-            Type();
-        }
+        Type();
+        
         transform.position += speed * dir * Time.deltaTime;
 
         FalseBullet();
+        currentTime += Time.deltaTime;
 
     }
     void FalseBullet()
@@ -67,56 +66,63 @@ public class PlayerBullet : BulletTrans
 
     void Type()
     {
-        switch(Typeint)
+        if (currentTime <= 0.1f || shift == false)
         {
-            case 1:
-                dir = Vector3.up;
-                break;
+            switch (Typeint)
+            {
+                case 1:
+                    dir = Vector3.up;
+                    break;
 
-            case 2:
-                switch(number)
-                {
-                    case 1:
-                        dir = new Vector3(0.2f, 0.8f, 0);
-                        break;
-                    case 2:
-                        dir = new Vector3(0, 1, 0);
-                        break;
-                    case 3:
-                        dir = new Vector3(-0.2f, 0.8f, 0);
-                        break;
-                }
-                break;
-            case 3:
-                switch (number)
-                {
-                    case 1:
-                        dir = new Vector3(0.1f, 0.8f, 0);
-                        break;
-                    case 2:
-                        dir = new Vector3(0.2f, 0.6f, 0);
-                        break;
-                    case 3:
-                        dir = new Vector3(0, 1, 0);
-                        break;
-                    case 4:
-                        dir = new Vector3(-0.2f, 0.6f, 0);
-                        break;
-                    case 5:
-                        dir = new Vector3(-0.1f, 0.8f, 0);
-                        break;
-                }
-                break;
+                case 2:
+                    switch (number)
+                    {
+                        case 1:
+                            dir = new Vector3(0.2f, 0.8f, 0);
+                            break;
+                        case 2:
+                            dir = new Vector3(0, 1, 0);
+                            break;
+                        case 3:
+                            dir = new Vector3(-0.2f, 0.8f, 0);
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch (number)
+                    {
+                        case 1:
+                            dir = new Vector3(0.1f, 0.8f, 0);
+                            break;
+                        case 2:
+                            dir = new Vector3(0.2f, 0.6f, 0);
+                            break;
+                        case 3:
+                            dir = new Vector3(0, 1, 0);
+                            break;
+                        case 4:
+                            dir = new Vector3(-0.2f, 0.6f, 0);
+                            break;
+                        case 5:
+                            dir = new Vector3(-0.1f, 0.8f, 0);
+                            break;
+                    }
+                    break;
+            }
+        }
+
+        if (shift == true)
+        {
+            Invoke("DIRUP", 0.2f);
         }
     }
-
+    void DIRUP()
+    {
+        dir = Vector3.up;
+    }
 
     public override void Reset()
     {
-        speed = 10;
-        shift = false;
-        StartCoroutine(BulletDieTime());
-        HP = 10000;
     }
     IEnumerator BulletDieTime()
     {

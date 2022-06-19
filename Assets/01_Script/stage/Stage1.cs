@@ -127,8 +127,6 @@ public class Stage1 : MonoBehaviour
                     StopAllCoroutines();
                     _SummonPaton = true;
                     StartCoroutine(Patton(Patten2, 1, 3));
-                    StartCoroutine(Patton(Patten2, 1, 5));
-                    StartCoroutine(Patton(Patten2, 1, 1));
                 }
                 _Patun = true;
                 _WorldTime = 61f;
@@ -150,7 +148,7 @@ public class Stage1 : MonoBehaviour
 
 
         _currentTime += Time.deltaTime;
-        _WorldTime += Time.deltaTime ;
+        _WorldTime += Time.deltaTime*3;
         
     }
 

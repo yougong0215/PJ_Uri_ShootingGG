@@ -10,49 +10,51 @@ public class PlayerFire : MonoBehaviour
     int Version;
     BulletTrans Bullet;
     PlayerBullet PBullet;
-
+    int speed;
     float Damage;
 
 
     private void Start()
     {
         playeritem = GameObject.Find("Player").GetComponent<PlayerItem>();
-        StartCoroutine(Delay());
+        StartCoroutine(Delay(speed));
     }
 
 
+    private void Update()
+    {
+        if (playeritem.GetPowerCnt() == 0)
+        {
+            bulletCnt = 1;
+            Version = 1;
+            bulletMa = 1;
+
+            Damage = 1;
+        }
+        else if (playeritem.GetPowerCnt() <= 1 && playeritem.GetPowerCnt() <= 3)
+        {
+            bulletCnt = 3;
+            Version = 2;
+            bulletMa = 3;
+
+            Damage = 1;
+        }
+        else if (playeritem.GetPowerCnt() <= 3)
+        {
+            bulletCnt = 5;
+            Version = 3;
+            bulletMa = 5;
+
+            Damage = 1;
+        }
+    }
 
 
-
-    IEnumerator Delay()
+    IEnumerator Delay(float sec)
     {
         while (true)
         {
             yield return new WaitForSeconds(0.1f);
-            if (playeritem.GetPowerCnt() == 0)
-            {
-                bulletCnt = 1;
-                Version = 1;
-                bulletMa = 1;
-
-                Damage = 1;
-            }
-            else if (playeritem.GetPowerCnt() <= 1)
-            {
-                bulletCnt = 3;
-                Version = 2;
-                bulletMa = 3;
-
-                Damage = 1;
-            }
-            else if (playeritem.GetPowerCnt() <= 3)
-            {
-                bulletCnt = 5;
-                Version = 3;
-                bulletMa = 5;
-
-                Damage = 0.6f;
-            }
             Shoot();
 
 

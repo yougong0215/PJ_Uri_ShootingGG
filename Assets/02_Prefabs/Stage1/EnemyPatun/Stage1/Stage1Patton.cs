@@ -40,7 +40,7 @@ public class Stage1Patton : BulletTrans
     void Update()
     {
         
-        if (gameObject.name == Patten1)
+        if (gameObject.name == Patten1 || gameObject.name == Patten2)
         {
             rotSpeed = Random.Range(100,300);
             
@@ -50,29 +50,7 @@ public class Stage1Patton : BulletTrans
             }
             transform.Rotate(new Vector3(0, 0, rotSpeed * Time.deltaTime));
         } 
-        if(gameObject.name == Patten2)
-        {
-            rotSpeed = 500;
-            for (int i = 0; transform.childCount > i; i++)
-            {
-                Transform transformChild = transform.GetChild(i);
-                if (transform.GetChild(0).gameObject.activeSelf == false)
-                {
-                    rotSpeed = 300;
-                    transform.GetChild(i).transform.position += new Vector3(1, 0, 0) * Time.deltaTime;
-                    //transform.GetChild(2).transform.position += new Vector3(0, 1, 0) * Time.deltaTime;
-                    //transform.GetChild(3).transform.position += new Vector3(-1, 0, 0) * Time.deltaTime;
-                    //transform.GetChild(4).transform.position += new Vector3(0, -1, 0) * Time.deltaTime;
 
-                    transform.Rotate(new Vector3(0, 0, -rotSpeed * Time.deltaTime));
-                    transform.DOMoveY(10f, 5f).Kill();
-                }
-                    transformChild.transform.Rotate(new Vector3(0, 0, -1 * rotSpeed * Time.deltaTime));
-                   
-            }
-            transform.Rotate(new Vector3(0, 0, rotSpeed * Time.deltaTime));
-
-        }
 
 
         
