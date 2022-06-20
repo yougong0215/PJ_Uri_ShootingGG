@@ -6,6 +6,8 @@ using DG.Tweening;
 public class PowerItem : BulletTrans
 {
     Sequence MoveUp;
+    PlayerHP GetHPRegister;
+
     public override void Reset()
     {
         HP = 10000;
@@ -27,6 +29,13 @@ public class PowerItem : BulletTrans
     private void OnEnable()
     {
         MoveUp.Restart();
+
+    }
+
+    public void Pl()
+    {
+        StopAllCoroutines();
+        DOTween.Sequence().SetAutoKill(false).Append(transform.DOMove(new Vector3(Random.Range(-4.9f, 0.9f), Random.Range(2.9f, 4f), 3), 0.3f));
     }
 
     // Update is called once per frame

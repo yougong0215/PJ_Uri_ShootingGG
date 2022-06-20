@@ -7,7 +7,7 @@ public class PlayerHP : MonoBehaviour
     [SerializeField]int HP =3;
     protected bool oncurrt;
     float currentTime;
-
+    PlayerItem powers;
 
 
     public bool GetOnCR()
@@ -17,7 +17,9 @@ public class PlayerHP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        powers = GameObject.Find("Player").GetComponent<PlayerItem>();
         currentTime = 0;
+      
         oncurrt = false;
         HP = 3;
     }
@@ -41,6 +43,7 @@ public class PlayerHP : MonoBehaviour
         //Debug.Log($"{GameManager.Instance.GetDamaged()} | {oncurrt}");
         if (collision.GetComponent<BulletTrans>() && oncurrt == true)
         {
+            powers.HitPowerCnt();
                 HP--;
                 oncurrt = false;
                 Debug.Log(HP);

@@ -6,13 +6,14 @@ public class JimBallType : BulletTrans
 {
     BlueBullet BB;
     int BoundCheck;
-
+    float currentTIme;
     public override void Reset()
     {
         BoundCheck = 0;
     }
     public void OnEnable()
     {
+        currentTIme = 0;
         StartCoroutine(Type1());
     }
 
@@ -35,6 +36,29 @@ public class JimBallType : BulletTrans
             
         }
     }
+
+    public void LateUpdate()
+    {
+        currentTIme += Time.deltaTime;
+        if (transform.parent == null)
+        {
+            if (currentTIme >= 4f)
+            {
+                PoolManager.Instance.Push(this);
+            }
+
+            if (Mathf.Abs(transform.position.y) >= 15f)
+            {
+                PoolManager.Instance.Push(this);
+            }
+        }
+        if (HP <= 0)
+        {
+            CreateItem();
+            PoolManager.Instance.Push(this);
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(BoundCheck >= 2)

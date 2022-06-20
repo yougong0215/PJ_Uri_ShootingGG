@@ -19,7 +19,7 @@ public class BaeYa : BulletTrans
     float currentTime;
     Stage1 stg;
     IEnumerator cor;
-
+    Animator _ani;
     #region
     bool FirstPatton = false;
     bool SecondPatton = false;
@@ -46,6 +46,7 @@ public class BaeYa : BulletTrans
     private void Awake()
     {
         stg = GameObject.Find("Stage1").GetComponent<Stage1>();
+        _ani = GetComponent<Animator>();
     }
     private void LateUpdate()
     {
@@ -57,9 +58,10 @@ public class BaeYa : BulletTrans
             DOTween.KillAll();
             thisHP.fillAmount = 0;
             thisHP = RedHP;
-            HP = 250;
+            HP = 300;
             OriginHP = HP;
             FirstPatton = false;
+            _ani.SetBool("Super", true);
         }
         thisHP.fillAmount = (HP / OriginHP);
         if (thisHP == RedHP && HP <=0)
@@ -69,7 +71,10 @@ public class BaeYa : BulletTrans
             stg.SetNextPatton();
             PoolManager.Instance.Push(this);
         }
-
+        if(thisHP == RedHP && HP >=300)
+        {
+            HP = 300;
+        }
 
     }
     private void Update()
@@ -235,6 +240,7 @@ public class BaeYa : BulletTrans
         transform.DOMove(new Vector3(-3, 3, 0), 1f).OnComplete(() =>
         {
             StartCoroutine(Patton3End());
+            HP += 50;
         });
     }
     IEnumerator Patton3End()
@@ -253,6 +259,7 @@ public class BaeYa : BulletTrans
         }
         yield return new WaitForSeconds(1.5f);
         SecondPatton = false ;
+        HP += 50;
     }
     IEnumerator Patton4()
     {
@@ -280,6 +287,7 @@ public class BaeYa : BulletTrans
         }
         yield return new WaitForSeconds(5f);
         FirstPatton = false;
+        HP += 50;
     }
 
     public override void Reset()

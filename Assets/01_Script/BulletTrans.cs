@@ -32,29 +32,20 @@ public abstract class BulletTrans : MonoBehaviour
 
     }
 
-    public void LateUpdate()
-    {
-
-        if (Mathf.Abs(transform.position.y) >= 15f)
-        {
-             PoolManager.Instance.Push(this);
-        }
-        if (HP <= 0)
-        {
-            CreateItem();
-            PoolManager.Instance.Push(this);
-        }
-    }
     public void SetDir(Vector3 value)
     {
         dir += value;
+    }
+    public void StaticSetDir(Vector3 value)
+    {
+        dir = value;
     }
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
             HP -= collision.GetComponent<PlayerBullet>().GetDamage();
-            PoolManager.Instance.Push(collision.GetComponent<BulletTrans>());
+            //PoolManager.Instance.Push(collision.GetComponent<PlayerBullet>());
         }
     }
     public void GetDamage(float value)
@@ -65,14 +56,15 @@ public abstract class BulletTrans : MonoBehaviour
     public void CreateItem()
     {
         ItemRandom = UnityEngine.Random.Range(0, 101);
-        if (ItemRandom >= 20 && ItemRandom < 70)
+        if (ItemRandom > 20 && ItemRandom < 70)
         {
             item = PoolManager.Instance.Pop("Power_Item") as PowerItem;
             item.SetPos(gameObject.transform.position);
         }
-        else if (ItemRandom > 1 && ItemRandom < 20)
+        else if (ItemRandom > 1 && ItemRandom <= 20)
         {
-
+            item = PoolManager.Instance.Pop("Big_Power_Item") as PowerItem;
+            item.SetPos(gameObject.transform.position);
         }
         else if(ItemRandom <= 1)
         {

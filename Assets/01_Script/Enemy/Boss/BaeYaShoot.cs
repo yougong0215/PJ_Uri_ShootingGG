@@ -49,6 +49,7 @@ public class BaeYaShoot : BulletTrans
     // Update is called once per frame
     void Update()
     {
+        HP = 10000;
         transform.position += dir * speed * Time.deltaTime;
     }
 

@@ -10,7 +10,7 @@ public class Stage1Patton : BulletTrans
     
     float ObjectRotZ;
     Vector3 ObjectRot;
-
+    int j = 0;
 
     const string Patten1 = "StagePattern1";
     const string Patten2 = "StagePattern2";
@@ -29,49 +29,50 @@ public class Stage1Patton : BulletTrans
         }
     }
     // Update is called once per frame
-    public void SetNextPatton()
-    {
-        STG.SetNextPatton();
-    }
     public float GetWorldTime()
     {
         return STG.GetWorldTime();
     }
     void Update()
     {
-        
+
         if (gameObject.name == Patten1 || gameObject.name == Patten2)
         {
-            rotSpeed = Random.Range(100,300);
-            
+            rotSpeed = Random.Range(100, 300);
+
             for (int i = 0; transform.childCount > i; i++)
             {
                 transform.GetChild(i).transform.Rotate(new Vector3(0, 0, -1 * rotSpeed * Time.deltaTime));
             }
             transform.Rotate(new Vector3(0, 0, rotSpeed * Time.deltaTime));
-        } 
+        }
+    }
 
-
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         
     }
+
+
+
+
     private void LateUpdate()
     {
-        int j = 0;
+        j = 0;
         for (int i = 0; transform.childCount > i; i++)
         {
-
             if (transform.GetChild(i).gameObject.activeSelf == false)
             {
                 j++;
             }
             if (j == transform.childCount)
             {
-                SetNextPatton();
+                STG.SetNextPatton();
+
                 PoolManager.Instance.Push(this);
             }
-
         }
+
     }
 
     public override void Reset()

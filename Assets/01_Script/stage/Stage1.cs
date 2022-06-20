@@ -47,7 +47,7 @@ public class Stage1 : MonoBehaviour
         _Patun = false;
         _currentTime = 0;
         _WorldTime = 0;
-        
+ 
     }
 
     public float GetWorldTime()
@@ -68,17 +68,21 @@ public class Stage1 : MonoBehaviour
                 StartCoroutine(MonsterSummonCrazy(1f, 30));
                 StartCoroutine(MonsterSummonTurlet(5f));
                 StartCoroutine(MonsterSummonJimball(2f, 50));
-                
                 break;
             case 2:
                 StopAllCoroutines();
-                StartCoroutine(MonsterSummonCrazy(1f, 50));
-                StartCoroutine(MonsterSummonTurlet(4f));
-                StartCoroutine(MonsterSummonJimball(2f, 80));
+                StartCoroutine(MonsterSummonCrazy(7f, 30));
+                StartCoroutine(MonsterSummonTurlet(0.8f));
+                StartCoroutine(MonsterSummonJimball(9f, 50));
                 break;
             case 3:
                 WhiteHP.fillAmount = 0;
                 RedHP.fillAmount = 0;
+                StopAllCoroutines();
+                StartCoroutine(MonsterSummonCrazy(5f, 50));
+                StartCoroutine(MonsterSummonTurlet(5f));
+                StartCoroutine(MonsterSummonJimball(8f, 70));
+                StartCoroutine(NonPatton(CBType2));
                 break;
         }
 
@@ -94,7 +98,6 @@ public class Stage1 : MonoBehaviour
     {
 
 
-        
         if (_WorldTime > 3) // 시작 할때 UI 보여줄 시간
         {
             Debug.Log(_WorldTime);
@@ -103,7 +106,6 @@ public class Stage1 : MonoBehaviour
                 _FirstSummon = true;
                 StartCoroutine(MonsterSummonCrazy(1.5f, 5));
                 StartCoroutine(MonsterSummonJimball(2.5f, 5));
-
             }
 
             if (40f > _WorldTime && _WorldTime >= 30f)
@@ -112,7 +114,7 @@ public class Stage1 : MonoBehaviour
                 {
                     StopAllCoroutines();
                     _SummonPaton = true;
-                    StartCoroutine(Patton(Patten1,1, 3));
+                    StartCoroutine(Patton(Patten1, 1, 3));
                 }
 
                 _Patun = true;
@@ -126,7 +128,7 @@ public class Stage1 : MonoBehaviour
                 {
                     StopAllCoroutines();
                     _SummonPaton = true;
-                    StartCoroutine(Patton(Patten2, 1, 3));
+                    StartCoroutine(Patton(Patten2, 2, 3));
                 }
                 _Patun = true;
                 _WorldTime = 61f;
@@ -138,17 +140,19 @@ public class Stage1 : MonoBehaviour
                 {
                     StopAllCoroutines();
                     _SummonPaton = true;
-                    BT = PoolManager.Instance.Pop(MiddleBoss);
+                    StartCoroutine(Patton(MiddleBoss, 3, 3));
                 }
                 _Patun = true;
                 _WorldTime = 121;
             }
 
+            
+
         }
 
 
         _currentTime += Time.deltaTime;
-        _WorldTime += Time.deltaTime*3;
+        _WorldTime += Time.deltaTime * 10;
         
     }
 
@@ -156,9 +160,54 @@ public class Stage1 : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         BT = PoolManager.Instance.Pop(obj);
-        BT.transform.position = new Vector3(-3, 6, 0);
-        BT.transform.DOMove(new Vector3(-pos, 3, 0), 2f);
+        BT.transform.position = new Vector3(-4, 6, 0);
+        if (obj != MiddleBoss)
+        {
+            BT.transform.DOMove(new Vector3(-pos, 3, 0), 2f);
+        }
         _PattonInt = i;
+    }
+    IEnumerator NonPatton(string obj)
+    {
+        while (true)
+        {
+            Debug.Log("던다");
+            float h = Random.Range(-6.5f, 1f);
+            for (int i = 0; i < 30; i++)
+            {
+                BT = PoolManager.Instance.Pop(obj);
+                BT.SetHp(100);
+                BT.StaticSetDir(Vector2.zero);
+                if (i % 2 == 0)
+                    BT.transform.position = new Vector3(Random.Range(h - 0.5f, h + 0.5f), 5, 0);
+                else
+                    BT.transform.position = new Vector3(Random.Range(h - 0.5f, h + 0.5f), -5, 0);
+
+                if (i % 2 == 0)
+                    StartCoroutine(BDUp1(BT));
+                else
+                    StartCoroutine(BDUp2(BT));
+            }
+            yield return new WaitForSeconds(10f);
+        }
+    }
+    IEnumerator BDUp1(BulletTrans obj)
+    {
+        obj.transform.DOMoveY(5, 0.5f);
+        yield return new WaitForSeconds(Random.Range(0.5f,1f));
+        obj.transform.DOMoveY(-7, Random.Range(1f, 8f)).OnComplete(()=>
+        {
+            PoolManager.Instance.Push(obj);
+        });
+    }
+    IEnumerator BDUp2(BulletTrans obj)
+    {
+        obj.transform.DOMoveY(-5, 0.5f);
+        yield return new WaitForSeconds(Random.Range(0.5f, 1f));
+        obj.transform.DOMoveY(7, Random.Range(1f, 8f)).OnComplete(() =>
+        {
+            PoolManager.Instance.Push(obj);
+        });
     }
 
 
@@ -168,7 +217,7 @@ public class Stage1 : MonoBehaviour
         while (true)
         {
 
-            RandomSummon = UnityEngine.Random.Range(0f, -6.5f);
+            RandomSummon = UnityEngine.Random.Range(-6.5f, 1.5f);
             switch (UnityEngine.Random.Range(0,2))
             {
                 case 0:
@@ -241,7 +290,7 @@ public class Stage1 : MonoBehaviour
         while (true)
         {
             BT = PoolManager.Instance.Pop(JBType) as JimBallType;
-            RandomSummon = UnityEngine.Random.Range(0f, -6.5f);
+            RandomSummon = UnityEngine.Random.Range(-6.5f, 1.5f);
             BT.transform.position = new Vector3(RandomSummon, 6.99f, 0);
             RandomSummon = UnityEngine.Random.Range(1, 5);
             switch ((int)RandomSummon)

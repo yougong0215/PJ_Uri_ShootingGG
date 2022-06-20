@@ -6,8 +6,6 @@ public class PlayerBullet : BulletTrans
 {
     private Vector3 dir = Vector3.up;
     [SerializeField] float speed = 10;
-    GameObject Target;
-    Vector3 Enemy;
     bool shift;
     float bulletDamage;
     private int Typeint;
@@ -15,25 +13,23 @@ public class PlayerBullet : BulletTrans
     float currentTime;
     private void OnEnable()
     {
-        currentTime = 0;
-        speed = 10;
-        shift = false;
-        StartCoroutine(BulletDieTime());
-        HP = 10000;
     }
     public void SetType(int Version, int i, float Damage)
     {
         Typeint = Version;
         number = i;
         bulletDamage = Damage;
+        speed = 10;
         currentTime = 0;
         shift = false;
+        HP = 10000;
+        UPcheck = false;
     }
     public float GetDamage()
     {
         if(shift == true)
         {
-            bulletDamage += 1;
+            bulletDamage -= 0.5f;
         }
 
         return bulletDamage;
@@ -42,6 +38,7 @@ public class PlayerBullet : BulletTrans
     // Update is called once per frame
     void Update()
     {
+        HP = 10000;
         speed = 15f;
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -50,12 +47,10 @@ public class PlayerBullet : BulletTrans
         Type();
         
         transform.position += speed * dir * Time.deltaTime;
-
-        FalseBullet();
         currentTime += Time.deltaTime;
 
     }
-    void FalseBullet()
+    private void LateUpdate()
     {
         if (Mathf.Abs(transform.position.y) >= 7)
         {
@@ -66,15 +61,26 @@ public class PlayerBullet : BulletTrans
 
     void Type()
     {
-        if (currentTime <= 0.1f || shift == false)
+        if (currentTime <= 0.2f || shift == false)
         {
             switch (Typeint)
             {
                 case 1:
                     dir = Vector3.up;
                     break;
-
                 case 2:
+                    switch (number)
+                    {
+                        case 1:
+                            dir = new Vector3(0.1f, 0.9f, 0);
+                            break;
+                        case 2:
+                            dir = new Vector3(-0.1f, 0.9f, 0);
+                            break;
+                    }
+                    break;
+
+                case 3:
                     switch (number)
                     {
                         case 1:
@@ -88,7 +94,27 @@ public class PlayerBullet : BulletTrans
                             break;
                     }
                     break;
-                case 3:
+                case 4:
+                    switch (number)
+                    {
+                        case 1:
+                            dir = new Vector3(0.1f, 0.8f, 0);
+                            break;
+                        case 2:
+                            dir = new Vector3(0, 1, 0);
+                            break;
+                        case 3:
+                            dir = new Vector3(-0.1f, 0.8f, 0);
+                            break;
+                        case 4:
+                            dir = new Vector3(-0.05f, 0.8f, 0);
+                            break;
+                        case 5:
+                            dir = new Vector3(0.05f, 0.8f, 0);
+                            break;
+                    }
+                    break;
+                case 5:
                     switch (number)
                     {
                         case 1:
@@ -111,27 +137,28 @@ public class PlayerBullet : BulletTrans
             }
         }
 
-        if (shift == true)
+        if (shift == true && UPcheck == false)
         {
-            Invoke("DIRUP", 0.2f);
+            UPcheck = true;
+            StartCoroutine(DIRUP());
         }
     }
-    void DIRUP()
+
+    bool UPcheck = false;
+
+    IEnumerator DIRUP()
     {
+        yield return new WaitForSeconds(0.2f);
         dir = Vector3.up;
     }
 
     public override void Reset()
     {
     }
-    IEnumerator BulletDieTime()
-    {
-        yield return new WaitForSeconds(1f);
-        PoolManager.Instance.Push(this);
-    }
+
     protected void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.GetComponent("Enemy"))
+        if(collision.gameObject.CompareTag("Enemy"))
         {
             PoolManager.Instance.Push(this);
         }

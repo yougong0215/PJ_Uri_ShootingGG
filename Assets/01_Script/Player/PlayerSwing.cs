@@ -13,7 +13,8 @@ public class PlayerSwing : MonoBehaviour
     [SerializeField] GameObject Explosion;
     BulletTrans bulletTrans;
     float SlashNum;
-
+    int SuperNovaCnt;
+    bool Check;
     // Start is called before the first frame update
     void Start()
     {
@@ -63,13 +64,16 @@ public class PlayerSwing : MonoBehaviour
 
     void SuperNove()
     {
-        if(Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftShift))
         {
-            for(int i = 0; i < Explosion.transform.childCount; i++)
-            {
-                Explosion.transform.GetChild(i).gameObject.SetActive(true);
-            }
-        }    
+            Explosion.transform.GetChild(1).gameObject.SetActive(true);
+            Check = true;
+        }
+        if (Input.GetKeyDown(KeyCode.C) && Check == false)
+        {
+                Explosion.transform.GetChild(0).gameObject.SetActive(true);
+        }
+        Check = false;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

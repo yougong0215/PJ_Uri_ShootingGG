@@ -9,9 +9,15 @@ public class CrazyBirdType : BulletTrans
     BlueBullet BB;
     const string Type1 = "CrazyBirdType1";
     const string Type2 = "CrazyBirdType2";
-    Vector3 dir;
 
+    const string Patten1 = "StagePattern1";
+    const string Patten2 = "StagePattern2";
+    const string Patten3 = "StagePattern3";
+    const string Patten4 = "StagePattern4";
+    Vector3 dir;
+    string nameing;
     bool isType;
+    float currentTIme;
     // 0번 1번 사용 가능
 
     int i;
@@ -32,19 +38,44 @@ public class CrazyBirdType : BulletTrans
 
     private void OnEnable()
     {
+        currentTIme = 0;
         StartCoroutine(CRType());
+       
     }
     public void Type()
     {
-        if (gameObject.name == Type1) // 3방향 난사
+            if (gameObject.name == Type1) // 3방향 난사
+            {
+                StartCoroutine(CRType1());
+            }
+            else if (gameObject.name == Type2) // 플레이어 방향 쏘기
+            {
+                StartCoroutine(CRType2());
+            }
+            StartCoroutine(CRType());
+        
+    }
+
+    public void LateUpdate()
+    {
+        currentTIme += Time.deltaTime;
+        if (transform.parent == null)
         {
-            StartCoroutine(CRType1());
+            if (currentTIme >= 4f)
+            {
+                PoolManager.Instance.Push(this);
+            }
+
+            if (Mathf.Abs(transform.position.y) >= 15f)
+            {
+                PoolManager.Instance.Push(this);
+            }
         }
-        else if (gameObject.name == Type2) // 플레이어 방향 쏘기
+        if (HP <= 0)
         {
-            StartCoroutine(CRType2());
+            CreateItem();
+            PoolManager.Instance.Push(this);
         }
-        StartCoroutine(CRType());
     }
 
     IEnumerator CRType1()
