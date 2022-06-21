@@ -61,7 +61,7 @@ public class PlayerBullet : BulletTrans
 
     void Type()
     {
-        if (currentTime <= 0.2f || shift == false)
+        if (currentTime <= 0.1f || shift == false)
         {
             switch (Typeint)
             {
@@ -137,20 +137,14 @@ public class PlayerBullet : BulletTrans
             }
         }
 
-        if (shift == true && UPcheck == false)
+        if (currentTime >= 0.1f && shift == true && UPcheck == false)
         {
             UPcheck = true;
-            StartCoroutine(DIRUP());
+            dir = Vector3.up;
         }
     }
 
     bool UPcheck = false;
-
-    IEnumerator DIRUP()
-    {
-        yield return new WaitForSeconds(0.2f);
-        dir = Vector3.up;
-    }
 
     public override void Reset()
     {

@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
    
 
     Image WhiteHP;
-    GameObject _Canvas;
     Image RedHP;
+    Image HPBar;
     Transform Player;
     private static GameManager instance = null;
     public static GameManager Instance
@@ -43,8 +43,11 @@ public class GameManager : MonoBehaviour
         }
         */
 
-        WhiteHP = GameObject.Find("Canvas/White").GetComponent<Image>();
-        RedHP = GameObject.Find("Canvas/Red").GetComponent<Image>();
+        WhiteHP = GameObject.Find("Canvas/Pase1").GetComponent<Image>();
+        RedHP = GameObject.Find("Canvas/Pase2").GetComponent<Image>();
+        HPBar = GameObject.Find("Canvas/HPBar").GetComponent<Image>();
+
+
         PoolManager.Instance = new PoolManager(transform); // 게임메니저 풀링 부모로 해서 풀메니저 싱글톤 생성
         foreach (BulletTrans p in _PoolList)
         {
@@ -52,6 +55,16 @@ public class GameManager : MonoBehaviour
         }
         
     }
+
+    public void HPBarOn()
+    {
+        HPBar.fillAmount = 1;
+    }
+    public void HPBarOff()
+    {
+        HPBar.fillAmount = 0;
+    }
+
     public Image GetWhiteImage()
     {
         return WhiteHP;

@@ -32,6 +32,7 @@ public class BaeYaShoot : BulletTrans
             case 1:
                 StartCoroutine(SpeedDown());
                 dir = value;
+                dir.Normalize();
                 break;
             case 2:
                 StartCoroutine(MoveDir(value));
@@ -56,7 +57,6 @@ public class BaeYaShoot : BulletTrans
     IEnumerator Patton4(Vector3 value)
     {
         yield return new WaitForSeconds(1.5f);
-        dir.Normalize();
         dir = value;
     }
     IEnumerator MoveDir(Vector3 value)
@@ -65,7 +65,6 @@ public class BaeYaShoot : BulletTrans
         yield return new WaitForSeconds(UnityEngine.Random.RandomRange(1f,3f));
         speed = 1f;
         dir = value;
-        dir.Normalize();
         yield return new WaitForSeconds(1f);
         speed = 10f;
     }
@@ -80,7 +79,6 @@ public class BaeYaShoot : BulletTrans
         yield return new WaitForSeconds(0.5f);
         speed = 4;
         dir = value;
-        dir.Normalize();
         yield return new WaitForSeconds(2f);
         for(int i = 1; i < 36; i++)
         {

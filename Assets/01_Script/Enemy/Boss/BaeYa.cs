@@ -10,7 +10,6 @@ public class BaeYa : BulletTrans
     Transform Player;
     Image thisHP;
     float OriginHP;
-    Vector3 direction = Vector3.right;
     Vector3 newDirection;
     BaeYaShoot bullet;
     float Rot;
@@ -24,19 +23,37 @@ public class BaeYa : BulletTrans
     bool FirstPatton = false;
     bool SecondPatton = false;
     #endregion
+    bool LateUpdateON = false;
+
     // Start is called before the first frame 
     void OnEnable()
     {
         WhiteHP = GameManager.Instance.GetWhiteImage();
         RedHP = GameManager.Instance.GetRedImage();
-        WhiteHP.fillAmount = 1;
-        RedHP.fillAmount = 1;
+        GameManager.Instance.HPBarOn();
+        StartCoroutine(HPBar());
         thisHP = WhiteHP;
         HP = 500;
         OriginHP = HP;
         Rot = 0;
         SecondPatton = true;
         transform.position = new Vector3(3, 8);
+    }
+
+    IEnumerator HPBar()
+    {
+        RedHP.fillAmount = 0;
+        WhiteHP.fillAmount = 0;
+        while (true)
+        {
+            yield return new WaitForSeconds(0.1f);
+            WhiteHP.fillAmount = RedHP.fillAmount == 1 ? WhiteHP.fillAmount += 0.1f : RedHP.fillAmount += 0.1f;
+            if(RedHP.fillAmount ==1)
+            {
+                LateUpdateON = true;
+                break;
+            }
+        }
     }
     private void Start()
     {
@@ -50,30 +67,33 @@ public class BaeYa : BulletTrans
     }
     private void LateUpdate()
     {
-        if (thisHP == WhiteHP && (HP / OriginHP) * 10 <= 1)
+        if (LateUpdateON == true)
         {
-            FirstPatton = true;
-            SecondPatton = true;
-            StopAllCoroutines();
-            DOTween.KillAll();
-            thisHP.fillAmount = 0;
-            thisHP = RedHP;
-            HP = 300;
-            OriginHP = HP;
-            FirstPatton = false;
-            _ani.SetBool("Super", true);
-        }
-        thisHP.fillAmount = (HP / OriginHP);
-        if (thisHP == RedHP && HP <=0)
-        {
-            WhiteHP.fillAmount = 0;
-            RedHP.fillAmount = 0;
-            stg.SetNextPatton();
-            PoolManager.Instance.Push(this);
-        }
-        if(thisHP == RedHP && HP >=300)
-        {
-            HP = 300;
+            if (thisHP == WhiteHP && (HP / OriginHP) * 10 <= 1)
+            {
+                FirstPatton = true;
+                SecondPatton = true;
+                StopAllCoroutines();
+                DOTween.KillAll();
+                thisHP.fillAmount = 0;
+                thisHP = RedHP;
+                HP = 300;
+                OriginHP = HP;
+                FirstPatton = false;
+                _ani.SetBool("Super", true);
+            }
+            thisHP.fillAmount = (HP / OriginHP);
+            if (thisHP == RedHP && HP <= 0)
+            {
+                WhiteHP.fillAmount = 0;
+                RedHP.fillAmount = 0;
+                stg.SetNextPatton();
+                PoolManager.Instance.Push(this);
+            }
+            if (thisHP == RedHP && HP >= 300)
+            {
+                HP = 300;
+            }
         }
 
     }
@@ -89,8 +109,8 @@ public class BaeYa : BulletTrans
                 FirstPatton = true;
                 transform.DOMove(new Vector3(-3, 3, 0), 1f).OnComplete(() =>
                 {
-                     StartCoroutine(BossBullet1(1.5f)); 
-                    StartCoroutine(BossBullet2(1.5f));
+                     StartCoroutine(BossBullet1()); 
+                    StartCoroutine(BossBullet2());
 
                 });
             }
@@ -109,7 +129,6 @@ public class BaeYa : BulletTrans
         {
             if (FirstPatton == false)
             {
-                Rot = 0;
                 FirstPatton = true;
                 transform.DOMove(new Vector3(0, 4, 0), 1f).OnComplete(() =>
                 {
@@ -123,16 +142,17 @@ public class BaeYa : BulletTrans
                 transform.DOMove(new Vector3(-3, 3, 0), 1f).OnComplete(() =>
                 {
                     StartCoroutine(Patton4());
-                    StartCoroutine(BossBullet1(3f));
-                    StartCoroutine(BossBullet2(3f));
+                    StartCoroutine(BossBullet1());
+                    StartCoroutine(BossBullet2());
                 });
             }
         } 
         
     }
     #region ∆–≈œ 1
-    IEnumerator BossBullet1(float a)
+    IEnumerator BossBullet1()
     {
+        transform.DOMoveY(0, 1f);
         for (int j = 1; j <= 30; j++)
         {
             for (int i = 1; i <= 5; i++)
@@ -140,24 +160,24 @@ public class BaeYa : BulletTrans
 
                 bullet = PoolManager.Instance.Pop("FireBullet_") as BaeYaShoot;
                 bullet.transform.position = transform.position;
-                bullet.SetDir(Quaternion.Euler(0, 0, 345 - 30 * i + Rot) * direction, 0.4f, 1);
+                bullet.SetDir(Quaternion.Euler(0, 0, 345 - 30 * i + Rot) * Vector3.right, 0.4f, 1);
                 bullet.SetHp(150);
                 yield return new WaitForEndOfFrame();
             }
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.25f);
             if (j < 5)
             {
-                Rot -= a;
+                Rot -= 1.5f;
             }
             else
             {
-                Rot += a;
+                Rot += 1.5f;
             }
         }
         if(thisHP == WhiteHP)
             SecondPatton = false;
     }
-    IEnumerator BossBullet2(float a)
+    IEnumerator BossBullet2()
     {
         for (int j = 1; j <= 30; j++)
         {
@@ -169,14 +189,14 @@ public class BaeYa : BulletTrans
                 bullet.SetHp(150);
                 yield return new WaitForEndOfFrame();
             }
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.25f);
             if (j < 5)
             {
-                Rot2 += a;
+                Rot2 += 1.5f;
             }
             else
             {
-                Rot2 -= a;
+                Rot2 -= 1.5f;
             }
         }
     }
@@ -263,7 +283,7 @@ public class BaeYa : BulletTrans
     }
     IEnumerator Patton4()
     {
-        for (int j = 1; j <= 15; j++)
+        for (int j = 1; j <= 20; j++)
         {
             for (int i = 1; i <= 3; i++)
             {

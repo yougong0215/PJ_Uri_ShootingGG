@@ -39,6 +39,7 @@ public class Stage1 : MonoBehaviour
     int _PattonInt;
     void Start()
     {
+        GameManager.Instance.HPBarOff();
         WhiteHP.fillAmount = 0;
         RedHP.fillAmount = 0;
         _SummonPaton = false;
