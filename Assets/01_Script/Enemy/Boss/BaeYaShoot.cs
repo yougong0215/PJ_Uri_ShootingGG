@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BaeYaShoot : BulletTrans
 {
+    Transform Target;
     Vector3 dir = Vector3.down;
     float speed;
     int Patton;
@@ -18,7 +19,7 @@ public class BaeYaShoot : BulletTrans
     }
     private void Awake()
     {
-
+        
     }
 
 
@@ -52,6 +53,8 @@ public class BaeYaShoot : BulletTrans
     {
         HP = 10000;
         transform.position += dir * speed * Time.deltaTime;
+
+
     }
 
     IEnumerator Patton4(Vector3 value)

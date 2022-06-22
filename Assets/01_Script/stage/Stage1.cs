@@ -24,7 +24,7 @@ public class Stage1 : MonoBehaviour
     BulletTrans BT;
     float _WorldHP;
 
-
+    bool BossSound;
 
     float RandomSummon;
     float _currentTime;
@@ -39,6 +39,7 @@ public class Stage1 : MonoBehaviour
     int _PattonInt;
     void Start()
     {
+        BossSound = false;
         GameManager.Instance.HPBarOff();
         WhiteHP.fillAmount = 0;
         RedHP.fillAmount = 0;
@@ -79,10 +80,13 @@ public class Stage1 : MonoBehaviour
             case 3:
                 WhiteHP.fillAmount = 0;
                 RedHP.fillAmount = 0;
+                
+                GameManager.Instance.ActiveFalseBulletOBJ();
+                GameManager.Instance.HPBarOff();
                 StopAllCoroutines();
-                StartCoroutine(MonsterSummonCrazy(5f, 50));
+                StartCoroutine(MonsterSummonCrazy(3f, 50));
                 StartCoroutine(MonsterSummonTurlet(5f));
-                StartCoroutine(MonsterSummonJimball(8f, 70));
+                StartCoroutine(MonsterSummonJimball(5f, 70));
                 StartCoroutine(NonPatton(CBType2));
                 break;
         }
@@ -101,7 +105,7 @@ public class Stage1 : MonoBehaviour
 
         if (_WorldTime > 3) // 시작 할때 UI 보여줄 시간
         {
-            Debug.Log(_WorldTime);
+            //Debug.Log(_WorldTime);
             if (_FirstSummon == false)
             {
                 _FirstSummon = true;
@@ -141,26 +145,38 @@ public class Stage1 : MonoBehaviour
                 {
                     StopAllCoroutines();
                     _SummonPaton = true;
+                    BossSound = true;
                     StartCoroutine(Patton(MiddleBoss, 3, 3));
                 }
                 _Patun = true;
                 _WorldTime = 121;
             }
 
-            
+
 
         }
 
 
         _currentTime += Time.deltaTime;
-        _WorldTime += Time.deltaTime * 10;
+        _WorldTime += Time.deltaTime;
         
+    }
+
+    public bool BossComeing()
+    {
+        return BossSound;
+    }
+    public void BossGone(bool a)
+    {
+        BossSound = a;
     }
 
     IEnumerator Patton(string obj, int i, float pos)
     {
-        yield return new WaitForSeconds(3f);
+        GameManager.Instance.AudioReturn(3);
+        yield return new WaitForSeconds(4f);
         BT = PoolManager.Instance.Pop(obj);
+        
         BT.transform.position = new Vector3(-4, 6, 0);
         if (obj != MiddleBoss)
         {
@@ -172,6 +188,7 @@ public class Stage1 : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForSeconds(10f);
             Debug.Log("던다");
             float h = Random.Range(-6.5f, 1f);
             for (int i = 0; i < 30; i++)
@@ -189,7 +206,6 @@ public class Stage1 : MonoBehaviour
                 else
                     StartCoroutine(BDUp2(BT));
             }
-            yield return new WaitForSeconds(10f);
         }
     }
     IEnumerator BDUp1(BulletTrans obj)

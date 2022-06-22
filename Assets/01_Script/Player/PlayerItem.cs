@@ -12,7 +12,7 @@ public class PlayerItem : MonoBehaviour
 
     private void Start()
     {
-        PowerCnt = 100;
+        PowerCnt = 0;
     }
     int PowerCnt;
     int LastCnt;

@@ -8,7 +8,8 @@ public class PlayerHP : MonoBehaviour
     protected bool oncurrt;
     float currentTime;
     PlayerItem powers;
-
+    AudioSource _audio;
+    [SerializeField]AudioClip _clip;
 
     public bool GetOnCR()
     {
@@ -17,6 +18,7 @@ public class PlayerHP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _audio = GetComponent<AudioSource>();
         powers = GameObject.Find("Player").GetComponent<PlayerItem>();
         currentTime = 0;
       
@@ -48,6 +50,7 @@ public class PlayerHP : MonoBehaviour
                 oncurrt = false;
                 Debug.Log(HP);
             currentTime = 0;
+            _audio.PlayOneShot(_clip);
         }
     }
 }

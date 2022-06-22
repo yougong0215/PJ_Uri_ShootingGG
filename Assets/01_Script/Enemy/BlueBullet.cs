@@ -50,6 +50,9 @@ public class BlueBullet : BulletTrans
             case 2:
                 Version2(); // Jimball
                 break;
+            case 3:
+                Version3();
+                break;
             default:
                 break;
         }
@@ -113,9 +116,51 @@ public class BlueBullet : BulletTrans
                 break;
         }
     }
+    void Version3()
+    {
+        switch (a)
+        {
+            case 0:
+                dir = DownLeft;
+                break;
+            case 1:
+                dir = Middle;
+                break;
+            case 2:
+                dir = DownRight;
+                break;
+            case 3:
+                dir = Right;
+                break;
+            case 4:
+                dir = RightUp;
+                break;
+            case 5:
+                dir = Up;
+                break;
+            case 6:
+                dir = LeftUp;
+                break;
+            case 7:
+                dir = Left;
+                break;
+        }
+        dir.x += Mathf.Sin(currenttime);
+        StartCoroutine(Version33());
+    }
+    IEnumerator Version33()
+    {
+        speed = 0;
+        yield return new WaitForSeconds(0.3f);
+        
+        yield return new WaitForSeconds(0.3f);
+        speed = 5;
+    }
+
 
     void Update()
     {
+        HP = 10000;
         transform.position += speed * dir * Time.deltaTime;
         if (gameObject.activeSelf)
         {

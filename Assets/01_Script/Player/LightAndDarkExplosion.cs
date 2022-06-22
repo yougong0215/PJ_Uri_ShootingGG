@@ -51,7 +51,7 @@ public class LightAndDarkExplosion : MonoBehaviour
     {
         if(gameObject.name == "LightEx")
         {
-            if(collision.GetComponent<BlueBullet>())
+            if(collision.GetComponent<BlueBullet>() || collision.GetComponent<BaeYaShoot>())
                 collision.gameObject.SetActive(false);
         }
     }

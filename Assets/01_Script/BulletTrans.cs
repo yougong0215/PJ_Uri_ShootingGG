@@ -6,6 +6,7 @@ using DG.Tweening;
 public abstract class BulletTrans : MonoBehaviour
 {
     // 1 : 30
+
     protected Vector3 dir;
     float currentTIme;
     int ItemRandom;
@@ -16,6 +17,7 @@ public abstract class BulletTrans : MonoBehaviour
 
     public void Awake()
     {
+        //_ShootNormalMonster = GameManager.Instance.AudioReturn(1);
         currentTIme = 0;
         dir = Vector3.down;
     }

@@ -58,6 +58,11 @@ public class TurletType : BulletTrans
             box.size = new Vector2(0.2f, 2.7f);
             box.offset = new Vector2(0.0f, 1.2f);
         }
+        if(isTrigger == true)
+        {
+            isTrigger = false;
+            GameManager.Instance.AudioReturn(2);
+        }
     }
 
     IEnumerator Fire()

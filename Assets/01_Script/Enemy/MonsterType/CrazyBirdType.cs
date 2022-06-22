@@ -6,6 +6,7 @@ using DG.Tweening;
 public class CrazyBirdType : BulletTrans
 {
     // 옌 BulletBullet만 사용함
+
     BlueBullet BB;
     const string Type1 = "CrazyBirdType1";
     const string Type2 = "CrazyBirdType2";
@@ -20,6 +21,11 @@ public class CrazyBirdType : BulletTrans
     float currentTIme;
     // 0번 1번 사용 가능
 
+    AudioSource _audio;
+    private void Start()
+    {
+        _audio = GetComponent<AudioSource>();
+    }
     int i;
     public override void Reset()
     {
@@ -73,6 +79,8 @@ public class CrazyBirdType : BulletTrans
         }
         if (HP <= 0)
         {
+            Debug.Log(GameManager.Instance);
+            GameManager.Instance.AudioReturn(0);
             CreateItem();
             PoolManager.Instance.Push(this);
         }

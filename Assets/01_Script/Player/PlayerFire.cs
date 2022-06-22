@@ -11,11 +11,12 @@ public class PlayerFire : MonoBehaviour
     float speed;
     float Damage;
     int bulletMax;
-    
+    AudioSource _audio;
 
 
     private void Start()
     {
+        _audio = GetComponent<AudioSource>();
         playeritem = GameObject.Find("Player").GetComponent<PlayerItem>();
         StartCoroutine(Delay());
     }
@@ -95,6 +96,10 @@ public class PlayerFire : MonoBehaviour
             speed = 0.05f;
             Damage = 2f;
         }
+        if (Input.GetKeyUp(KeyCode.Z) && gameObject.name == "Dark")
+        {
+            _audio.Stop();
+        }
     }
 
 
@@ -104,6 +109,7 @@ public class PlayerFire : MonoBehaviour
         {
 
             yield return new WaitForSeconds(speed);
+
             Shoot();
         }
     }
@@ -128,7 +134,10 @@ public class PlayerFire : MonoBehaviour
                 PBullet.SetType(Version, bulletCnt, Damage);
                 PBullet.transform.position = transform.position;
             }
-
+            if (gameObject.name == "Dark")
+            {
+                _audio.Play();
+            }
 
         }
     }

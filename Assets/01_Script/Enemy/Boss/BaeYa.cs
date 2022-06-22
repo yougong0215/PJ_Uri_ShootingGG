@@ -25,6 +25,8 @@ public class BaeYa : BulletTrans
     #endregion
     bool LateUpdateON = false;
 
+    bool Talk = false;
+
     // Start is called before the first frame 
     void OnEnable()
     {
@@ -99,55 +101,63 @@ public class BaeYa : BulletTrans
     }
     private void Update()
     {
-        currentTime += Time.deltaTime;
-
-        if (thisHP == WhiteHP)
+        if (Talk == true)
         {
-            if (FirstPatton == false)
-            {
-                //Rot = 0;
-                FirstPatton = true;
-                transform.DOMove(new Vector3(-3, 3, 0), 1f).OnComplete(() =>
-                {
-                     StartCoroutine(BossBullet1()); 
-                    StartCoroutine(BossBullet2());
+            currentTime += Time.deltaTime;
 
-                });
-            }
-            if (SecondPatton == false)
+            if (thisHP == WhiteHP)
             {
-                //Rot = 0;
-                SecondPatton = true;
-                transform.DOMove(new Vector3(-5, 3, 0), 1f).OnComplete(() =>
+                if (FirstPatton == false)
                 {
-                    StartCoroutine(Patton2());
-                    transform.DOMove(new Vector3(-1, 3, 0), 3f);
-                });
+                    //Rot = 0;
+                    GameManager.Instance.AudioReturn(4);
+                    FirstPatton = true;
+                    transform.DOMove(new Vector3(-3, 3, 0), 1f).OnComplete(() =>
+                    {
+
+                        StartCoroutine(BossBullet1());
+                        StartCoroutine(BossBullet2());
+
+                    });
+                }
+                if (SecondPatton == false)
+                {
+                    //Rot = 0;
+                    GameManager.Instance.AudioReturn(4);
+                    SecondPatton = true;
+                    transform.DOMove(new Vector3(-5, 3, 0), 1f).OnComplete(() =>
+                    {
+
+                        StartCoroutine(Patton2());
+                        transform.DOMove(new Vector3(-1, 3, 0), 3f);
+                    });
+                }
+            }
+            else if (thisHP == RedHP)
+            {
+                if (FirstPatton == false)
+                {
+                    GameManager.Instance.AudioReturn(4);
+                    FirstPatton = true;
+                    transform.DOMove(new Vector3(0, 4, 0), 1f).OnComplete(() =>
+                    {
+                        StartCoroutine(Patton3());
+                        transform.DOMove(new Vector3(-6, 4, 0), 4).SetEase(Ease.Linear);
+                    });
+                }
+                if (SecondPatton == false)
+                {
+                    GameManager.Instance.AudioReturn(4);
+                    SecondPatton = true;
+                    transform.DOMove(new Vector3(-3, 3, 0), 1f).OnComplete(() =>
+                    {
+                        StartCoroutine(Patton4());
+                        StartCoroutine(BossBullet1());
+                        StartCoroutine(BossBullet2());
+                    });
+                }
             }
         }
-        else if (thisHP == RedHP)
-        {
-            if (FirstPatton == false)
-            {
-                FirstPatton = true;
-                transform.DOMove(new Vector3(0, 4, 0), 1f).OnComplete(() =>
-                {
-                    StartCoroutine(Patton3());
-                    transform.DOMove(new Vector3(-6, 4, 0), 4).SetEase(Ease.Linear);
-                });
-            }
-            if(SecondPatton == false)
-            {
-                SecondPatton = true;
-                transform.DOMove(new Vector3(-3, 3, 0), 1f).OnComplete(() =>
-                {
-                    StartCoroutine(Patton4());
-                    StartCoroutine(BossBullet1());
-                    StartCoroutine(BossBullet2());
-                });
-            }
-        } 
-        
     }
     #region ∆–≈œ 1
     IEnumerator BossBullet1()
@@ -189,6 +199,7 @@ public class BaeYa : BulletTrans
                 bullet.SetHp(150);
                 yield return new WaitForEndOfFrame();
             }
+            GameManager.Instance.AudioReturn(6);
             yield return new WaitForSeconds(0.25f);
             if (j < 5)
             {
@@ -213,6 +224,7 @@ public class BaeYa : BulletTrans
                 bullet.SetHp(150);
                 yield return new WaitForEndOfFrame();
             }
+            GameManager.Instance.AudioReturn(5);
             yield return new WaitForSeconds(0.2f);
         }
     
@@ -238,6 +250,7 @@ public class BaeYa : BulletTrans
                 bullet.SetHp(150);
                 yield return new WaitForEndOfFrame();
             }
+            GameManager.Instance.AudioReturn(5);
             yield return new WaitForSeconds(0.2f);
         }
      
@@ -255,6 +268,7 @@ public class BaeYa : BulletTrans
                 yield return new WaitForEndOfFrame();
             }
             yield return new WaitForSeconds(0.1f);
+            GameManager.Instance.AudioReturn(6);
         }
         yield return new WaitForSeconds(0.5f);
         transform.DOMove(new Vector3(-3, 3, 0), 1f).OnComplete(() =>
@@ -277,6 +291,7 @@ public class BaeYa : BulletTrans
             }
             yield return new WaitForSeconds(0.1f);
         }
+        GameManager.Instance.AudioReturn(6);
         yield return new WaitForSeconds(1.5f);
         SecondPatton = false ;
         HP += 50;
@@ -303,6 +318,7 @@ public class BaeYa : BulletTrans
                     bullet.SetDir(Player.position - bullet.transform.position, 3f, 4);
                 yield return new WaitForEndOfFrame();
             }
+            GameManager.Instance.AudioReturn(6);
             yield return new WaitForSeconds(0.3f);
         }
         yield return new WaitForSeconds(5f);

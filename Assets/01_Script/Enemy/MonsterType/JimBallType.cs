@@ -54,6 +54,7 @@ public class JimBallType : BulletTrans
         }
         if (HP <= 0)
         {
+            GameManager.Instance.AudioReturn(0);
             CreateItem();
             PoolManager.Instance.Push(this);
         }
