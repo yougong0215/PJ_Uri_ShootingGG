@@ -9,7 +9,7 @@ public class Stage1 : MonoBehaviour
 
     [SerializeField] Image WhiteHP;
     [SerializeField] Image RedHP;
-
+    [SerializeField] BackgroundSound bgSound;
     const string CBType1 = "CrazyBirdType1";
     const string CBType2 = "CrazyBirdType2";
     const string JBType = "Jimball";
@@ -143,7 +143,7 @@ public class Stage1 : MonoBehaviour
             {
                 if (_SummonPaton == false)
                 {
-                    StopAllCoroutines();
+                    StopAllCoroutines();  
                     _SummonPaton = true;
                     BossSound = true;
                     StartCoroutine(Patton(MiddleBoss, 3, 3));
@@ -158,7 +158,7 @@ public class Stage1 : MonoBehaviour
 
 
         _currentTime += Time.deltaTime;
-        _WorldTime += Time.deltaTime;
+        _WorldTime += Time.deltaTime * 2;
         
     }
 
@@ -177,10 +177,15 @@ public class Stage1 : MonoBehaviour
         yield return new WaitForSeconds(4f);
         BT = PoolManager.Instance.Pop(obj);
         
+        
         BT.transform.position = new Vector3(-4, 6, 0);
         if (obj != MiddleBoss)
         {
             BT.transform.DOMove(new Vector3(-pos, 3, 0), 2f);
+        }
+        else
+        {
+            bgSound.TalkingStart(MiddleBoss);
         }
         _PattonInt = i;
     }

@@ -31,8 +31,14 @@ public class BackgroundSound : MonoBehaviour
     public void PlayNext()
     {
         _audio.Play();
+        StartCoroutine(StartFight());
+        
     }
-
+    IEnumerator StartFight()
+    {
+        yield return new WaitForSeconds(2f);
+        _stg1.BossGone(false);
+    }
     
 
 

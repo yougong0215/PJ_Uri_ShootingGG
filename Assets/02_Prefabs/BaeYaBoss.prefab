@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6887381578871873153}
+  - component: {fileID: -7701818230440172053}
   - component: {fileID: 6887381578871873279}
   - component: {fileID: 6887381578871873152}
   - component: {fileID: 6887381578871873277}
@@ -35,6 +36,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-7701818230440172053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6887381578871873154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14cb4de5c39dbc045a4fcacf4c89783f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Talking:
+  - "BaeYa :\uC774\uAC8C \uBB34\uC2A8 \uC18C\uB780\uC774\uC9C0?"
+  - "\uB098 : \uB108\uAC00 \uC54C\uBE60\uB294 \uC544\uB2C8\uC796\uC544"
+  - "BaeYa : \uB108 \uB355\uBD84\uC5D0 \uB0B4 \uD734\uC2DD\uC2DC\uAC04\uC774 \uB0A0\uC544\uAC14\uC796\uC544!!"
+  - "\uB098 : \uC5B4\uCC28\uD53C \uB108\uB294 \uC5EC\uAE30 \uAD6D\uAC00 \uC0AC\uB78C\uB3C4
+    \uC544\uB2C8 \uC796\uC544"
+  - "BaeYa : \uC2DC\uB044\uB7EC\uC6CC"
+  - "BaeYa : \uB110 \uB0A0\uB824\uBC84\uB9AC\uACA0\uC5B4"
 --- !u!212 &6887381578871873279
 SpriteRenderer:
   m_ObjectHideFlags: 0

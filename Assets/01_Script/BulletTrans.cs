@@ -34,7 +34,7 @@ public abstract class BulletTrans : MonoBehaviour
 
     }
 
-    public void SetDir(Vector3 value)
+    public virtual void SetDir(Vector3 value)
     {
         dir += value;
     }

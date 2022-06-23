@@ -12,16 +12,16 @@ public class PlayerItem : MonoBehaviour
 
     private void Start()
     {
-        PowerCnt = 0;
+        PowerCnt = 100;
     }
-    int PowerCnt;
+    float PowerCnt;
     int LastCnt;
 
     public void HitPowerCnt()
     {
-        LastCnt = PowerCnt;
+        LastCnt = (int)PowerCnt;
         PowerCnt /= 2;
-        LastCnt = LastCnt - PowerCnt;
+        LastCnt = LastCnt - (int)PowerCnt;
         for(int i = 0; i < LastCnt/2;)
         {
             if(LastCnt - 5 >= 10)
@@ -40,7 +40,7 @@ public class PlayerItem : MonoBehaviour
             }
         }
     }
-    public int GetPowerCnt()
+    public float GetPowerCnt()
     {
         return PowerCnt;
     }

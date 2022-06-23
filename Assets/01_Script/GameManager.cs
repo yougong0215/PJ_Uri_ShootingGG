@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,7 +13,9 @@ public class GameManager : MonoBehaviour
     Image RedHP;
     Image HPBar;
     Transform Player;
-    
+    TextMeshProUGUI TalkText;
+    Image _Panel;
+
     private static GameManager instance = null;
     public static GameManager Instance
     {
@@ -44,6 +47,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         */
+        _Panel = GameObject.Find("Canvas/TalkPanel").GetComponent<Image>();
+        TalkText = GameObject.Find("Canvas/TalkPanel/Talk").GetComponent<TextMeshProUGUI>();
         _AudioPlay = GetComponent<AudioSource>();
         WhiteHP = GameObject.Find("Canvas/Pase1").GetComponent<Image>();
         RedHP = GameObject.Find("Canvas/Pase2").GetComponent<Image>();
@@ -54,12 +59,19 @@ public class GameManager : MonoBehaviour
         {
             PoolManager.Instance.CreatePool(p, 1); // 40개씨 뽑아내는건데 이건 나중에 원하는만큼뽑게 바꾸어ㅑ됨
         }
-
+        _Panel.rectTransform.localPosition = new Vector3(280, -1000, 0);
     }
     private void Start()
     {
     }
-
+    public Image TextPanel()
+    {
+        return _Panel;
+    }
+    public TextMeshProUGUI TextGUI()
+    {
+        return TalkText;
+    }
     
     [SerializeField] private List<AudioClip> _audio;
     public void AudioReturn(int i)

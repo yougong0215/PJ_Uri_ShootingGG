@@ -117,7 +117,7 @@ public class PlayerFire : MonoBehaviour
     {
         
 
-        if (Input.GetKey(KeyCode.Z))
+        if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.Return))
         {
             for (bulletCnt = bulletMax; bulletCnt > 0; bulletCnt--)
             {

@@ -40,6 +40,7 @@ public class BaeYa : BulletTrans
         Rot = 0;
         SecondPatton = true;
         transform.position = new Vector3(3, 8);
+        transform.DOMove(new Vector3(-3, 3, 0), 1f);
     }
 
     IEnumerator HPBar()
@@ -101,7 +102,12 @@ public class BaeYa : BulletTrans
     }
     private void Update()
     {
-        if (Talk == true)
+        if (stg.BossComeing() == true)
+        {
+            HP = OriginHP;
+        }
+
+        if (stg.BossComeing() == false)
         {
             currentTime += Time.deltaTime;
 
