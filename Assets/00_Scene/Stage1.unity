@@ -2295,6 +2295,7 @@ MonoBehaviour:
   - {fileID: -6551765077490878578, guid: caf382fa2e4e6614ebfa198d45eb592a, type: 3}
   - {fileID: 6887381578871873276, guid: f6fc43f2303adeb458f989661975b70d, type: 3}
   - {fileID: 8571658132358058394, guid: 9ec0298d1a157294386bdbab884a7e75, type: 3}
+  - {fileID: 4721342443662115947, guid: ec93d3a6358ef5643b0b0231692d0a88, type: 3}
   _audio:
   - {fileID: 8300000, guid: 02354f06fc7eb6340a7d0d1e64d39d1a, type: 3}
   - {fileID: 8300000, guid: 00a0a02d6e4c1654e844caaf165c1d57, type: 3}

@@ -75,7 +75,7 @@ public class PlayerSwing : MonoBehaviour
             isAble = false;
             gameObject.GetComponent<BoxCollider2D>().enabled = true;
             Attack.fillAmount = 1;
-            Slash.fillAmount += speed;
+            Slash.fillAmount += 1;//speed;
         }
         currentTime += Time.deltaTime;
         Attack.fillAmount -= Time.deltaTime ;
@@ -89,7 +89,7 @@ public class PlayerSwing : MonoBehaviour
         {
             SlashNum = 0;
             animator.SetTrigger("swing");
-            if (_pitem.GetPowerCnt() >= 100)
+            if(Random.Range(0,101) <= _pitem.GetPowerCnt())
             {
                 StartCoroutine(Slashing());
             }
@@ -129,6 +129,7 @@ public class PlayerSwing : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.gameObject.GetComponent<BulletTrans>().GetDamage(30 + _pitem.GetPowerCnt() *2);
+        Debug.Log(collision.name);
+        collision.gameObject.GetComponent<BulletTrans>().GetDamage(10 + _pitem.GetPowerCnt() *3);
     }
 }

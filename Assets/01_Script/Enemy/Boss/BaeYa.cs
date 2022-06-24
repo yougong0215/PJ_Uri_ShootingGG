@@ -168,7 +168,8 @@ public class BaeYa : BulletTrans
     #region ∆–≈œ 1
     IEnumerator BossBullet1()
     {
-        transform.DOMoveY(0, 1f);
+        Rot = 0;
+        //transform.DOMoveY(0, 1f);
         for (int j = 1; j <= 30; j++)
         {
             for (int i = 1; i <= 5; i++)
@@ -177,7 +178,7 @@ public class BaeYa : BulletTrans
                 bullet = PoolManager.Instance.Pop("FireBullet_") as BaeYaShoot;
                 bullet.transform.position = transform.position;
                 bullet.SetDir(Quaternion.Euler(0, 0, 345 - 30 * i + Rot) * Vector3.right, 0.4f, 1);
-                bullet.SetHp(150);
+                bullet.SetHp(15000);
                 yield return new WaitForEndOfFrame();
             }
             yield return new WaitForSeconds(0.25f);
@@ -195,6 +196,7 @@ public class BaeYa : BulletTrans
     }
     IEnumerator BossBullet2()
     {
+        Rot2 = 0;
         for (int j = 1; j <= 30; j++)
         {
             for (int i = 1; i <= 5; i++)

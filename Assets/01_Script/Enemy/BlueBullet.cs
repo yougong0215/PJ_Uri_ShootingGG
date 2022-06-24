@@ -38,6 +38,7 @@ public class BlueBullet : BulletTrans
         this.speed = speed;
         this.Version = Version;
         dir = Vector2.zero;
+        currenttime = 0;
         ObjectPos = obj.transform.position;
         switch (Version)
         {
@@ -145,16 +146,14 @@ public class BlueBullet : BulletTrans
                 dir = Left;
                 break;
         }
-        dir.x += Mathf.Sin(currenttime);
         StartCoroutine(Version33());
     }
     IEnumerator Version33()
     {
-        speed = 0;
-        yield return new WaitForSeconds(0.3f);
-        
-        yield return new WaitForSeconds(0.3f);
-        speed = 5;
+        speed = 2;
+        Version = 4;
+        yield return new WaitForSeconds(1f);
+        speed = 1;
     }
 
 
@@ -162,6 +161,7 @@ public class BlueBullet : BulletTrans
     {
         HP = 10000;
         transform.position += speed * dir * Time.deltaTime;
+        dir.Normalize();
         if (gameObject.activeSelf)
         {
             currenttime += Time.deltaTime;
@@ -174,6 +174,15 @@ public class BlueBullet : BulletTrans
         if (Mathf.Abs(transform.position.y) >= 7)
         {
             PushBullet();
+        }
+        if (Version == 4 && speed == 1)
+        {
+            dir.x += Mathf.Cos(currenttime);
+            dir.y += Mathf.Sin(currenttime);
+            if (currenttime >= 5)
+            {
+                PushBullet();
+            }
         }
 
     }

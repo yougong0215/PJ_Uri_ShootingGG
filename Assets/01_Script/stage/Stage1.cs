@@ -19,6 +19,7 @@ public class Stage1 : MonoBehaviour
     const string Patten1 = "StagePattern1";
     const string Patten2 = "StagePattern2";
     const string MiddleBoss = "BaeYaBoss";
+    const string IdonowType = "IDoNow";
 
     string ThisObject;
     BulletTrans BT;
@@ -88,6 +89,7 @@ public class Stage1 : MonoBehaviour
                 StartCoroutine(MonsterSummonTurlet(5f));
                 StartCoroutine(MonsterSummonJimball(5f, 70));
                 StartCoroutine(NonPatton(CBType2));
+                StartCoroutine(IdoNOwSummon(6, 30));
                 break;
         }
 
@@ -233,7 +235,19 @@ public class Stage1 : MonoBehaviour
     }
 
 
+    IEnumerator IdoNOwSummon(float sec, float hp)
+    {
+        while (true)
+        {
 
+            RandomSummon = UnityEngine.Random.Range(-6.5f, 1.5f);
+
+                    BT = PoolManager.Instance.Pop(IdonowType) as IDoNowType;
+                    BT.transform.position = new Vector3(RandomSummon, 6.99f, 0);
+                    BT.SetHp(hp + _WorldHP);
+            yield return new WaitForSeconds(sec);
+        }
+    }
     IEnumerator MonsterSummonCrazy(float sec, float hp)
     {
         while (true)

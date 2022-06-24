@@ -8,11 +8,16 @@ public class IDoNowType : BulletTrans
     float currentTime;
     Vector3 dir;
     Transform player;
+    bool bbshooting = false;
+    float speed = 2;
     public override void Reset()
     {
     }
     public void OnEnable()
     {
+        speed = 2;
+        HP = 30;
+        bbshooting = false;
         currentTime = 0;
     }
 
@@ -29,7 +34,7 @@ public class IDoNowType : BulletTrans
             dir = player.position - transform.position;
             dir.Normalize();
         }
-        transform.position = dir * Time.deltaTime * 2f;
+        transform.position += dir * Time.deltaTime * speed;
 
     }
 
@@ -48,19 +53,31 @@ public class IDoNowType : BulletTrans
                 PoolManager.Instance.Push(this);
             }
         }
-        if (HP <= 0)
+        if (HP <= 0 && bbshooting == false)
         {
-            CreateItem();
-            for(int i = 0; i < 5; i++)
-            {
-                for(int j = 0; j< 8; j++)
-                {
-                    BB = PoolManager.Instance.Pop("BlueBullet") as BlueBullet;
-                    BB.SetDir(j, 0, 3, gameObject);
-                }
-            }
-            PoolManager.Instance.Push(this);
+            //if()
+            speed = 0;
+            bbshooting = true;
+            HP = 0;
+            StartCoroutine(BBShoot());
         }
+    }
+    IEnumerator BBShoot()
+    {
+        
+        
+        for (int i = 0; i < 5; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                HP = 0;
+                BB = PoolManager.Instance.Pop("BlueBullet") as BlueBullet;
+                BB.transform.position = transform.position;
+                BB.SetDir(j, 0, 3, gameObject);
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        PoolManager.Instance.Push(this);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
