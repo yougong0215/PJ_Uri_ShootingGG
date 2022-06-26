@@ -31,6 +31,8 @@ public class TalkSK : MonoBehaviour
         talkint = 0;
         StartCoroutine(TalkingStart());
     }
+
+    Sequence seq;
     public IEnumerator TalkingStart()
     {
 
@@ -38,10 +40,15 @@ public class TalkSK : MonoBehaviour
         while (true)
         {
             TalkText.text = "";
-            TalkText.DOText(Talking[talkint], 2f);
+            
+            TalkText.DOText(Talking[talkint], 1f);
             yield return new WaitForSeconds(0.5f);
-            if (skipText == false)
-                yield return new WaitForSeconds(3f);
+            if (skipText == true)
+            {
+                TalkText.DOKill();
+                TalkText.text = "";
+                yield return new WaitForSeconds(1f);
+            }
 
 
             skipText = false;
@@ -52,6 +59,7 @@ public class TalkSK : MonoBehaviour
             {
                 break;
             }
+            TalkText.DOKill();
         }
         _BGsound.PlayNext();
         _Panel.rectTransform.DOMoveY(-900, 1f);

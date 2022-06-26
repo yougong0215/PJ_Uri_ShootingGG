@@ -12,6 +12,7 @@ public class PlayerFire : MonoBehaviour
     float Damage;
     int bulletMax;
     AudioSource _audio;
+    SceneData _SC;
 
 
     private void Start()
@@ -19,6 +20,7 @@ public class PlayerFire : MonoBehaviour
         _audio = GetComponent<AudioSource>();
         playeritem = GameObject.Find("Player").GetComponent<PlayerItem>();
         StartCoroutine(Delay());
+        _SC = GameObject.Find("StartData").GetComponent<SceneData>();
     }
 
 
@@ -115,30 +117,37 @@ public class PlayerFire : MonoBehaviour
     }
     void Shoot()
     {
-        
-
-        if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.Return))
+        if (_SC.GetModeData() != 3)
         {
-            for (bulletCnt = bulletMax; bulletCnt > 0; bulletCnt--)
-            {
-
-                if (gameObject.name == "Dark")
+            
+                if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.Return))
                 {
-                    PBullet = PoolManager.Instance.Pop("DarkArr") as PlayerBullet;
+                    for (bulletCnt = bulletMax; bulletCnt > 0; bulletCnt--)
+                    {
+
+                        if (gameObject.name == "Dark")
+                        {
+                            PBullet = PoolManager.Instance.Pop("DarkArr") as PlayerBullet;
+
+                        }
+                        else if (gameObject.name == "Light")
+                        {
+                            PBullet = PoolManager.Instance.Pop("LightArr") as PlayerBullet;
+                        }
+                    if (_SC.GetDiff() == 1)
+                    {
+                        Damage *= 2;
+                    }
+                    PBullet.SetType(Version, bulletCnt, Damage);
+                        PBullet.transform.position = transform.position;
+                    }
+                    if (gameObject.name == "Dark")
+                    {
+                        _audio.Play();
+                    }
 
                 }
-                else if (gameObject.name == "Light")
-                {
-                    PBullet = PoolManager.Instance.Pop("LightArr") as PlayerBullet;
-                }
-                PBullet.SetType(Version, bulletCnt, Damage);
-                PBullet.transform.position = transform.position;
-            }
-            if (gameObject.name == "Dark")
-            {
-                _audio.Play();
-            }
-
+            
         }
     }
 }

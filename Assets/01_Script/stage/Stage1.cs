@@ -20,6 +20,7 @@ public class Stage1 : MonoBehaviour
     const string Patten2 = "StagePattern2";
     const string MiddleBoss = "BaeYaBoss";
     const string IdonowType = "IDoNow";
+    SceneData _SC;
 
     string ThisObject;
     BulletTrans BT;
@@ -37,9 +38,11 @@ public class Stage1 : MonoBehaviour
     bool _SummonPaton; //한마리만 소환해야됨;
     bool _SecondSummon;
     #endregion
+    float StageDiff;
     int _PattonInt;
     void Start()
     {
+        _SC = GameObject.Find("StartData").GetComponent<SceneData>();
         BossSound = false;
         GameManager.Instance.HPBarOff();
         WhiteHP.fillAmount = 0;
@@ -50,6 +53,18 @@ public class Stage1 : MonoBehaviour
         _Patun = false;
         _currentTime = 0;
         _WorldTime = 0;
+        if(_SC.GetDiff() == 1)
+        {
+            StageDiff = 2;
+        }
+        if(_SC.GetDiff() == 2)
+        {
+            StageDiff = 1;
+        }
+        if(_SC.GetDiff() == 3)
+        {
+            StageDiff = 0.5f;
+        }
  
     }
 
@@ -68,15 +83,15 @@ public class Stage1 : MonoBehaviour
         {
             case 1:
                 StopAllCoroutines();
-                StartCoroutine(MonsterSummonCrazy(1f, 30));
+                StartCoroutine(MonsterSummonCrazy(1f, 30/StageDiff));
                 StartCoroutine(MonsterSummonTurlet(5f));
-                StartCoroutine(MonsterSummonJimball(2f, 50));
+                StartCoroutine(MonsterSummonJimball(2f, 50 / StageDiff));
                 break;
             case 2:
                 StopAllCoroutines();
-                StartCoroutine(MonsterSummonCrazy(7f, 30));
-                StartCoroutine(MonsterSummonTurlet(0.8f));
-                StartCoroutine(MonsterSummonJimball(9f, 50));
+                StartCoroutine(MonsterSummonCrazy(4f, 30 / StageDiff));
+                StartCoroutine(MonsterSummonTurlet(0.8f * StageDiff));
+                StartCoroutine(MonsterSummonJimball(6f, 50 / StageDiff));
                 break;
             case 3:
                 WhiteHP.fillAmount = 0;
@@ -85,11 +100,11 @@ public class Stage1 : MonoBehaviour
                 GameManager.Instance.ActiveFalseBulletOBJ();
                 GameManager.Instance.HPBarOff();
                 StopAllCoroutines();
-                StartCoroutine(MonsterSummonCrazy(3f, 50));
+                StartCoroutine(MonsterSummonCrazy(3f, 50 / StageDiff));
                 StartCoroutine(MonsterSummonTurlet(5f));
-                StartCoroutine(MonsterSummonJimball(5f, 70));
+                StartCoroutine(MonsterSummonJimball(5f, 70 / StageDiff));
                 StartCoroutine(NonPatton(CBType2));
-                StartCoroutine(IdoNOwSummon(6, 30));
+                StartCoroutine(IdoNOwSummon(6, 30 / StageDiff));
                 break;
         }
 
@@ -141,7 +156,7 @@ public class Stage1 : MonoBehaviour
                 _WorldTime = 61f;
             }
 
-            if (130f > _WorldTime && _WorldTime >= 120)
+            if (170f > _WorldTime && _WorldTime >= 150)
             {
                 if (_SummonPaton == false)
                 {
@@ -151,7 +166,7 @@ public class Stage1 : MonoBehaviour
                     StartCoroutine(Patton(MiddleBoss, 3, 3));
                 }
                 _Patun = true;
-                _WorldTime = 121;
+                _WorldTime = 151;
             }
 
 
@@ -160,7 +175,7 @@ public class Stage1 : MonoBehaviour
 
 
         _currentTime += Time.deltaTime;
-        _WorldTime += Time.deltaTime * 2;
+        _WorldTime += Time.deltaTime;
         
     }
 

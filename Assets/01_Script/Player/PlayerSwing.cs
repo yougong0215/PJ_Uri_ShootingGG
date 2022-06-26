@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerSwing : MonoBehaviour
 {
     float currentTime;
-     PlayerItem _pitem;
+    PlayerItem _pitem;
     bool isAble;
     Animator animator;
     [SerializeField] Image Attack;
@@ -17,12 +17,14 @@ public class PlayerSwing : MonoBehaviour
     int SuperNovaCnt;
     bool Check;
     float speed;
-    
+    SceneData _SC;
+
     // Start is called before the first frame update
     void Start()
     {
+        _SC = GameObject.Find("StartData").GetComponent<SceneData>();
         _pitem = GameObject.Find("Player").GetComponent<PlayerItem>();
-        
+
         SlashNum = 0;
         animator = gameObject.GetComponent<Animator>();
         currentTime = 0;
@@ -39,7 +41,7 @@ public class PlayerSwing : MonoBehaviour
 
     void NormalAttack()
     {
-           
+
 
         if ((Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Q)) && isAble == false)
         {
@@ -75,23 +77,47 @@ public class PlayerSwing : MonoBehaviour
             isAble = false;
             gameObject.GetComponent<BoxCollider2D>().enabled = true;
             Attack.fillAmount = 1;
-            Slash.fillAmount += 1;//speed;
+            if (_SC.GetDiff() == 1)
+            {
+                speed *= 1.5f;
+            }
+            if (_SC.GetDiff() == 2)
+            {
+                speed *= 1.2f;
+            }
+            if (_SC.GetDiff() == 3)
+            {
+                speed *= 1f;
+            }
+            Slash.fillAmount += speed;
         }
         currentTime += Time.deltaTime;
-        Attack.fillAmount -= Time.deltaTime ;
-        gameObject.GetComponent<BoxCollider2D>().enabled = currentTime > 0.3f? false : true;
+        Attack.fillAmount -= Time.deltaTime;
+        gameObject.GetComponent<BoxCollider2D>().enabled = currentTime > 0.3f ? false : true;
         isAble = currentTime > 1 ? false : true;
     }
 
     void WindSlash()
     {
+
         if (Input.GetKeyDown(KeyCode.Space) && Slash.fillAmount == 1)
         {
             SlashNum = 0;
             animator.SetTrigger("swing");
-            if(Random.Range(0,101) <= _pitem.GetPowerCnt())
+            if (Random.Range(0, 101) <= _pitem.GetPowerCnt())
             {
-                StartCoroutine(Slashing());
+                if (_SC.GetDiff() == 1 || _SC.GetDiff() == 2)
+                {
+                    StartCoroutine(Slashing());
+                }
+                else
+                {
+
+                    bulletTrans = PoolManager.Instance.Pop("WindSlash") as Slash;
+                    bulletTrans.transform.position = transform.position;
+                    bulletTrans.SetDirH(1);
+                }
+                Slash.fillAmount = 0;
             }
             else
             {
@@ -101,8 +127,8 @@ public class PlayerSwing : MonoBehaviour
                 bulletTrans.SetDirH(1);
             }
             Slash.fillAmount = 0;
+
         }
-        
     }
     IEnumerator Slashing()
     {
@@ -123,13 +149,14 @@ public class PlayerSwing : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.C) && Check == false)
         {
-                Explosion.transform.GetChild(0).gameObject.SetActive(true);
+            Explosion.transform.GetChild(0).gameObject.SetActive(true);
         }
         Check = false;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.name);
-        collision.gameObject.GetComponent<BulletTrans>().GetDamage(10 + _pitem.GetPowerCnt() *3);
+        collision.gameObject.GetComponent<BulletTrans>().GetDamage(10 + _pitem.GetPowerCnt() * 3);
     }
+        
 }
