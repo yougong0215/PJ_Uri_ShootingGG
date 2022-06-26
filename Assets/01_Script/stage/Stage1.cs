@@ -156,7 +156,7 @@ public class Stage1 : MonoBehaviour
                 _WorldTime = 61f;
             }
 
-            if (170f > _WorldTime && _WorldTime >= 150)
+            if (150f > _WorldTime && _WorldTime >= 120)
             {
                 if (_SummonPaton == false)
                 {
@@ -166,7 +166,7 @@ public class Stage1 : MonoBehaviour
                     StartCoroutine(Patton(MiddleBoss, 3, 3));
                 }
                 _Patun = true;
-                _WorldTime = 151;
+                _WorldTime = 121;
             }
 
 

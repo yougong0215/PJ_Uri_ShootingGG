@@ -10,8 +10,12 @@ public class Choose : MonoBehaviour
 {
     int SMQ = 1;
     int ModeSelect = 1;
+    int diff = 2;
     bool _select = false;
     bool _seeing = false;
+    bool _diffsel = true;
+    float currentTIme = 0;
+    TextMeshProUGUI ThisImage = null;
 
 
     [SerializeField] TextMeshProUGUI Starts;
@@ -27,6 +31,11 @@ public class Choose : MonoBehaviour
     [SerializeField] TextMeshProUGUI Normal;
     [SerializeField] TextMeshProUGUI Mingun;
     [SerializeField] TextMeshProUGUI Sword;
+
+    [SerializeField] RectTransform DiffSElectUI;
+    [SerializeField] TextMeshProUGUI Easy;
+    [SerializeField] TextMeshProUGUI Deafult;
+    [SerializeField] TextMeshProUGUI Hard;
 
     public int GetModeselect()
     {
@@ -100,55 +109,132 @@ public class Choose : MonoBehaviour
                     _seeing = true;
                     PlayingUI.DOMoveX(600, 1f).SetEase(Ease.OutQuad);
                 }
-                switch (ModeSelect)
+                if (_diffsel == true)
                 {
-                    case 1:
+                    switch (ModeSelect)
+                    {
+                        case 1:
 
-                        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-                        {
-                            ModeSelect = 2;
-                        }
-                        Normal.color = new Color(255, 0, 0);
-                        Mingun.color = new Color(255, 255, 255);
-                        Sword.color = new Color(255, 255, 255);
-                        break;
-                    case 2:
-                        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-                        {
-                            ModeSelect = 1;
-                        }
-                        if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-                        {
-                            ModeSelect = 3;
-                        }
-                        Normal.color = new Color(255, 255, 255);
-                        Mingun.color = new Color(255, 0, 0);
-                        Sword.color = new Color(255, 255, 255);
-                        break;
-                    case 3:
-                        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-                        {
-                            ModeSelect = 2;
-                        }
-                        Normal.color = new Color(255, 255, 255);
-                        Mingun.color = new Color(255, 255, 255);
-                        Sword.color = new Color(255, 0, 0);
-                        break;
+                            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                            {
+                                ModeSelect = 2;
+                            }
+                            Normal.color = new Color(255, 0, 0);
+                            Mingun.color = new Color(255, 255, 255);
+                            Sword.color = new Color(255, 255, 255);
+                            ThisImage = Normal;
+                            break;
+                        case 2:
+                            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+                            {
+                                ModeSelect = 1;
+                            }
+                            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                            {
+                                ModeSelect = 3;
+                            }
+                            Normal.color = new Color(255, 255, 255);
+                            Mingun.color = new Color(255, 0, 0);
+                            Sword.color = new Color(255, 255, 255);
+                            ThisImage = Mingun;
+                            break;
+                        case 3:
+                            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+                            {
+                                ModeSelect = 2;
+                            }
+                            Normal.color = new Color(255, 255, 255);
+                            Mingun.color = new Color(255, 255, 255);
+                            Sword.color = new Color(255, 0, 0);
+                            ThisImage = Sword;
+                            break;
 
 
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Escape))
+                    {
+                        _select = false;
+                        _seeing = false;
+                        PlayingUI.DOMoveX(-2000, 2f).SetEase(Ease.OutQuad);
+                    }
+                    if ((Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return)) && _diffsel == true)
+                    {
+                        if(ThisImage == Normal)
+                        {
+                            Normal.color = new Color(0, 255, 0);
+                        }
+                        if (ThisImage == Mingun)
+                        {
+                            Mingun.color = new Color(0, 255, 0);
+                        }
+                        if (ThisImage == Sword)
+                        {
+                            Sword.color = new Color(0, 255, 0);
+                        }
+
+
+                        DiffSElectUI.DOMoveX(1200, 1f).SetEase(Ease.OutQuad);
+                        _diffsel = false;
+                        currentTIme = 0;
+                    }
                 }
 
-                if(Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return))
+                if (_diffsel == false)
                 {
-                    SceneManager.LoadScene("Stage1");
+                    currentTIme += Time.deltaTime;
+                    switch (diff)
+                    {
+                        case 1:
+
+                            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                            {
+                                diff = 2;
+                            }
+                            Easy.color = new Color(255, 0, 0);
+                            Deafult.color = new Color(255, 255, 255);
+                            Hard.color = new Color(255, 255, 255);
+                            break;
+                        case 2:
+                            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+                            {
+                                diff = 1;
+                            }
+                            if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+                            {
+                                diff = 3;
+                            }
+                            Easy.color = new Color(255, 255, 255);
+                            Deafult.color = new Color(255, 0, 0);
+                            Hard.color = new Color(255, 255, 255);
+                            break;
+                        case 3:
+                            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+                            {
+                                diff = 2;
+                            }
+                            Easy.color = new Color(255, 255, 255);
+                            Deafult.color = new Color(255, 255, 255);
+                            Hard.color = new Color(255, 0, 0);
+                            break;
+
+
+                    }
+                    if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Escape))
+                    {
+
+                        DiffSElectUI.DOMoveX(-2000, 1f).SetEase(Ease.OutQuad);
+                        _diffsel = true;
+                    }
+                    if (currentTIme >= 0.1f && (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return)))
+                    {
+                        SceneManager.LoadScene("Stage1");
+                    }
                 }
 
-                if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Escape))
-                {
-                    _select = false;
-                    _seeing = false;
-                    PlayingUI.DOMoveX(-2000, 2f).SetEase(Ease.OutQuad);
-                }
+                
+               
+
 
 
 

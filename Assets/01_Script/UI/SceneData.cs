@@ -6,7 +6,7 @@ public class SceneData : MonoBehaviour
 {
     [SerializeField] Choose GetData;
     int Mode = 1;
-    int Difficult = 2;
+    int Difficult = 1;
     private void Awake()
     {
         DontDestroyOnLoad(this);
