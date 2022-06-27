@@ -41,6 +41,10 @@ public class Choose : MonoBehaviour
     {
         return ModeSelect;
     }
+    public int Getdiffselect()
+    {
+        return diff;
+    }
     // Update is called once per frame
     void Update()
     {

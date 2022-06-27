@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHP : MonoBehaviour
 {
-    int HP =10;
+    int HP =1;
     protected bool oncurrt;
     float currentTime;
-    PlayerItem powers;
     AudioSource _audio;
     [SerializeField]AudioClip _clip;
     [SerializeField] Image HP1;
@@ -16,6 +16,9 @@ public class PlayerHP : MonoBehaviour
     [SerializeField] Image HP3;
     [SerializeField] Image HP4;
     [SerializeField] Image HP5;
+    [SerializeField] GameObject Explosion;
+    SceneData _SC;
+    PlayerItem _pitem;
 
     public bool GetOnCR()
     {
@@ -24,8 +27,9 @@ public class PlayerHP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _pitem = GameObject.Find("Player").GetComponent<PlayerItem>();
+        _SC = GameObject.Find("StartData").GetComponent<SceneData>();
         _audio = GetComponent<AudioSource>();
-        powers = GameObject.Find("Player").GetComponent<PlayerItem>();
         currentTime = 0;
       
         oncurrt = false;
@@ -53,11 +57,7 @@ public class PlayerHP : MonoBehaviour
         switch (HP)
         {
             case 0:
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+                SceneManager.LoadScene("GameOver");
                 break;
             case 1:
                 HP1.fillAmount = 0.5f;
@@ -137,12 +137,16 @@ public class PlayerHP : MonoBehaviour
         //Debug.Log($"{GameManager.Instance.GetDamaged()} | {oncurrt}");
         if (collision.GetComponent<BulletTrans>() && oncurrt == true)
         {
-            powers.HitPowerCnt();
+            _pitem.HitPowerCnt();
                 HP--;
                 oncurrt = false;
                 Debug.Log(HP);
             currentTime = 0;
             _audio.PlayOneShot(_clip);
+            if ( Random.Range(0, 101) <= _pitem.GetPowerCnt() * 2)
+            {
+                Explosion.transform.GetChild(0).gameObject.SetActive(true);
+            }
         }
     }
 }

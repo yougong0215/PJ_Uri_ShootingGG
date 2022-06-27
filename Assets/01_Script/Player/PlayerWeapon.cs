@@ -9,7 +9,6 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] GameObject UP;
     [SerializeField] GameObject Down;
     [SerializeField] GameObject Dark;
-
     Vector3 Lightps;
     Vector3 Darkps;
     Vector3 UpPs;

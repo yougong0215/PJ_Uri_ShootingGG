@@ -77,13 +77,6 @@ public class CrazyBirdType : BulletTrans
                 PoolManager.Instance.Push(this);
             }
         }
-        if (HP <= 0)
-        {
-            Debug.Log(GameManager.Instance);
-            GameManager.Instance.AudioReturn(0);
-            CreateItem();
-            PoolManager.Instance.Push(this);
-        }
     }
 
     IEnumerator CRType1()

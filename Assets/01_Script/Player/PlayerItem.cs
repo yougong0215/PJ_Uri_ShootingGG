@@ -1,22 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerItem : MonoBehaviour
 {
     const string Ult = "Ult_Item";
     const string Power = "Power_Item";
     const string BigPower = "Big_Power_Item";
-
+    [SerializeField] Image Gage;
     PowerItem Pitem;
 
     private void Start()
     {
-        PowerCnt = 100;
+        PowerCnt = 0;
     }
     float PowerCnt;
     int LastCnt;
 
+    private void Update()
+    {
+        if(PowerCnt <= 0 )
+        {
+            PowerCnt = 0;
+        }
+        if (PowerCnt >= 100)
+        {
+            PowerCnt = 100;
+        }
+        Gage.fillAmount = PowerCnt / 100;
+    }
     public void HitPowerCnt()
     {
         LastCnt = (int)PowerCnt;

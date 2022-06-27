@@ -52,12 +52,6 @@ public class JimBallType : BulletTrans
                 PoolManager.Instance.Push(this);
             }
         }
-        if (HP <= 0)
-        {
-            GameManager.Instance.AudioReturn(0);
-            CreateItem();
-            PoolManager.Instance.Push(this);
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

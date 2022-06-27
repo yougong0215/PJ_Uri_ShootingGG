@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class BaeYa : BulletTrans
 {
     Image WhiteHP;
     Image RedHP;
+    Image BlueHP;
     Transform Player;
     Image thisHP;
     float OriginHP;
+    SceneData _SC;
     Vector3 newDirection;
     BaeYaShoot bullet;
     float Rot;
@@ -22,16 +26,20 @@ public class BaeYa : BulletTrans
     #region
     bool FirstPatton = false;
     bool SecondPatton = false;
+    bool ThirdPatton = true;
     #endregion
     bool LateUpdateON = false;
 
     bool Talk = false;
 
     // Start is called before the first frame 
+    bool Infin = false;
     void OnEnable()
     {
+        _SC = GameObject.Find("StartData").GetComponent<SceneData>();
         WhiteHP = GameManager.Instance.GetWhiteImage();
         RedHP = GameManager.Instance.GetRedImage();
+        BlueHP = GameManager.Instance.GetBlueImage();
         GameManager.Instance.HPBarOn();
         StartCoroutine(HPBar());
         thisHP = WhiteHP;
@@ -45,18 +53,29 @@ public class BaeYa : BulletTrans
 
     IEnumerator HPBar()
     {
+        Infin = true;
         RedHP.fillAmount = 0;
         WhiteHP.fillAmount = 0;
         while (true)
         {
             yield return new WaitForSeconds(0.1f);
             WhiteHP.fillAmount = RedHP.fillAmount == 1 ? WhiteHP.fillAmount += 0.1f : RedHP.fillAmount += 0.1f;
-            if(RedHP.fillAmount ==1)
+            if (RedHP.fillAmount == 1)
             {
+                BlueHP.fillAmount = 1;
                 LateUpdateON = true;
                 break;
             }
         }
+    }
+    private void FixedUpdate()
+    {
+    }
+    IEnumerator Infinity()
+    {
+        Infin = true;
+        yield return new WaitForSeconds(1f);
+        Infin = false;
     }
     private void Start()
     {
@@ -83,22 +102,53 @@ public class BaeYa : BulletTrans
                 HP = 300;
                 OriginHP = HP;
                 FirstPatton = false;
-                _ani.SetBool("Super", true);
+                StartCoroutine(Infinity());
             }
             thisHP.fillAmount = (HP / OriginHP);
             if (thisHP == RedHP && HP <= 0)
             {
+                OriginHP = 300;
+                HP = 300;
                 WhiteHP.fillAmount = 0;
                 RedHP.fillAmount = 0;
+                StopAllCoroutines();
+                DOTween.KillAll();
+                thisHP = BlueHP;
+                FirstPatton = false;
+                SecondPatton = true;
+                _ani.SetBool("Super", true);
+                StartCoroutine(Holding());
+                StartCoroutine(Infinity());
+            }
+            if (thisHP == BlueHP && HP <= 0)
+            {
                 stg.SetNextPatton();
+                stg.PlusScore(100000);
+                SceneManager.LoadScene("GameOver");
                 PoolManager.Instance.Push(this);
             }
+
             if (thisHP == RedHP && HP >= 300)
             {
                 HP = 300;
             }
         }
 
+    }
+
+
+    IEnumerator Holding()
+    {
+        while (true)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                bullet = PoolManager.Instance.Pop("FireBullet_") as BaeYaShoot;
+                bullet.SetDir(Vector3.zero, 5, 6);
+                yield return new WaitForEndOfFrame();
+            }
+            yield return new WaitForSeconds(1f);
+        }
     }
     private void Update()
     {
@@ -135,7 +185,6 @@ public class BaeYa : BulletTrans
                     {
 
                         StartCoroutine(Patton2());
-                        transform.DOMove(new Vector3(-1, 3, 0), 3f);
                     });
                 }
             }
@@ -145,11 +194,7 @@ public class BaeYa : BulletTrans
                 {
                     GameManager.Instance.AudioReturn(4);
                     FirstPatton = true;
-                    transform.DOMove(new Vector3(0, 4, 0), 1f).OnComplete(() =>
-                    {
-                        StartCoroutine(Patton3());
-                        transform.DOMove(new Vector3(-6, 4, 0), 4).SetEase(Ease.Linear);
-                    });
+                    StartCoroutine(Patton3());
                 }
                 if (SecondPatton == false)
                 {
@@ -163,13 +208,130 @@ public class BaeYa : BulletTrans
                     });
                 }
             }
+            else if (thisHP == BlueHP)
+            {
+                if (FirstPatton == false)
+                {
+                    FirstPatton = true;
+                    GameManager.Instance.AudioReturn(4);
+                    StartCoroutine(Pase3MiddleAttack());
+                    transform.DOMove(new Vector3(-3, 3, 0), 1f);
+                }
+                if (SecondPatton == false)
+                {
+                    SecondPatton = true;
+                    transform.DOMove(new Vector3(-3, 4, 0), 1f).OnComplete(() => {
+                        StartCoroutine(BossBullet4());
+                        StartCoroutine(BossBullet3());
+                        StartCoroutine(BossBullet1());
+                        StartCoroutine(BossBullet2());
+                    });
+                }
+                if (ThirdPatton == false)
+                {
+                    ThirdPatton = true;
+                    Thirdset = true;
+                    transform.DOMove(new Vector3(-5, 3, 0), 1f).OnComplete(() =>
+                    {
+
+                        StartCoroutine(Patton2());
+                        StartCoroutine(Pase3MiddleAttack());
+                    });
+                }
+
+            }
         }
     }
+    bool Thirdset = false;
+
+    IEnumerator Pase3MiddleAttack()
+    {
+        yield return new WaitForSeconds(2f);
+        for (int i = -3; i <= 10; i++)
+        {
+            for (int j = 1; j <= 8; j++)
+            {
+                bullet = PoolManager.Instance.Pop("FireBullet_") as BaeYaShoot;
+                bullet.SetDir(Vector3.down, i, 5);
+                yield return new WaitForSeconds(0.01f);
+            }
+            yield return new WaitForSeconds(0.05f);
+        }
+        if(Thirdset == false)
+            SecondPatton = false;
+        else if (Thirdset == true)
+        {
+            Thirdset = false;
+            FirstPatton = false;
+        }
+        
+    }
+    float Rot3;
+    float Rot4;
+    IEnumerator BossBullet3()
+    {
+
+        Rot3 = 0;
+        yield return new WaitForSeconds(1f);
+        //transform.DOMoveY(0, 1f);
+        for (int j = 1; j <= 30; j++)
+        {
+            for (int i = 1; i <= 12; i++)
+            {
+
+                bullet = PoolManager.Instance.Pop("FireBullet_") as BaeYaShoot;
+                bullet.transform.position = transform.position;
+                bullet.SetDir(Quaternion.Euler(0, 0, 360 - 30 * i + Rot3) * Vector3.right, 0.4f, 1);
+                bullet.SetHp(15000);
+                yield return new WaitForEndOfFrame();
+            }
+            yield return new WaitForSeconds(0.25f);
+            if (j < 5)
+            {
+                Rot3 -= 3f;
+            }
+            else
+            {
+                Rot3 += 3;
+            }
+        }
+    }
+    IEnumerator BossBullet4()
+    {
+        yield return new WaitForSeconds(1f);
+        Rot4 = 0;
+        for (int j = 1; j <= 30; j++)
+        {
+            for (int i = 1; i <= 12; i++)
+            {
+                bullet = PoolManager.Instance.Pop("FireBullet_") as BaeYaShoot;
+                bullet.transform.position = transform.position;
+                bullet.SetDir(Quaternion.Euler(0, 0, 0 + 30 * i + Rot4) * Vector3.right, 0.4f, 1);
+                bullet.SetHp(150);
+                yield return new WaitForEndOfFrame();
+            }
+            GameManager.Instance.AudioReturn(6);
+            yield return new WaitForSeconds(0.25f);
+            if (j < 5)
+            {
+                Rot4 += 3f;
+            }
+            else
+            {
+                Rot4 -= 3f;
+            }
+        }
+        ThirdPatton = false;
+    }
+
+
+
     #region ÆÐÅÏ 1
     IEnumerator BossBullet1()
     {
         Rot = 0;
         //transform.DOMoveY(0, 1f);
+        yield return new WaitForSeconds(1f);
         for (int j = 1; j <= 30; j++)
         {
             for (int i = 1; i <= 5; i++)
@@ -191,12 +353,13 @@ public class BaeYa : BulletTrans
                 Rot += 1.5f;
             }
         }
-        if(thisHP == WhiteHP)
+        if (thisHP == WhiteHP)
             SecondPatton = false;
     }
     IEnumerator BossBullet2()
     {
         Rot2 = 0;
+        yield return new WaitForSeconds(1f);
         for (int j = 1; j <= 30; j++)
         {
             for (int i = 1; i <= 5; i++)
@@ -228,22 +391,27 @@ public class BaeYa : BulletTrans
             {
                 bullet = PoolManager.Instance.Pop("FireBullet_") as BaeYaShoot;
                 bullet.transform.position = transform.position;
-                bullet.SetDir(Quaternion.Euler(0, 0, 30 * UnityEngine.Random.Range(0,12)) * Vector3.right, 3f, 2);
+                bullet.SetDir(Quaternion.Euler(0, 0, 30 * UnityEngine.Random.Range(0, 12)) * Vector3.right, 3f, 2);
                 bullet.SetHp(150);
                 yield return new WaitForEndOfFrame();
             }
             GameManager.Instance.AudioReturn(5);
             yield return new WaitForSeconds(0.2f);
         }
-    
+
         yield return new WaitForSeconds(0.5f);
+
         transform.DOMove(new Vector3(-1, 3, 0), 1f).OnComplete(() =>
         {
             StartCoroutine(Patton2_To());
-            transform.DOMove(new Vector3(-5, 3, 0), 3f).OnComplete(()=>
+            if (thisHP == WhiteHP)
             {
-                FirstPatton = false;
-            });
+                transform.DOMove(new Vector3(-5, 3, 0), 3f).OnComplete(() =>
+                {
+
+                    FirstPatton = false;
+                });
+            }
         });
     }
     IEnumerator Patton2_To()
@@ -261,10 +429,16 @@ public class BaeYa : BulletTrans
             GameManager.Instance.AudioReturn(5);
             yield return new WaitForSeconds(0.2f);
         }
-     
+
     }
-        IEnumerator Patton3()
+    IEnumerator Patton3()
     {
+        transform.DOMove(new Vector3(0, 4, 0), 0.1f).OnComplete(() => {
+            transform.DOMove(new Vector3(-6, 4, 0), 3.9f).SetEase(Ease.Linear);
+
+
+        });
+
         for (int j = 1; j <= 15; j++)
         {
             for (int i = 1; i <= 12; i++)
@@ -284,6 +458,7 @@ public class BaeYa : BulletTrans
             StartCoroutine(Patton3End());
             HP += 50;
         });
+
     }
     IEnumerator Patton3End()
     {
@@ -301,7 +476,7 @@ public class BaeYa : BulletTrans
         }
         GameManager.Instance.AudioReturn(6);
         yield return new WaitForSeconds(1.5f);
-        SecondPatton = false ;
+        SecondPatton = false;
         HP += 50;
     }
     IEnumerator Patton4()
@@ -323,7 +498,7 @@ public class BaeYa : BulletTrans
                     else
                         break;
                 }
-                    bullet.SetDir(Player.position - bullet.transform.position, 3f, 4);
+                bullet.SetDir(Player.position - bullet.transform.position, 3f, 4);
                 yield return new WaitForEndOfFrame();
             }
             GameManager.Instance.AudioReturn(6);
@@ -334,6 +509,15 @@ public class BaeYa : BulletTrans
         HP += 50;
     }
 
+    protected void OnTriggerEnter2D(Collider2D collision)
+    {
+    }
+    public void GetDamage(float value)
+    {
+        if (Infin == false)
+            HP -= value;
+        //Debug.Log($"{gameObject}, {HP}");
+    }
     public override void Reset()
     {
     }

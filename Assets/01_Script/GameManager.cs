@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     Image WhiteHP;
     Image RedHP;
     Image HPBar;
+    Image BlueHP;
     Transform Player;
     TextMeshProUGUI TalkText;
     Image _Panel;
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour
         _AudioPlay = GetComponent<AudioSource>();
         WhiteHP = GameObject.Find("Canvas/Pase1").GetComponent<Image>();
         RedHP = GameObject.Find("Canvas/Pase2").GetComponent<Image>();
+        BlueHP = GameObject.Find("Canvas/Pase3").GetComponent<Image>();
         HPBar = GameObject.Find("Canvas/HPBar").GetComponent<Image>();
         Player = GameObject.Find("Player").GetComponent<Transform>();
         PoolManager.Instance = new PoolManager(transform); // 게임메니저 풀링 부모로 해서 풀메니저 싱글톤 생성
@@ -106,6 +108,10 @@ public class GameManager : MonoBehaviour
         HPBar.fillAmount = 0;
     }
 
+    public Image GetBlueImage()
+    {
+        return BlueHP;
+    }
     public Image GetWhiteImage()
     {
         return WhiteHP;

@@ -12,12 +12,13 @@ public abstract class BulletTrans : MonoBehaviour
     int ItemRandom;
     PowerItem item;
     public abstract void Reset();
-    [SerializeField]
+     Stage1 stg;
     protected float HP;
 
     public void Awake()
     {
         //_ShootNormalMonster = GameManager.Instance.AudioReturn(1);
+        stg = GameObject.Find("Stage1").GetComponent<Stage1>();
         currentTIme = 0;
         dir = Vector3.down;
     }
@@ -33,6 +34,16 @@ public abstract class BulletTrans : MonoBehaviour
         }
 
     }
+    private void FixedUpdate()
+    {
+        if (HP <= 0)
+        {
+            stg.PlusScore(Random.Range(1,11)*100);
+            GameManager.Instance.AudioReturn(0);
+            CreateItem();
+            PoolManager.Instance.Push(this);
+        }
+    }
 
     public virtual void SetDir(Vector3 value)
     {
@@ -41,14 +52,6 @@ public abstract class BulletTrans : MonoBehaviour
     public void StaticSetDir(Vector3 value)
     {
         dir = value;
-    }
-    protected void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("PlayerBullet"))
-        {
-            HP -= collision.GetComponent<PlayerBullet>().GetDamage();
-            //PoolManager.Instance.Push(collision.GetComponent<PlayerBullet>());
-        }
     }
     public void GetDamage(float value)
     {

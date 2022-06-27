@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
-
+using TMPro;
 public class Stage1 : MonoBehaviour
 {
-
+    [SerializeField] TextMeshProUGUI ScoreUI;
+    [SerializeField] TextMeshProUGUI HighScoreUI;
     [SerializeField] Image WhiteHP;
     [SerializeField] Image RedHP;
+    [SerializeField] Image BlueHP;
     [SerializeField] BackgroundSound bgSound;
     const string CBType1 = "CrazyBirdType1";
     const string CBType2 = "CrazyBirdType2";
@@ -27,11 +29,23 @@ public class Stage1 : MonoBehaviour
     float _WorldHP;
 
     bool BossSound;
-
+    int Score = 0;
     float RandomSummon;
     float _currentTime;
     float _WorldTime;
 
+    public void PlusScore(int value)
+    {
+        Score += value;
+    }
+    public int GetScore()
+    {
+        return Score;
+    }
+    public float GetGameTime()
+    {
+        return _currentTime;
+    }
     #region
     bool _FirstSummon;
     bool _Patun; // 페턴중이냐 자체의 유무
@@ -47,6 +61,7 @@ public class Stage1 : MonoBehaviour
         GameManager.Instance.HPBarOff();
         WhiteHP.fillAmount = 0;
         RedHP.fillAmount = 0;
+        BlueHP.fillAmount = 0;
         _SummonPaton = false;
         _FirstSummon = false;
         _SecondSummon = true;
@@ -89,9 +104,10 @@ public class Stage1 : MonoBehaviour
                 break;
             case 2:
                 StopAllCoroutines();
-                StartCoroutine(MonsterSummonCrazy(4f, 30 / StageDiff));
-                StartCoroutine(MonsterSummonTurlet(0.8f * StageDiff));
-                StartCoroutine(MonsterSummonJimball(6f, 50 / StageDiff));
+                StartCoroutine(MonsterSummonCrazy(2f, 30 / StageDiff));
+                StartCoroutine(MonsterSummonTurlet(1.2f * StageDiff));
+                StartCoroutine(MonsterSummonJimball(3f, 50 / StageDiff));
+                StartCoroutine(IdoNOwSummon(6, 30 / StageDiff));
                 break;
             case 3:
                 WhiteHP.fillAmount = 0;
@@ -113,6 +129,21 @@ public class Stage1 : MonoBehaviour
 
 
 
+    }
+    private void LateUpdate()
+    {
+        PlayerPrefs.SetInt("Score", Score);
+        ScoreUI.text = $"Score : {Score}";
+
+        if(PlayerPrefs.GetInt("HighScore", 0)< PlayerPrefs.GetInt("Score",0))
+        {
+            PlayerPrefs.SetInt("HighScore", PlayerPrefs.GetInt("Score", 0));
+            HighScoreUI.text = $"HighScore : {PlayerPrefs.GetInt("HighScore", 0)} Break!!";
+        }
+        else
+        {
+            HighScoreUI.text = $"HighScore : {PlayerPrefs.GetInt("HightScore", 0)}";
+        }
     }
 
     // Update is called once per frame
@@ -156,7 +187,7 @@ public class Stage1 : MonoBehaviour
                 _WorldTime = 61f;
             }
 
-            if (150f > _WorldTime && _WorldTime >= 120)
+            if (130f > _WorldTime && _WorldTime >= 120)
             {
                 if (_SummonPaton == false)
                 {

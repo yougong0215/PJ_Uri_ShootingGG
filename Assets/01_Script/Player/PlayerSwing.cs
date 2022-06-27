@@ -12,6 +12,7 @@ public class PlayerSwing : MonoBehaviour
     [SerializeField] Image Attack;
     [SerializeField] Image Slash;
     [SerializeField] GameObject Explosion;
+    [SerializeField] Image NovaGage;
     Slash bulletTrans;
     float SlashNum;
     int SuperNovaCnt;
@@ -36,6 +37,16 @@ public class PlayerSwing : MonoBehaviour
         WindSlash();
         NormalAttack();
         SuperNove();
+        NovaGage.fillAmount += Time.deltaTime / 30;
+
+        if (_SC.GetModeData() == 1)
+        {
+            gameObject.GetComponent<BoxCollider2D>().size = new Vector2(0.3f, 0.3f);
+        }
+        if (_SC.GetModeData() == 3)
+        {
+            gameObject.GetComponent<BoxCollider2D>().size = new Vector2(0.5f, 0.5f);
+        }
     }
 
 
@@ -69,6 +80,13 @@ public class PlayerSwing : MonoBehaviour
                     bulletTrans.transform.position = transform.position;
                     bulletTrans.SetDirH(1);
                 }
+
+                if (_SC.GetModeData() == 3 && Random.Range(0, 101) <= _pitem.GetPowerCnt())
+                {
+
+                    StartCoroutine(MSlashing());
+                }
+
             }
 
 
@@ -99,16 +117,26 @@ public class PlayerSwing : MonoBehaviour
 
     void WindSlash()
     {
-
-        if (Input.GetKeyDown(KeyCode.Space) && Slash.fillAmount == 1)
+        if (_SC.GetModeData() == 1 || _SC.GetModeData() == 3)
         {
-            SlashNum = 0;
-            animator.SetTrigger("swing");
-            if (Random.Range(0, 101) <= _pitem.GetPowerCnt())
+            if (Input.GetKeyDown(KeyCode.Space) && Slash.fillAmount == 1)
             {
-                if (_SC.GetDiff() == 1 || _SC.GetDiff() == 2)
+                SlashNum = 0;
+                animator.SetTrigger("swing");
+                if (Random.Range(0, 101) <= _pitem.GetPowerCnt())
                 {
-                    StartCoroutine(Slashing());
+                    if (_SC.GetDiff() == 1 || _SC.GetDiff() == 2)
+                    {
+                        StartCoroutine(Slashing());
+                    }
+                    else
+                    {
+
+                        bulletTrans = PoolManager.Instance.Pop("WindSlash") as Slash;
+                        bulletTrans.transform.position = transform.position;
+                        bulletTrans.SetDirH(1);
+                    }
+                    Slash.fillAmount = 0;
                 }
                 else
                 {
@@ -118,16 +146,34 @@ public class PlayerSwing : MonoBehaviour
                     bulletTrans.SetDirH(1);
                 }
                 Slash.fillAmount = 0;
-            }
-            else
-            {
 
-                bulletTrans = PoolManager.Instance.Pop("WindSlash") as Slash;
-                bulletTrans.transform.position = transform.position;
-                bulletTrans.SetDirH(1);
             }
-            Slash.fillAmount = 0;
+        }
+        if (_SC.GetModeData() == 3)
+        {
+            swordMofi = 2;
+        }
 
+    }
+    IEnumerator Slashings()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            StartCoroutine(MSlashing());
+            yield return new WaitForSeconds(0.1f);
+        }
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(Slashing());
+        NovaCheck = false;
+    }
+    IEnumerator MSlashing()
+    {
+        for (int j = 1; j <= 3; j++)
+        {
+            bulletTrans = PoolManager.Instance.Pop("MiniSlash") as Slash;
+            bulletTrans.transform.position = transform.position;
+            bulletTrans.SetDirH(j);
+            yield return new WaitForEndOfFrame();
         }
     }
     IEnumerator Slashing()
@@ -140,23 +186,65 @@ public class PlayerSwing : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
     }
+    public bool GetNova()
+    {
+        return NovaCheck;
+    }
+    bool NovaCheck;
+    bool MiniSuper = false;
     void SuperNove()
     {
-        if (Input.GetKeyDown(KeyCode.C) && Input.GetKey(KeyCode.LeftShift))
+        if (NovaGage.fillAmount == 1 && Input.GetKeyDown(KeyCode.C))
         {
-            Explosion.transform.GetChild(1).gameObject.SetActive(true);
-            Check = true;
+            if (_SC.GetModeData() == 1)
+            {
+                NovaGage.fillAmount = 0;
+                Explosion.transform.GetChild(1).gameObject.SetActive(true);
+                Explosion.transform.GetChild(0).gameObject.SetActive(true);
+
+            }
+            if (_SC.GetModeData() == 2 && MiniSuper == false)
+            {
+                MiniSuper = true;
+                Explosion.transform.GetChild(0).gameObject.SetActive(true);
+            }
+
+            if (_SC.GetModeData() == 3)
+            {
+                NovaCheck = true;
+                StartCoroutine(Slashings());
+                NovaGage.fillAmount = 0;
+                Explosion.transform.GetChild(0).gameObject.SetActive(true);
+            }
         }
-        if (Input.GetKeyDown(KeyCode.C) && Check == false)
+        if(MiniSuper == true)
         {
-            Explosion.transform.GetChild(0).gameObject.SetActive(true);
+            SUperTime += Time.deltaTime;
+            if(SUperTime >= 0.1f)
+            {
+                NovaGage.fillAmount -= 0.025f;
+                SUperTime = 0;
+            }
         }
-        Check = false;
+        if(NovaGage.fillAmount == 0 )
+        {
+            MiniSuper = false;
+        }
+    }
+    float SUperTime =0;
+    int swordMofi = 1;
+    public bool GetSuperMofe()
+    {
+        return MiniSuper;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.name);
-        collision.gameObject.GetComponent<BulletTrans>().GetDamage(10 + _pitem.GetPowerCnt() * 3);
+        collision.gameObject.GetComponent<BulletTrans>().GetDamage(10 + _pitem.GetPowerCnt() * swordMofi);
+        if (collision.GetComponent<BlueBullet>() || collision.GetComponent<BaeYaShoot>())
+        {
+            PoolManager.Instance.Push(collision.gameObject.GetComponent<BulletTrans>());
+        }
     }
-        
+
 }

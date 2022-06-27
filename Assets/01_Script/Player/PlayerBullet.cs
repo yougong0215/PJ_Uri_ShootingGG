@@ -5,17 +5,61 @@ using UnityEngine;
 public class PlayerBullet : BulletTrans
 {
     private Vector3 dir = Vector3.up;
+    [SerializeField] Sprite MinigunMod;
+    [SerializeField] Sprite NormalModeLight;
+    [SerializeField] Sprite NormalModeDark;
     [SerializeField] float speed = 10;
+    SpriteRenderer _spi;
     bool shift;
     float bulletDamage;
     private int Typeint;
     private int number;
     float currentTime;
+    SceneData _SC;
+    private void Awake()
+    {
+        _spi = GetComponent<SpriteRenderer>();
+        _SC = GameObject.Find("StartData").GetComponent<SceneData>();
+        if (_SC.GetModeData() == 1)
+        {
+            if (gameObject.name == "DarkArr")
+                _spi.sprite = NormalModeDark;
+            if (gameObject.name == "LightArr")
+                _spi.sprite = NormalModeLight;
+        }
+        if (_SC.GetModeData() == 2)
+        {
+            _spi.sprite = MinigunMod;
+        }
+    }
     private void OnEnable()
     {
+        if (_SC.GetModeData() == 1)
+        {
+            if (gameObject.name == "DarkArr")
+                _spi.sprite = NormalModeDark;
+            if(gameObject.name == "LightArr")
+                _spi.sprite = NormalModeLight;
+        }
+        if(_SC.GetModeData() == 2)
+        {
+            _spi.sprite = MinigunMod;
+        }
     }
     public void SetType(int Version, int i, float Damage)
     {
+        if (_SC.GetModeData() == 1)
+        {
+            if (gameObject.name == "DarkArr")
+                _spi.sprite = NormalModeDark;
+            if (gameObject.name == "LightArr")
+                _spi.sprite = NormalModeLight;
+        }
+        if (_SC.GetModeData() == 2)
+        {
+            _spi.sprite = MinigunMod;
+            _spi.size = new Vector2(0.5f, 0.5f);
+        }
         Typeint = Version;
         number = i;
         bulletDamage = Damage;
@@ -152,6 +196,10 @@ public class PlayerBullet : BulletTrans
 
     protected void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.gameObject.GetComponent<BulletTrans>())
+        {
+            collision.gameObject.GetComponent<BulletTrans>().GetDamage(bulletDamage);
+        }
         if(collision.gameObject.CompareTag("Enemy"))
         {
             PoolManager.Instance.Push(this);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerFire : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class PlayerFire : MonoBehaviour
     int bulletMax;
     AudioSource _audio;
     SceneData _SC;
+    [SerializeField] TextMeshProUGUI _PowerCnt;
+    [SerializeField] PlayerSwing Pswing;
 
 
     private void Start()
@@ -33,6 +36,11 @@ public class PlayerFire : MonoBehaviour
             speed = 0.2f;
             Damage = 1;
             bulletMax = 1;
+            _PowerCnt.text = "LVL : [ 1 ]";
+            if (_SC.GetModeData() == 2)
+            {
+                Damage = 0.01f;
+            }
         }
         else if (playeritem.GetPowerCnt() >= 3 && playeritem.GetPowerCnt() <= 7)
         {
@@ -41,6 +49,11 @@ public class PlayerFire : MonoBehaviour
             Version = 1;
             speed = 0.2f;
             Damage = 2;
+            _PowerCnt.text = "LVL : [ 2 ]";
+            if (_SC.GetModeData() == 2)
+            {
+                Damage = 0.03f;
+            }
         }
         else if (playeritem.GetPowerCnt() > 7 && playeritem.GetPowerCnt() <= 15)
         {
@@ -49,6 +62,11 @@ public class PlayerFire : MonoBehaviour
             Version = 2;
             speed = 0.2f;
             Damage = 2;
+            _PowerCnt.text = "LVL : [ 3 ]";
+            if (_SC.GetModeData() == 2)
+            {
+                Damage = 0.03f;
+            }
         }
         else if (playeritem.GetPowerCnt() > 15 && playeritem.GetPowerCnt() <= 20)
         {
@@ -57,6 +75,11 @@ public class PlayerFire : MonoBehaviour
             Version = 2;
             speed = 0.2f;
             Damage = 2f;
+            _PowerCnt.text = "LVL : [ 4 ]";
+            if (_SC.GetModeData() == 2)
+            {
+                Damage = 0.03f;
+            }
         }
         else if (playeritem.GetPowerCnt() > 20 && playeritem.GetPowerCnt() <= 40)
         {
@@ -65,6 +88,11 @@ public class PlayerFire : MonoBehaviour
             Version = 3;
             speed = 0.2f;
             Damage = 2.5f;
+            if (_SC.GetModeData() == 2)
+            {
+                Damage = 0.05f;
+            }
+            _PowerCnt.text = "LVL : [ 5 ]";
         }
         else if (playeritem.GetPowerCnt() > 40 && playeritem.GetPowerCnt() <= 60)
         {
@@ -73,6 +101,11 @@ public class PlayerFire : MonoBehaviour
             Version = 3;
             speed = 0.2f;
             Damage = 3f;
+            _PowerCnt.text = "LVL : [ 6 ]";
+            if (_SC.GetModeData() == 2)
+            {
+                Damage = 0.05f;
+            }
         }
         else if (playeritem.GetPowerCnt() > 60 && playeritem.GetPowerCnt() <= 80)
         {
@@ -81,6 +114,11 @@ public class PlayerFire : MonoBehaviour
             Version = 4;
             speed = 0.15f;
             Damage = 2f;
+            _PowerCnt.text = "LVL : [ 7 ]";
+            if (_SC.GetModeData() == 2)
+            {
+                Damage = 0.075f;
+            }
         }
         else if (playeritem.GetPowerCnt() > 80 && playeritem.GetPowerCnt() < 100)
         {
@@ -89,6 +127,11 @@ public class PlayerFire : MonoBehaviour
             Version = 4;
             speed = 0.10f;
             Damage = 2f;
+            _PowerCnt.text = "LVL : [ 8 ]";
+            if (_SC.GetModeData() == 2)
+            {
+                Damage = 0.075f;
+            }
         }
         else if (playeritem.GetPowerCnt() >= 100)
         {
@@ -97,11 +140,22 @@ public class PlayerFire : MonoBehaviour
             Version = 5;
             speed = 0.05f;
             Damage = 2f;
+            if (_SC.GetModeData() == 2)
+            {
+                Damage = 0.1f;
+            }
+            _PowerCnt.text = "LVL : [MAX]";
         }
         if (Input.GetKeyUp(KeyCode.Z) && gameObject.name == "Dark")
         {
             _audio.Stop();
         }
+        if (_SC.GetModeData() == 2)
+        {
+            speed = 0.02f;
+            Damage *= 6;
+        }
+
     }
 
 
@@ -119,35 +173,52 @@ public class PlayerFire : MonoBehaviour
     {
         if (_SC.GetModeData() != 3)
         {
-            
-                if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.Return))
+
+            if (Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.Return))
+            {
+                for (bulletCnt = bulletMax; bulletCnt > 0; bulletCnt--)
                 {
-                    for (bulletCnt = bulletMax; bulletCnt > 0; bulletCnt--)
+
+                    if (gameObject.name == "Dark")
                     {
-
-                        if (gameObject.name == "Dark")
+                        PBullet = PoolManager.Instance.Pop("DarkArr") as PlayerBullet;
+                        PBullet.transform.position = transform.position;
+                        
+                        if (Pswing.GetSuperMofe() == true)
                         {
-                            PBullet = PoolManager.Instance.Pop("DarkArr") as PlayerBullet;
-
+                            PBullet = PBullet = PoolManager.Instance.Pop("DarkArr") as PlayerBullet;
+                            PBullet.transform.position = new Vector3(transform.position.x + 0.5f, transform.position.y + 0.1f, 0);
+                            PBullet = PBullet = PoolManager.Instance.Pop("DarkArr") as PlayerBullet;
+                            PBullet.transform.position = new Vector3(transform.position.x + 0.25f, transform.position.y + 0.1f, 0);
                         }
-                        else if (gameObject.name == "Light")
+                    }
+                    else if (gameObject.name == "Light")
+                    {
+                        PBullet = PoolManager.Instance.Pop("LightArr") as PlayerBullet;
+                        PBullet.transform.position = transform.position;
+                        if (Pswing.GetSuperMofe() == true)
                         {
-                            PBullet = PoolManager.Instance.Pop("LightArr") as PlayerBullet;
+                            PBullet = PBullet = PoolManager.Instance.Pop("LightArr") as PlayerBullet;
+                            PBullet.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y + 0.1f, 0);
+                            PBullet = PBullet = PoolManager.Instance.Pop("LightArr") as PlayerBullet;
+                            PBullet.transform.position = new Vector3(transform.position.x + 0.25f, transform.position.y + 0.1f, 0);
                         }
+
+                    }
                     if (_SC.GetDiff() == 1)
                     {
                         Damage *= 2;
                     }
-                    PBullet.SetType(Version, bulletCnt, Damage);
-                        PBullet.transform.position = transform.position;
-                    }
-                    if (gameObject.name == "Dark")
-                    {
-                        _audio.Play();
-                    }
 
+                    PBullet.SetType(Version, bulletCnt, Damage);
                 }
-            
+                if (gameObject.name == "Dark")
+                {
+                    _audio.Play();
+                }
+
+            }
+
         }
     }
 }

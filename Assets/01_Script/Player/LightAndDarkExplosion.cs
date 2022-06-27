@@ -6,9 +6,11 @@ using DG.Tweening;
 public class LightAndDarkExplosion : MonoBehaviour
 {
     float currentTime;
+    PlayerSwing _pSwing;
+    float CheckTime = 2.5f;
     void Start()
     {
-
+        _pSwing = GameObject.Find("Player/Sprite").GetComponent<PlayerSwing>();
     }
     private void OnEnable()
     {
@@ -26,7 +28,15 @@ public class LightAndDarkExplosion : MonoBehaviour
     }
     private void Update()
     {
-        if (currentTime > 2.5f)
+        if(_pSwing.GetNova() == true)
+        {
+            CheckTime = 5f;
+        }    
+        else
+        {
+            CheckTime = 2.5f;
+        }
+        if (currentTime > CheckTime)
         {
             if (gameObject.name == "LightEx" && gameObject.transform.localScale != new Vector3(5, 5, 1))
             {

@@ -21,9 +21,9 @@ public class TalkSK : MonoBehaviour
     bool skipText = false;
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.Z))
+        if(Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.Return))
         {
-            skipText = true;
+            second = 0.1f;
         }
     }
     public void TalkingS()
@@ -31,30 +31,22 @@ public class TalkSK : MonoBehaviour
         talkint = 0;
         StartCoroutine(TalkingStart());
     }
-
+    float second = 3f;
     Sequence seq;
     public IEnumerator TalkingStart()
     {
-
+        second = 5f;
         _Panel.rectTransform.localPosition = new Vector3(-280, -280, 0);
         while (true)
         {
             TalkText.text = "";
             
-            TalkText.DOText(Talking[talkint], 1f);
-            yield return new WaitForSeconds(0.5f);
-            if (skipText == true)
-            {
-                TalkText.DOKill();
-                TalkText.text = "";
-                yield return new WaitForSeconds(1f);
-            }
+            TalkText.DOText(Talking[talkint], 3f);
+            yield return new WaitForSeconds(second);
 
 
             skipText = false;
             talkint++;
-
-
             if(talkint == Talking.Count)
             {
                 break;
