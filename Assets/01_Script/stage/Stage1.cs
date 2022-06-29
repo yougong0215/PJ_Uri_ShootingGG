@@ -80,7 +80,7 @@ public class Stage1 : MonoBehaviour
         {
             StageDiff = 0.5f;
         }
- 
+        HighScoreUI.text = $"HighScore : {PlayerPrefs.GetInt("HighScore", 0)}";
     }
 
     public float GetWorldTime()
@@ -104,9 +104,9 @@ public class Stage1 : MonoBehaviour
                 break;
             case 2:
                 StopAllCoroutines();
-                StartCoroutine(MonsterSummonCrazy(2f, 30 / StageDiff));
-                StartCoroutine(MonsterSummonTurlet(1.2f * StageDiff));
-                StartCoroutine(MonsterSummonJimball(3f, 50 / StageDiff));
+                StartCoroutine(MonsterSummonCrazy(3f, 30 / StageDiff));
+                StartCoroutine(MonsterSummonTurlet(1.5f * StageDiff));
+                StartCoroutine(MonsterSummonJimball(4f, 50 / StageDiff));
                 StartCoroutine(IdoNOwSummon(6, 30 / StageDiff));
                 break;
             case 3:
@@ -139,10 +139,6 @@ public class Stage1 : MonoBehaviour
         {
             PlayerPrefs.SetInt("HighScore", PlayerPrefs.GetInt("Score", 0));
             HighScoreUI.text = $"HighScore : {PlayerPrefs.GetInt("HighScore", 0)} Break!!";
-        }
-        else
-        {
-            HighScoreUI.text = $"HighScore : {PlayerPrefs.GetInt("HightScore", 0)}";
         }
     }
 
@@ -187,7 +183,7 @@ public class Stage1 : MonoBehaviour
                 _WorldTime = 61f;
             }
 
-            if (130f > _WorldTime && _WorldTime >= 120)
+            if (130f > _WorldTime && _WorldTime >= 100)
             {
                 if (_SummonPaton == false)
                 {
@@ -197,7 +193,7 @@ public class Stage1 : MonoBehaviour
                     StartCoroutine(Patton(MiddleBoss, 3, 3));
                 }
                 _Patun = true;
-                _WorldTime = 121;
+                _WorldTime = 101;
             }
 
 

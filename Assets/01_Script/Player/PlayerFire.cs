@@ -152,8 +152,8 @@ public class PlayerFire : MonoBehaviour
         }
         if (_SC.GetModeData() == 2)
         {
-            speed = 0.02f;
-            Damage *= 6;
+            speed = 0.01f;
+            Damage *= 8;
         }
 
     }
@@ -182,25 +182,31 @@ public class PlayerFire : MonoBehaviour
                     if (gameObject.name == "Dark")
                     {
                         PBullet = PoolManager.Instance.Pop("DarkArr") as PlayerBullet;
+                        PBullet.SetHp(10000);
                         PBullet.transform.position = transform.position;
                         
                         if (Pswing.GetSuperMofe() == true)
                         {
                             PBullet = PBullet = PoolManager.Instance.Pop("DarkArr") as PlayerBullet;
+                            PBullet.SetHp(10000);
                             PBullet.transform.position = new Vector3(transform.position.x + 0.5f, transform.position.y + 0.1f, 0);
                             PBullet = PBullet = PoolManager.Instance.Pop("DarkArr") as PlayerBullet;
+                            PBullet.SetHp(10000);
                             PBullet.transform.position = new Vector3(transform.position.x + 0.25f, transform.position.y + 0.1f, 0);
                         }
                     }
                     else if (gameObject.name == "Light")
                     {
                         PBullet = PoolManager.Instance.Pop("LightArr") as PlayerBullet;
+                        PBullet.SetHp(10000);
                         PBullet.transform.position = transform.position;
                         if (Pswing.GetSuperMofe() == true)
                         {
                             PBullet = PBullet = PoolManager.Instance.Pop("LightArr") as PlayerBullet;
+                            PBullet.SetHp(10000);
                             PBullet.transform.position = new Vector3(transform.position.x - 0.5f, transform.position.y + 0.1f, 0);
                             PBullet = PBullet = PoolManager.Instance.Pop("LightArr") as PlayerBullet;
+                            PBullet.SetHp(10000);
                             PBullet.transform.position = new Vector3(transform.position.x + 0.25f, transform.position.y + 0.1f, 0);
                         }
 

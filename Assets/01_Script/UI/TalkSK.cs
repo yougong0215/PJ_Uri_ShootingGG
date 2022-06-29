@@ -8,52 +8,58 @@ using UnityEngine.UI;
 public class TalkSK : MonoBehaviour
 {
     int talkint;
+    float currentTime;
     [SerializeField] List<string> Talking;
     BackgroundSound _BGsound;
     TextMeshProUGUI TalkText;
+    AudioSource _audio;
     Image _Panel;
+    bool Sounds = false;
     private void Awake()
     {
         TalkText = GameManager.Instance.TextGUI();
         _Panel = GameManager.Instance.TextPanel();
         _BGsound = GameObject.Find("Background").GetComponent<BackgroundSound>();
     }
+    private void Start()
+    {
+        TalkText.text = "";
+    }
     bool skipText = false;
     private void Update()
     {
-        if(Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.Return))
-        {
-            second = 0.1f;
-        }
+        TalkingS();
     }
     public void TalkingS()
     {
-        talkint = 0;
-        StartCoroutine(TalkingStart());
-    }
-    float second = 3f;
-    Sequence seq;
-    public IEnumerator TalkingStart()
-    {
-        second = 5f;
-        _Panel.rectTransform.localPosition = new Vector3(-280, -280, 0);
-        while (true)
+        if (talkint < Talking.Count)
         {
-            TalkText.text = "";
-            
-            TalkText.DOText(Talking[talkint], 3f);
-            yield return new WaitForSeconds(second);
-
-
-            skipText = false;
-            talkint++;
-            if(talkint == Talking.Count)
+            if (currentTime >= 2f)
             {
-                break;
+                currentTime = 0;
+                TalkText.DOKill();
+                _Panel.rectTransform.localPosition = new Vector3(-280, -280, 0);
+                TalkText.DOText(Talking[talkint], 2f).OnComplete(() => { TalkText.text = ""; });
+                talkint++;
             }
-            TalkText.DOKill();
+            else
+            {
+                currentTime += Time.deltaTime;
+            }
+
+            if ((Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return) )&& currentTime>=0.3f)
+            {
+                TalkText.text = "";
+                TalkText.DOKill();
+                currentTime += 2;
+            }
         }
-        _BGsound.PlayNext();
-        _Panel.rectTransform.DOMoveY(-900, 1f);
+
+        if (talkint == Talking.Count && Sounds == false)
+        {
+            Sounds = true;
+            _BGsound.PlayNext();
+            _Panel.rectTransform.DOMoveY(-900, 1f);
+        }
     }
 }

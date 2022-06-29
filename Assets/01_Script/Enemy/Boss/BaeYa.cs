@@ -101,6 +101,11 @@ public class BaeYa : BulletTrans
                 thisHP = RedHP;
                 HP = 300;
                 OriginHP = HP;
+                if (_SC.GetDiff() == 3)
+                {
+                    OriginHP = 500;
+                    HP = 500;
+                }
                 FirstPatton = false;
                 StartCoroutine(Infinity());
             }
@@ -109,6 +114,11 @@ public class BaeYa : BulletTrans
             {
                 OriginHP = 300;
                 HP = 300;
+                if(_SC.GetDiff() == 3)
+                {
+                    OriginHP = 500;
+                    HP = 500;
+                }
                 WhiteHP.fillAmount = 0;
                 RedHP.fillAmount = 0;
                 StopAllCoroutines();
@@ -123,6 +133,7 @@ public class BaeYa : BulletTrans
             if (thisHP == BlueHP && HP <= 0)
             {
                 stg.SetNextPatton();
+                _SC.SetClear();
                 stg.PlusScore(100000);
                 SceneManager.LoadScene("GameOver");
                 PoolManager.Instance.Push(this);
@@ -141,7 +152,7 @@ public class BaeYa : BulletTrans
     {
         while (true)
         {
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 8; i++)
             {
                 bullet = PoolManager.Instance.Pop("FireBullet_") as BaeYaShoot;
                 bullet.SetDir(Vector3.zero, 5, 6);
@@ -456,7 +467,8 @@ public class BaeYa : BulletTrans
         transform.DOMove(new Vector3(-3, 3, 0), 1f).OnComplete(() =>
         {
             StartCoroutine(Patton3End());
-            HP += 50;
+            if (_SC.GetDiff() == 3)
+                HP += 50;
         });
 
     }
@@ -477,7 +489,8 @@ public class BaeYa : BulletTrans
         GameManager.Instance.AudioReturn(6);
         yield return new WaitForSeconds(1.5f);
         SecondPatton = false;
-        HP += 50;
+        if (_SC.GetDiff() == 3)
+            HP += 50;
     }
     IEnumerator Patton4()
     {
@@ -506,7 +519,8 @@ public class BaeYa : BulletTrans
         }
         yield return new WaitForSeconds(5f);
         FirstPatton = false;
-        HP += 50;
+        if (_SC.GetDiff() == 3)
+            HP += 50;
     }
 
     protected void OnTriggerEnter2D(Collider2D collision)

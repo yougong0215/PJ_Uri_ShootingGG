@@ -11,6 +11,7 @@ public class SceneData : MonoBehaviour
     int currentTime;
     private void Awake()
     {
+        PlayerPrefs.SetInt("HighScore", 0);
         DontDestroyOnLoad(this);
     }
     private void Update()

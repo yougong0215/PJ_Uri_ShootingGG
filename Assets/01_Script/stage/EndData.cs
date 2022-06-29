@@ -30,7 +30,6 @@ public class EndData : MonoBehaviour
         try
         {
             clear = _SC.Getclear();
-            Debug.Log($"{Modname} {Difname}");
             switch (Modname)
             {
                 case 1:
@@ -46,10 +45,10 @@ public class EndData : MonoBehaviour
             switch (Difname)
             {
                 case 1:
-                    Diff.text = $"Difficult : ¿Ã£p";
+                    Diff.text = $"Difficult : Easy";
                     break;
                 case 2:
-                    Diff.text = $"Difficult : ≥Î∏ª";
+                    Diff.text = $"Difficult : Normal";
                     break;
                 case 3:
                     Diff.text = $"PlayMode : Hard";

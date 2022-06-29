@@ -25,7 +25,6 @@ public class BackgroundSound : MonoBehaviour
         talkSK = GameObject.Find($"GameManager/{Boss}").GetComponent<TalkSK>();
         _audio.Stop();
         _audio.clip = _AudioClip[1];
-        talkSK.TalkingS();
     }
 
     public void PlayNext()

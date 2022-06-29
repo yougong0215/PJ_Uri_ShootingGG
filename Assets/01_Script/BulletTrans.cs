@@ -73,7 +73,11 @@ public abstract class BulletTrans : MonoBehaviour
         }
         else if(ItemRandom <= 1)
         {
-
+            for(int i =0; i<3; i++)
+            {
+                item = PoolManager.Instance.Pop("Big_Power_Item") as PowerItem;
+                item.SetPos(gameObject.transform.position);
+            }
         }
 
     }

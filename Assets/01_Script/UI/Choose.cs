@@ -16,8 +16,9 @@ public class Choose : MonoBehaviour
     bool _diffsel = true;
     float currentTIme = 0;
     TextMeshProUGUI ThisImage = null;
-
-
+    Vector3 first = new Vector3(-2000, 537,0);
+    Vector3 second = new Vector3(600, 537, 0);
+    Vector3 third = new Vector3(1200, 537, 0);
     [SerializeField] TextMeshProUGUI Starts;
     [SerializeField] TextMeshProUGUI Mofi;
     [SerializeField] TextMeshProUGUI Quit;
@@ -36,7 +37,11 @@ public class Choose : MonoBehaviour
     [SerializeField] TextMeshProUGUI Easy;
     [SerializeField] TextMeshProUGUI Deafult;
     [SerializeField] TextMeshProUGUI Hard;
-
+    
+    private void OnEnable()
+    {
+        DOTween.KillAll();
+    }
     public int GetModeselect()
     {
         return ModeSelect;
@@ -48,6 +53,7 @@ public class Choose : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log($"{SMQ} |  {diff}");
         if (_select == false)
         {
             if (SMQ == 1)
@@ -111,7 +117,7 @@ public class Choose : MonoBehaviour
                 {
                     Starts.color = new Color(0, 255, 0);
                     _seeing = true;
-                    PlayingUI.DOMoveX(600, 1f).SetEase(Ease.OutQuad);
+                    PlayingUI.position = second;
                 }
                 if (_diffsel == true)
                 {
@@ -160,7 +166,7 @@ public class Choose : MonoBehaviour
                     {
                         _select = false;
                         _seeing = false;
-                        PlayingUI.DOMoveX(-2000, 2f).SetEase(Ease.OutQuad);
+                        PlayingUI.position = first;
                     }
                     if ((Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return)) && _diffsel == true)
                     {
@@ -178,7 +184,7 @@ public class Choose : MonoBehaviour
                         }
 
 
-                        DiffSElectUI.DOMoveX(1200, 1f).SetEase(Ease.OutQuad);
+                        DiffSElectUI.position = third;
                         _diffsel = false;
                         currentTIme = 0;
                     }
@@ -227,8 +233,9 @@ public class Choose : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Escape))
                     {
 
-                        DiffSElectUI.DOMoveX(-2000, 1f).SetEase(Ease.OutQuad);
+                        DiffSElectUI.position = first;
                         _diffsel = true;
+                        
                     }
                     if (currentTIme >= 0.1f && (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return)))
                     {
@@ -250,13 +257,13 @@ public class Choose : MonoBehaviour
                 {
                     Mofi.color = new Color(0, 255, 0);
                     _seeing = true;
-                    MofiUI.DOMoveX(600, 1f).SetEase(Ease.OutQuad);
+                    MofiUI.position = second;
                 }
                 if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Escape))
                 {
                     _select = false;
                     _seeing = false;
-                    MofiUI.DOMoveX(-2000, 2f).SetEase(Ease.OutQuad);
+                    MofiUI.position = first;
                 }
             }
             else if (SMQ == 3)
@@ -265,3 +272,34 @@ public class Choose : MonoBehaviour
         }
     }
 }
+
+/*
+ *  void moveing()
+    {
+        UIMoveTime += Time.deltaTime;
+        if (bPlayingUI == true&& SMQ == 1)
+        {
+            PlayingUI.position = Vector3.Lerp(transform.position, SecondPos, UIMoveTime);
+        }
+        else if(bPlayingUI == false && SMQ == 1)
+        {
+            PlayingUI.position = Vector3.Lerp(transform.position, FirstPos, UIMoveTime);
+        }
+        if (bDiffUI == true && SMQ == 1)
+        {
+            DiffSElectUI.position = Vector3.Lerp(transform.position, new Vector3(1200, 580, 0), UIMoveTime);
+        }
+        else if(bDiffUI == false && SMQ == 1)
+        {
+            DiffSElectUI.position = Vector3.Lerp(transform.position, FirstPos, UIMoveTime); ;
+        }
+        if(bMofiUI == true && SMQ == 2)
+        {
+            MofiUI.position = Vector3.Lerp(transform.position, SecondPos, UIMoveTime);
+        }
+        else if(bMofiUI == false && SMQ == 2)
+        {
+            MofiUI.position = Vector3.Lerp(transform.position, FirstPos, UIMoveTime);
+        }
+    }
+ * */

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 public class WaitFor : MonoBehaviour
 {
     [SerializeField] Image Panel;
@@ -51,6 +52,7 @@ public class WaitFor : MonoBehaviour
                 Stop.color = new Color(255, 0, 0);
                 if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return))
                 {
+                    DOTween.KillAll();
                     Destroy(_SC.gameObject);
                     SceneManager.LoadScene("Start");
                 }
